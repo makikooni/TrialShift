@@ -14,6 +14,14 @@ enum Layer: CGFloat {
     case foreground
     case player
     case collectible
+    case ui
+}
+
+enum PhysicsCategory {
+static let none: UInt32 = 0
+static let player: UInt32 = 0b1 // 1 
+static let collectible: UInt32 = 0b10 // 2
+static let foreground: UInt32 = 0b100 // 4
 }
 
 extension SKSpriteNode {
@@ -49,5 +57,18 @@ extension SKSpriteNode {
                 run(repeatAction, withKey: name)
             }
         }
+    }
+}
+
+extension SKScene {
+    
+    // Top of view
+    func viewTop() -> CGFloat {
+        return convertPoint(fromView: CGPoint(x: 0.0, y: 0)).y
+    }
+    // Bottom of view
+    func viewBottom() -> CGFloat {
+        guard let view = view else { return 0.0 }
+        return convertPoint(fromView: CGPoint(x: 0.0, y: view.bounds.size.height)).y
     }
 }

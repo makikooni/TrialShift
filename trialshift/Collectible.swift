@@ -18,30 +18,43 @@ class Collectible: SKSpriteNode {
     // MARK: - PROPERTIES
     private var collectibleType: CollectibleType = .none
     // MARK: - INIT
-    init(collectibleType: CollectibleType) { 
+    init(collectibleType: CollectibleType) {
         var texture: SKTexture!
         self.collectibleType = collectibleType
-      
-    // Set the texture based on the type
-    switch self.collectibleType {
-    case .water:
-        texture = SKTexture(imageNamed: "water_0") 
         
-    case .none:
-        break
+        // Set the texture based on the type
+        switch self.collectibleType {
+        case .water:
+            texture = SKTexture(imageNamed: "water_0")
+            
+        case .none:
+            break
+        }
+        // Call to super.init
+        super.init(texture: texture, color: SKColor.clear, size: texture.size())
+        
+        // Set up collectible
+        self.name = "co_\(collectibleType)"
+        self.anchorPoint = CGPoint(x: 0.5, y: 1.0)
+        self.zPosition = Layer.collectible.rawValue
+        
+        // Add physics body
+        self.physicsBody = SKPhysicsBody(rectangleOf: self.size, center: CGPoint(x: 0.0, y: -self.size.height/2))
+        self.physicsBody?.affectedByGravity = false
+        
+        
+        // Set up physics categories for contacts
+        self.physicsBody?.categoryBitMask = PhysicsCategory.collectible
+        self.physicsBody?.contactTestBitMask = PhysicsCategory.player
+        | PhysicsCategory.foreground
+        self.physicsBody?.collisionBitMask = PhysicsCategory.none
+        
+        
     }
-      // Call to super.init
-    super.init(texture: texture, color: SKColor.clear, size: texture.size())
-    
-    // Set up collectible
-    self.name = "co_\(collectibleType)"
-    self.anchorPoint = CGPoint(x: 0.5, y: 1.0)
-    self.zPosition = Layer.collectible.rawValue
-      }
     // Required init
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-      }
+    }
     
     // MARK: - FUNCTIONS
     func drop(dropSpeed: TimeInterval, floorLevel: CGFloat) {
@@ -56,10 +69,10 @@ class Collectible: SKSpriteNode {
         
         // Add texture change action
         let changeTexture = SKAction.run {
-               if self.position.y <= (floorLevel + 50) {
-                   self.texture = SKTexture(imageNamed: "water_1")
-               }
-           }
+            if self.position.y <= (floorLevel + 50) {
+                self.texture = SKTexture(imageNamed: "water_1")
+            }
+        }
         
         let actionSequence = SKAction.sequence([appear, scale, moveAction,changeTexture])
         
@@ -67,6 +80,21 @@ class Collectible: SKSpriteNode {
         self.scale(to: CGSize(width: 0.27, height: 1.0))
         self.run(actionSequence, withKey: "drop")
         
-        }}
+    }
+    
+    // Handle Contacts
+    func collected() {
+        let removeFromParent = SKAction.removeFromParent()
+        self.run(removeFromParent)
+    }
+    func missed() {
+       //stopping  physics simulation so it doesn't move anymore
+        self.physicsBody?.isDynamic = false
+        
+                
+        // You might also want to remove its physics body if you don't want further collisions
+        self.physicsBody = nil
+    }
+}
     
 
