@@ -15,6 +15,7 @@
 		FBF563C92B9A89EE007EC769 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FBF563C72B9A89EE007EC769 /* LaunchScreen.storyboard */; };
 		FBF563D02B9A9A20007EC769 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF563CF2B9A9A20007EC769 /* Player.swift */; };
 		FBF563D22B9A9A7D007EC769 /* SpriteKitHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF563D12B9A9A7D007EC769 /* SpriteKitHelper.swift */; };
+		FBF563D42B9B4885007EC769 /* Collectible.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF563D32B9B4885007EC769 /* Collectible.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		FBF563C82B9A89EE007EC769 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FBF563CF2B9A9A20007EC769 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		FBF563D12B9A9A7D007EC769 /* SpriteKitHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteKitHelper.swift; sourceTree = "<group>"; };
+		FBF563D32B9B4885007EC769 /* Collectible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collectible.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 				FBF563C02B9A89ED007EC769 /* GameViewController.swift */,
 				FBF563C22B9A89ED007EC769 /* Main.storyboard */,
 				FBF563C52B9A89EE007EC769 /* Assets.xcassets */,
+				FBF563D32B9B4885007EC769 /* Collectible.swift */,
 				FBF563CF2B9A9A20007EC769 /* Player.swift */,
 				FBF563D12B9A9A7D007EC769 /* SpriteKitHelper.swift */,
 				FBF563C72B9A89EE007EC769 /* LaunchScreen.storyboard */,
@@ -144,6 +147,7 @@
 			files = (
 				FBF563D02B9A9A20007EC769 /* Player.swift in Sources */,
 				FBF563BF2B9A89ED007EC769 /* GameScene.swift in Sources */,
+				FBF563D42B9B4885007EC769 /* Collectible.swift in Sources */,
 				FBF563C12B9A89ED007EC769 /* GameViewController.swift in Sources */,
 				FBF563D22B9A9A7D007EC769 /* SpriteKitHelper.swift in Sources */,
 				FBF563B92B9A89ED007EC769 /* AppDelegate.swift in Sources */,
