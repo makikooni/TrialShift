@@ -10,6 +10,7 @@
 //3. Add Welcome Screen
 //4. Add Music
 //5.icon
+//6. resize the textures of characters and remove scaling to avoid difference with physics body
 
 import SpriteKit
 import GameplayKit

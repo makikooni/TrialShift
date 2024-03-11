@@ -15,8 +15,12 @@ enum CollectibleType: String {
 }
 
 class Collectible: SKSpriteNode {
+    
     // MARK: - PROPERTIES
     private var collectibleType: CollectibleType = .none
+    private let playCollectSound = SKAction.playSoundFileNamed("collect.wav", waitForCompletion: false)
+    private let playMissSound = SKAction.playSoundFileNamed("miss.wav", waitForCompletion: false)
+
     // MARK: - INIT
     init(collectibleType: CollectibleType) {
         var texture: SKTexture!
@@ -84,17 +88,24 @@ class Collectible: SKSpriteNode {
     
     // Handle Contacts
     func collected() {
-        let removeFromParent = SKAction.removeFromParent()
-        self.run(removeFromParent)
+    let removeFromParent = SKAction.removeFromParent()
+    let actionGroup = SKAction.group([playCollectSound, removeFromParent]) 
+        self.run(actionGroup)
     }
+
     func missed() {
        //stopping  physics simulation so it doesn't move anymore
-        self.physicsBody?.isDynamic = false
+        //self.physicsBody?.isDynamic = false
         
                 
         // You might also want to remove its physics body if you don't want further collisions
-        self.physicsBody = nil
+        //self.physicsBody = nil
+        let removeFromParent = SKAction.removeFromParent()
+        let actionGroup = SKAction.group([playMissSound, removeFromParent]) 
+        self.run(actionGroup)
+        }
+
     }
-}
+
     
 
