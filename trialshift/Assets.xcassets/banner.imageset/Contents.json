@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "tplImgf030d2d089a5472196058151610079de.png",
+      "filename" : "banner@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "banner@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "banner@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

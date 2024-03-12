@@ -53,6 +53,7 @@ class Collectible: SKSpriteNode {
         | PhysicsCategory.foreground
         self.physicsBody?.collisionBitMask = PhysicsCategory.none
         
+
         
     }
     // Required init
@@ -62,7 +63,7 @@ class Collectible: SKSpriteNode {
     
     // MARK: - FUNCTIONS
     func drop(dropSpeed: TimeInterval, floorLevel: CGFloat) {
-        let pos = CGPoint(x: position.x, y: floorLevel)
+        let pos = CGPoint(x: position.x, y: floorLevel + 50)
         //Scaling the water drop during animation
         let scaleX = SKAction.scaleX(to: 0.22, duration: 1.0)
         let scaleY = SKAction.scaleY(to: 0.25, duration: 1.0)
@@ -75,6 +76,7 @@ class Collectible: SKSpriteNode {
         let changeTexture = SKAction.run {
             if self.position.y <= (floorLevel + 50) {
                 self.texture = SKTexture(imageNamed: "water_1")
+
             }
         }
         
@@ -89,7 +91,7 @@ class Collectible: SKSpriteNode {
     // Handle Contacts
     func collected() {
     let removeFromParent = SKAction.removeFromParent()
-    let actionGroup = SKAction.group([playCollectSound, removeFromParent]) 
+    let actionGroup = SKAction.group([playCollectSound, removeFromParent])
         self.run(actionGroup)
     }
 
@@ -99,9 +101,9 @@ class Collectible: SKSpriteNode {
         
                 
         // You might also want to remove its physics body if you don't want further collisions
-        //self.physicsBody = nil
-        let removeFromParent = SKAction.removeFromParent()
-        let actionGroup = SKAction.group([playMissSound, removeFromParent]) 
+        self.physicsBody = nil
+        //let removeFromParent = SKAction.removeFromParent()
+        let actionGroup = SKAction.group([playMissSound])
         self.run(actionGroup)
         }
 

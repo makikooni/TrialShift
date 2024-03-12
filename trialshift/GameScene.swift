@@ -8,10 +8,20 @@
 //1. Update the sprite when game over
 //2. Update sprite so it carries a bucket ? 
 //3. Add Welcome Screen
-//4. Add Music
+//4. Change bubble sound to kitchen sounds
+//5. Change background music sound
 //5.icon
 //6. resize the textures of characters and remove scaling to avoid difference with physics body
+//DONE ---- 7. repair drops vanishing after head and sound
+//DONE ---- 9. splash no longer visible ? ? ?? ?
+//10. beggining of new level- change audio of muble
+//11. change main font
+//12. update banner
+//13. add flying cupcake (138)
+//14. Repair graphic for water and make it bigger
+//DONE ---- 15. Repair foreground placing
 
+import AVFoundation
 import SpriteKit
 import GameplayKit
 
@@ -44,8 +54,36 @@ class GameScene: SKScene {
     // Labels
     var scoreLabel: SKLabelNode = SKLabelNode() 
     var levelLabel: SKLabelNode = SKLabelNode()
+    let musicAudioNode = SKAudioNode(fileNamed: "music.mp3")
+    let bubblesAudioNode = SKAudioNode(fileNamed: "bubbles.mp3")
+    var prevDropLocation: CGFloat = 0.0
     
     override func didMove(to view: SKView) {
+        
+        // Decrease the audio engine's volume
+        audioEngine.mainMixerNode.outputVolume = 0.0
+        
+        // Run a delayed action to add bubble audio to the scene
+        run(SKAction.wait(forDuration: 1.5), completion: { [unowned self] in
+            self.bubblesAudioNode.autoplayLooped = true
+            self.addChild(self.bubblesAudioNode)
+        })
+
+        
+        // Set up the background music audio node
+        musicAudioNode.autoplayLooped = true
+        musicAudioNode.isPositional = false
+        
+        
+        // Add the audio node to the scene
+        addChild(musicAudioNode)
+        
+        // Use an action to adjust the audio node's volume to 0
+        musicAudioNode.run(SKAction.changeVolume(to: 0.0, duration: 0.0))
+        // Run a delayed action on the scene that fades in the music
+        run(SKAction.wait(forDuration: 1.0), completion: { [unowned self] in self.audioEngine.mainMixerNode.outputVolume = 1.0
+            self.musicAudioNode.run(SKAction.changeVolume(to: 0.75, duration: 2.0))
+        })
         
         // Set up the physics world contact delegate
         physicsWorld.contactDelegate = self
@@ -62,7 +100,7 @@ class GameScene: SKScene {
         let foreground = SKSpriteNode(imageNamed: "foreground_01")
         foreground.anchorPoint = CGPoint(x: 0, y: 0)
         foreground.zPosition = Layer.foreground.rawValue
-        foreground.position = CGPoint(x: 0, y: 180) //change when proper assets added
+        foreground.position = CGPoint(x: 0, y: 60)
         
         
         // Add physics body
@@ -70,6 +108,12 @@ class GameScene: SKScene {
         foreground.physicsBody?.affectedByGravity = false
         addChild(foreground)
         
+        // Set up the banner
+        let banner = SKSpriteNode(imageNamed: "banner")
+        banner.zPosition = Layer.background.rawValue + 1 
+        banner.position = CGPoint(x: frame.midX, y: viewTop() - 20)
+        banner.anchorPoint = CGPoint(x: 0.5, y: 1.0)
+        addChild(banner)
         
         // Set up physics categories for contacts
         foreground.physicsBody?.categoryBitMask = PhysicsCategory.foreground
@@ -159,7 +203,7 @@ class GameScene: SKScene {
     /* ####################################################################### */
     
     func spawnMultipleWater() {
-        
+        player.mumble()
         // Start player walk animation
         player.walk()
         // Reset the level and score
@@ -231,8 +275,45 @@ class GameScene: SKScene {
         let dropRange = SKRange(lowerLimit: frame.minX + margin,
                                 upperLimit: frame.maxX - margin)
         
-        let randomX = CGFloat.random(in:
+        var randomX = CGFloat.random(in:
                                         dropRange.lowerLimit...dropRange.upperLimit)
+        
+        /* START ENHANCED DROP MOVEMENT
+         this helps to create a "snake-like" pattern */
+        // Set a range
+        let randomModifier = SKRange(lowerLimit: 50 + CGFloat(level), upperLimit: 60 * CGFloat(level))
+        var modifier = CGFloat.random(in: randomModifier.lowerLimit...randomModifier.upperLimit)
+        if modifier > 400 { modifier = 400 }
+        
+        // Set the previous drop location
+        if prevDropLocation == 0.0 { prevDropLocation = randomX
+        }
+        
+        // Clamp its x-position
+        if prevDropLocation < randomX {
+        randomX = prevDropLocation + modifier
+        } else {
+        randomX = prevDropLocation - modifier
+        }
+        // Make sure the collectible stays within the frame
+        if randomX <= (frame.minX + margin) { randomX = frame.minX + margin
+        } else if randomX >= (frame.maxX - margin) { randomX = frame.maxX - margin
+        }
+        
+        // Store the location
+        prevDropLocation = randomX
+        /* END ENHANCED DROP MOVEMENT */
+        
+        // Add the number tag to the collectible drop
+        let xLabel = SKLabelNode()
+        xLabel.name = "dropNumber"
+        xLabel.fontName = "Helvetica-Bold"
+        xLabel.fontColor = UIColor.black
+        xLabel.fontSize = 100.0
+        xLabel.text = "\(numberOfDrops)"
+        xLabel.position = CGPoint(x: 0, y: 30)
+        collectible.addChild(xLabel)
+        numberOfDrops -= 1 // decrease drop count by 1
         
         collectible.position = CGPoint(x: randomX,
                                        y: player.position.y * 2.6)
@@ -243,8 +324,8 @@ class GameScene: SKScene {
         addChild(collectible)
         
         //Changing the floorLevel value etc
-        collectible.drop(dropSpeed: TimeInterval(1.0), floorLevel: player.frame.minY + 40)
-        
+        collectible.drop(dropSpeed: TimeInterval(1.0),floorLevel: player.frame.minY + 40)
+
       
     }
     
@@ -408,6 +489,28 @@ extension GameScene: SKPhysicsContactDelegate {
                     sprite.collected()
                     dropsCollected += 1
                     score += 1
+                    
+                    // Add the 'chomp' text at the player's position
+                    let chomp = SKLabelNode(fontNamed: "Helvetica-Bold")
+                    chomp.name = "chomp"
+                    chomp.alpha = 0.0
+                    chomp.fontSize = 50.0
+                    chomp.text = "YAY!!"
+                    chomp.horizontalAlignmentMode = .center
+                    chomp.verticalAlignmentMode = .bottom
+                    chomp.position = CGPoint(x: player.position.x, y: player.frame.maxY + 25) 
+                    chomp.zRotation = CGFloat.random(in: -0.15...0.15)
+                    addChild(chomp)
+                    
+                    // Add actions to fade in, rise up, and fade out
+                    let fadeIn = SKAction.fadeAlpha(to: 1.0, duration: 0.05)
+                    let fadeOut = SKAction.fadeAlpha(to: 0.0, duration: 0.45)
+                    let moveUp = SKAction.moveBy(x: 0.0, y: 45, duration: 0.45)
+                    let groupAction = SKAction.group([fadeOut, moveUp])
+                    let removeFromParent = SKAction.removeFromParent()
+                    let chompAction = SKAction.sequence([fadeIn, groupAction, removeFromParent])
+                    chomp.run(chompAction)
+                    
                     //score += level
                 }
             }
