@@ -10,16 +10,17 @@
 //3. Add Welcome Screen
 //4. Change bubble sound to kitchen sounds
 //5. Change background music sound
-//5.icon
+//DONE ---- 5.icon
 //6. resize the textures of characters and remove scaling to avoid difference with physics body
 //DONE ---- 7. repair drops vanishing after head and sound
 //DONE ---- 9. splash no longer visible ? ? ?? ?
 //10. beggining of new level- change audio of muble
 //11. change main font
-//12. update banner
+//DONE ---- 12. update banner
 //13. add flying cupcake (138)
-//14. Repair graphic for water and make it bigger
+//DONE ---- 14. Repair graphic for water and make it bigger
 //DONE ---- 15. Repair foreground placing
+//DONE ---- 16. Add various texts for player reaction when successed 
 
 import AVFoundation
 import SpriteKit
@@ -140,7 +141,7 @@ class GameScene: SKScene {
     func setupLabels() {
     /* SCORE LABEL */
     scoreLabel.name = "score"
-    scoreLabel.fontName = "Helvetica-Bold"
+    scoreLabel.fontName = "ChalkboardSE-Bold"
     scoreLabel.fontColor = .black
     scoreLabel.fontSize = 35.0
     scoreLabel.horizontalAlignmentMode = .right
@@ -154,7 +155,7 @@ class GameScene: SKScene {
       
     /* LEVEL LABEL */
     levelLabel.name = "level"
-    levelLabel.fontName = "Helvetica-Bold"
+    levelLabel.fontName = "ChalkboardSE-Bold"
     levelLabel.fontColor = .black
     levelLabel.fontSize = 35.0
     levelLabel.horizontalAlignmentMode = .right
@@ -169,7 +170,7 @@ class GameScene: SKScene {
         // Set up message label
         let messageLabel = SKLabelNode()
         messageLabel.name = "message"
-        messageLabel.position = CGPoint(x: frame.midX, y: player.frame.maxY + 100)
+        messageLabel.position = CGPoint(x: frame.midX, y: player.frame.maxY + 50)
         messageLabel.zPosition = Layer.ui.rawValue
         messageLabel.numberOfLines = 2
         
@@ -180,7 +181,7 @@ class GameScene: SKScene {
         let attributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.black,
             .backgroundColor: UIColor.clear,
-            .font: UIFont(name: "Helvetica-Bold", size: 45.0)!,
+            .font: UIFont(name: "ChalkboardSE-Bold", size: 45.0)!,
             .paragraphStyle: paragraph
         ]
         messageLabel.attributedText = NSAttributedString(string:
@@ -490,18 +491,33 @@ extension GameScene: SKPhysicsContactDelegate {
                     dropsCollected += 1
                     score += 1
                     
-                    // Add the 'chomp' text at the player's position
-                    let chomp = SKLabelNode(fontNamed: "Helvetica-Bold")
+                    // Define an array of possible texts
+                    let texts = ["YAY!", "HURRAY!", "WOW!", "AWESOME!","COOL!"]
+
+                    // Keep track of the index of the last displayed text
+                    var lastIndex = UserDefaults.standard.integer(forKey: "lastIndex") // Retrieve the last index from UserDefaults
+
+                    // Get the next text to display
+                    let nextText = texts[lastIndex]
+
+                    // Create the chomp label with the next text
+                    let chomp = SKLabelNode(fontNamed: "ChalkboardSE-Bold")
                     chomp.name = "chomp"
                     chomp.alpha = 0.0
                     chomp.fontSize = 50.0
-                    chomp.text = "YAY!!"
+                    chomp.text = nextText
                     chomp.horizontalAlignmentMode = .center
                     chomp.verticalAlignmentMode = .bottom
-                    chomp.position = CGPoint(x: player.position.x, y: player.frame.maxY + 25) 
+                    chomp.position = CGPoint(x: player.position.x, y: player.frame.maxY + 25)
                     chomp.zRotation = CGFloat.random(in: -0.15...0.15)
                     addChild(chomp)
-                    
+
+                    // Update the index for the next cycle
+                    lastIndex = (lastIndex + 1) % texts.count
+
+                    // Save the updated index to UserDefaults
+                    UserDefaults.standard.set(lastIndex, forKey: "lastIndex")
+
                     // Add actions to fade in, rise up, and fade out
                     let fadeIn = SKAction.fadeAlpha(to: 1.0, duration: 0.05)
                     let fadeOut = SKAction.fadeAlpha(to: 0.0, duration: 0.45)

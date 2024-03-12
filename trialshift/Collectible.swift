@@ -63,8 +63,8 @@ class Collectible: SKSpriteNode {
     
     // MARK: - FUNCTIONS
     func drop(dropSpeed: TimeInterval, floorLevel: CGFloat) {
-        let pos = CGPoint(x: position.x, y: floorLevel + 50)
-        //Scaling the water drop during animation
+        let scaledHeight = self.size.height * 0.2 // Adjusted scale factor to match the scaleFactor in changeTexture action
+        let pos = CGPoint(x: position.x, y: floorLevel - scaledHeight / 2) // Adjusted position calculation
         let scaleX = SKAction.scaleX(to: 0.22, duration: 1.0)
         let scaleY = SKAction.scaleY(to: 0.25, duration: 1.0)
         let scale = SKAction.group([scaleX, scaleY])
@@ -72,21 +72,23 @@ class Collectible: SKSpriteNode {
         let appear = SKAction.fadeAlpha(to: 1.0, duration: 0.25)
         let moveAction = SKAction.move(to: pos, duration: dropSpeed)
         
-        // Add texture change action
         let changeTexture = SKAction.run {
             if self.position.y <= (floorLevel + 50) {
                 self.texture = SKTexture(imageNamed: "water_1")
-
+                
+                let scaleFactor: CGFloat = 0.2  // Set this to the desired percentage of the original size
+                let newWidth = self.texture!.size().width * scaleFactor
+                let newHeight = self.texture!.size().height * scaleFactor
+                
+                self.size = CGSize(width: newWidth, height: newHeight)
             }
         }
         
-        let actionSequence = SKAction.sequence([appear, scale, moveAction,changeTexture])
-        
-        // Shrink first, then run fall action
+        let actionSequence = SKAction.sequence([appear, scale, moveAction, changeTexture])
         self.scale(to: CGSize(width: 0.27, height: 1.0))
         self.run(actionSequence, withKey: "drop")
-        
     }
+
     
     // Handle Contacts
     func collected() {
