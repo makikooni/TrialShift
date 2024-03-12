@@ -13,7 +13,8 @@
 		FB7433082B9F447B0093ED6F /* blob_mumble-2.wav in Resources */ = {isa = PBXBuildFile; fileRef = FB7433022B9F447B0093ED6F /* blob_mumble-2.wav */; };
 		FB7433092B9F447B0093ED6F /* blob_mumble-3.wav in Resources */ = {isa = PBXBuildFile; fileRef = FB7433032B9F447B0093ED6F /* blob_mumble-3.wav */; };
 		FB74330A2B9F447B0093ED6F /* blob_mumble-1.wav in Resources */ = {isa = PBXBuildFile; fileRef = FB7433042B9F447B0093ED6F /* blob_mumble-1.wav */; };
-		FBDC0A322B9FD3CC005B534B /* music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FBDC0A312B9FD3CC005B534B /* music.mp3 */; };
+		FB76CE7D2BA07CB100DB8BBF /* kitchen.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FB76CE7C2BA07CB100DB8BBF /* kitchen.mp3 */; };
+		FB76CE7F2BA0838100DB8BBF /* music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FB76CE7E2BA0838100DB8BBF /* music.mp3 */; };
 		FBDC0A342B9FD91F005B534B /* Flow.sks in Resources */ = {isa = PBXBuildFile; fileRef = FBDC0A332B9FD91F005B534B /* Flow.sks */; };
 		FBF563B92B9A89ED007EC769 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF563B82B9A89ED007EC769 /* AppDelegate.swift */; };
 		FBF563BF2B9A89ED007EC769 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF563BE2B9A89ED007EC769 /* GameScene.swift */; };
@@ -33,7 +34,8 @@
 		FB7433022B9F447B0093ED6F /* blob_mumble-2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "blob_mumble-2.wav"; sourceTree = "<group>"; };
 		FB7433032B9F447B0093ED6F /* blob_mumble-3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "blob_mumble-3.wav"; sourceTree = "<group>"; };
 		FB7433042B9F447B0093ED6F /* blob_mumble-1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "blob_mumble-1.wav"; sourceTree = "<group>"; };
-		FBDC0A312B9FD3CC005B534B /* music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = music.mp3; sourceTree = "<group>"; };
+		FB76CE7C2BA07CB100DB8BBF /* kitchen.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = kitchen.mp3; sourceTree = "<group>"; };
+		FB76CE7E2BA0838100DB8BBF /* music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = music.mp3; sourceTree = "<group>"; };
 		FBDC0A332B9FD91F005B534B /* Flow.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Flow.sks; sourceTree = "<group>"; };
 		FBF563B52B9A89ED007EC769 /* trialshift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = trialshift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBF563B82B9A89ED007EC769 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -61,6 +63,7 @@
 		FB7432FE2B9F447B0093ED6F /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				FB76CE7C2BA07CB100DB8BBF /* kitchen.mp3 */,
 				FB7432FF2B9F447B0093ED6F /* bubbles.mp3 */,
 				FB7433002B9F447B0093ED6F /* collect.wav */,
 				FB7433012B9F447B0093ED6F /* miss.wav */,
@@ -74,7 +77,7 @@
 		FBDC0A302B9FD3CC005B534B /* Music */ = {
 			isa = PBXGroup;
 			children = (
-				FBDC0A312B9FD3CC005B534B /* music.mp3 */,
+				FB76CE7E2BA0838100DB8BBF /* music.mp3 */,
 			);
 			path = Music;
 			sourceTree = "<group>";
@@ -172,14 +175,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FBDC0A322B9FD3CC005B534B /* music.mp3 in Resources */,
 				FB7433082B9F447B0093ED6F /* blob_mumble-2.wav in Resources */,
 				FB74330A2B9F447B0093ED6F /* blob_mumble-1.wav in Resources */,
 				FB7433072B9F447B0093ED6F /* miss.wav in Resources */,
 				FBDC0A342B9FD91F005B534B /* Flow.sks in Resources */,
 				FB7433062B9F447B0093ED6F /* collect.wav in Resources */,
 				FB7433052B9F447B0093ED6F /* bubbles.mp3 in Resources */,
+				FB76CE7D2BA07CB100DB8BBF /* kitchen.mp3 in Resources */,
 				FBF563C42B9A89ED007EC769 /* Main.storyboard in Resources */,
+				FB76CE7F2BA0838100DB8BBF /* music.mp3 in Resources */,
 				FB7433092B9F447B0093ED6F /* blob_mumble-3.wav in Resources */,
 				FBF563C62B9A89EE007EC769 /* Assets.xcassets in Resources */,
 				FBF563C92B9A89EE007EC769 /* LaunchScreen.storyboard in Resources */,
@@ -355,6 +359,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortraitUpsideDown";
@@ -383,6 +388,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortraitUpsideDown";

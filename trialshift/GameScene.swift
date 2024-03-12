@@ -5,22 +5,25 @@
 //  Created by Weronika E. Falinska on 07/03/2024.
 //
 
-//1. Update the sprite when game over
-//2. Update sprite so it carries a bucket ? 
-//3. Add Welcome Screen
-//4. Change bubble sound to kitchen sounds
-//5. Change background music sound
+//DONE ----- 1. Update the sprite when game over
+//2. Update sprite so it carries a bucket ?
+//DONE -----3. Add Welcome Screen
+//DONE ---- 4. Change bubble sound to kitchen sounds
+//DONE ---- 5. Change background music sound
 //DONE ---- 5.icon
 //6. resize the textures of characters and remove scaling to avoid difference with physics body
 //DONE ---- 7. repair drops vanishing after head and sound
 //DONE ---- 9. splash no longer visible ? ? ?? ?
 //10. beggining of new level- change audio of muble
-//11. change main font
+//DONE ---- 11. change main font
 //DONE ---- 12. update banner
 //13. add flying cupcake (138)
 //DONE ---- 14. Repair graphic for water and make it bigger
 //DONE ---- 15. Repair foreground placing
 //DONE ---- 16. Add various texts for player reaction when successed 
+// 17. Figure out why launch screen logo is not visible on my phone
+// DONE 18. Make background tad more green
+// 19. Make floor more interesting?
 
 import AVFoundation
 import SpriteKit
@@ -56,7 +59,7 @@ class GameScene: SKScene {
     var scoreLabel: SKLabelNode = SKLabelNode() 
     var levelLabel: SKLabelNode = SKLabelNode()
     let musicAudioNode = SKAudioNode(fileNamed: "music.mp3")
-    let bubblesAudioNode = SKAudioNode(fileNamed: "bubbles.mp3")
+    let kitchenAudioNode = SKAudioNode(fileNamed: "kitchen.mp3")
     var prevDropLocation: CGFloat = 0.0
     
     override func didMove(to view: SKView) {
@@ -66,8 +69,9 @@ class GameScene: SKScene {
         
         // Run a delayed action to add bubble audio to the scene
         run(SKAction.wait(forDuration: 1.5), completion: { [unowned self] in
-            self.bubblesAudioNode.autoplayLooped = true
-            self.addChild(self.bubblesAudioNode)
+            kitchenAudioNode.run(SKAction.changeVolume(to: 1.0, duration: 0.0))
+            self.kitchenAudioNode.autoplayLooped = true
+            self.addChild(self.kitchenAudioNode)
         })
 
         
@@ -83,7 +87,7 @@ class GameScene: SKScene {
         musicAudioNode.run(SKAction.changeVolume(to: 0.0, duration: 0.0))
         // Run a delayed action on the scene that fades in the music
         run(SKAction.wait(forDuration: 1.0), completion: { [unowned self] in self.audioEngine.mainMixerNode.outputVolume = 1.0
-            self.musicAudioNode.run(SKAction.changeVolume(to: 0.75, duration: 2.0))
+            self.musicAudioNode.run(SKAction.changeVolume(to: 0.3, duration: 2.0))
         })
         
         // Set up the physics world contact delegate
@@ -181,7 +185,7 @@ class GameScene: SKScene {
         let attributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.black,
             .backgroundColor: UIColor.clear,
-            .font: UIFont(name: "ChalkboardSE-Bold", size: 45.0)!,
+            .font: UIFont(name: "ChalkboardSE-Bold", size: 50.0)!,
             .paragraphStyle: paragraph
         ]
         messageLabel.attributedText = NSAttributedString(string:
@@ -340,7 +344,7 @@ class GameScene: SKScene {
     func nextLevel() {
         missed = 0
         //Show message
-        showMessage("Get Ready!")
+        showMessage("Leveling up!")
         let wait = SKAction.wait(forDuration: 2.25)
         run(wait, completion:{[unowned self] in self.level += 1
             
@@ -352,7 +356,7 @@ class GameScene: SKScene {
     func gameOver() {
         missed = 0
         //Show message
-        showMessage("Game Over\nTap to try again")
+        showMessage("Game Over")
         // Update game states
         gameInProgress = false
         
