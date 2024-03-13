@@ -24,6 +24,8 @@ class Player: SKSpriteNode {
         
         // Set default texture
         let texture = SKTexture(imageNamed: "avatar_0") // Call to super.init
+        print("Texture size: \(texture.size())")
+
         
         
         super.init(texture: texture, color: .clear, size: texture.size())
@@ -65,12 +67,7 @@ class Player: SKSpriteNode {
     }
     
     // MARK: - METHODS
-    func mumble() {
-        let random = Int.random(in: 1...3)
-        let playSound = SKAction.playSoundFileNamed("blob_mumble-\(random)",
-                                                    waitForCompletion: true)
-        self.run(playSound, withKey: "mumble") }
-    
+
     func walk() {
         // Check for textures
         guard let walkTextures = walkTextures else {

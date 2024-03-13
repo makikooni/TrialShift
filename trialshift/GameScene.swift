@@ -5,27 +5,12 @@
 //  Created by Weronika E. Falinska on 07/03/2024.
 //
 
-//DONE ----- 1. Update the sprite when game over
-//2. Update sprite so it carries a bucket ?
-//DONE -----3. Add Welcome Screen
-//DONE ---- 4. Change bubble sound to kitchen sounds
-//DONE ---- 5. Change background music sound
-//DONE ---- 5.icon
-//6. resize the textures of characters and remove scaling to avoid difference with physics body
-//DONE ---- 7. repair drops vanishing after head and sound
-//DONE ---- 9. splash no longer visible ? ? ?? ?
-//10. beggining of new level- change audio of muble
-//DONE ---- 11. change main font
-//DONE ---- 12. update banner
-//13. change cupcake to donut  (138)
-//DONE ---- 14. Repair graphic for water and make it bigger
-//DONE ---- 15. Repair foreground placing
-//DONE ---- 16. Add various texts for player reaction when successed 
-// 17. Figure out why launch screen logo is not visible on my phone
-// DONE 18. Make background tad more green
-// DONE 19. Make floor more interesting?
-// DONE 20. Change donut to toad?
-// 21. Animate Toad...
+//1. DONE Update sprite so it carries a bucket ?
+//2. DONE resize the textures of characters and remove scaling to avoid difference with physics body
+//3. DONE beggining of new level- change audio of muble
+//4. DONE  Figure out why launch screen logo is not visible on my phone
+//5. DONE Add toad sound
+//6. Make game start/level up fonts better
 
 import AVFoundation
 import SpriteKit
@@ -89,7 +74,7 @@ class GameScene: SKScene {
         musicAudioNode.run(SKAction.changeVolume(to: 0.0, duration: 0.0))
         // Run a delayed action on the scene that fades in the music
         run(SKAction.wait(forDuration: 1.0), completion: { [unowned self] in self.audioEngine.mainMixerNode.outputVolume = 1.0
-            self.musicAudioNode.run(SKAction.changeVolume(to: 0.3, duration: 2.0))
+            self.musicAudioNode.run(SKAction.changeVolume(to: 0.1, duration: 2.0))
         })
         
         // Set up the physics world contact delegate
@@ -143,7 +128,7 @@ class GameScene: SKScene {
         //spawnMultipleWater()
         
        //Show message
-        showMessage("Tap to start game")
+        showMessage("TAP TO START")
         sendGreenToad()
         sendBrownToad()
         
@@ -152,7 +137,7 @@ class GameScene: SKScene {
     /* SCORE LABEL */
     scoreLabel.name = "score"
     scoreLabel.fontName = "ChalkboardSE-Bold"
-    scoreLabel.fontColor = .black
+    scoreLabel.fontColor = .white
     scoreLabel.fontSize = 65.0
     scoreLabel.horizontalAlignmentMode = .right
     scoreLabel.verticalAlignmentMode = .center
@@ -166,7 +151,7 @@ class GameScene: SKScene {
     /* LEVEL LABEL */
     levelLabel.name = "level"
     levelLabel.fontName = "ChalkboardSE-Bold"
-    levelLabel.fontColor = .black
+    levelLabel.fontColor = .white
     levelLabel.fontSize = 65.0
     levelLabel.horizontalAlignmentMode = .right
     levelLabel.verticalAlignmentMode = .center
@@ -180,7 +165,7 @@ class GameScene: SKScene {
         // Set up message label
         let messageLabel = SKLabelNode()
         messageLabel.name = "message"
-        messageLabel.position = CGPoint(x: frame.midX, y: player.frame.maxY + 50)
+        messageLabel.position = CGPoint(x: frame.midX, y: player.frame.maxY + 157)
         messageLabel.zPosition = Layer.ui.rawValue
         messageLabel.numberOfLines = 2
         
@@ -189,9 +174,9 @@ class GameScene: SKScene {
         paragraph.alignment = .center
         
         let attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.black,
-            .backgroundColor: UIColor.clear,
-            .font: UIFont(name: "ChalkboardSE-Bold", size: 65.0)!,
+            .foregroundColor: UIColor.white,
+            .backgroundColor:  UIColor(red: 0x50/255.0, green: 0x9c/255.0, blue: 0x9c/255.0, alpha: 1.0),
+            .font: UIFont(name: "ChalkboardSE-Bold", size: 90.0)!,
             .paragraphStyle: paragraph
         ]
         messageLabel.attributedText = NSAttributedString(string:
@@ -227,6 +212,13 @@ class GameScene: SKScene {
         let scaleFactor: CGFloat = 0.8
         toad.setScale(scaleFactor)
         addChild(toad)
+        
+        // Set up audio node and make it a child of the robot sprite node
+        let audioNode = SKAudioNode(fileNamed: "quak.mp3")
+        audioNode.autoplayLooped = true
+        audioNode.run(SKAction.changeVolume(to: 1.0, duration: 0.0))
+        toad.addChild(audioNode)
+             
         
         // Create animation action
         let animateAction = SKAction.animate(with: toadFrames, timePerFrame: 0.1)
@@ -315,7 +307,7 @@ class GameScene: SKScene {
     /* ####################################################################### */
     
     func spawnMultipleWater() {
-        player.mumble()
+        //player.mumble()
         // Start player walk animation
         player.walk()
         // Reset the level and score
@@ -419,8 +411,8 @@ class GameScene: SKScene {
         // Add the number tag to the collectible drop
         let xLabel = SKLabelNode()
         xLabel.name = "dropNumber"
-        xLabel.fontName = "Helvetica-Bold"
-        xLabel.fontColor = UIColor.black
+        xLabel.fontName = "ChalkboardSE-Bold"
+        xLabel.fontColor = UIColor.white
         xLabel.fontSize = 100.0
         xLabel.text = "\(numberOfDrops)"
         xLabel.position = CGPoint(x: 0, y: 30)
@@ -448,7 +440,7 @@ class GameScene: SKScene {
     func nextLevel() {
         missed = 0
         //Show message
-        showMessage("Leveling up!")
+        showMessage("LEVELING UP!")
         let wait = SKAction.wait(forDuration: 2.25)
         run(wait, completion:{[unowned self] in self.level += 1
             
@@ -460,7 +452,7 @@ class GameScene: SKScene {
     func gameOver() {
         missed = 0
         //Show message
-        showMessage("Game Over")
+        showMessage("GAME OVER")
         // Update game states
         gameInProgress = false
         
@@ -535,22 +527,24 @@ class GameScene: SKScene {
     movingPlayer = true }
     }
     
-    func touchMoved(toPoint pos: CGPoint) { 
+    func touchMoved(toPoint pos: CGPoint) {
         if movingPlayer == true {
-        // Clamp position
+            // Clamp position
             let newPos = CGPoint(x: pos.x, y: player.position.y)
             player.position = newPos
-        
+
             // Check last position; if empty set it
-            let recordedPosition = lastPosition ?? player.position 
+            let recordedPosition = lastPosition ?? player.position
             if recordedPosition.x > newPos.x {
-                player.xScale = -abs(xScale) } 
-            else {
-                player.xScale = abs(xScale) }
+                player.xScale = abs(player.xScale) // Ensure positive x scale
+            } else {
+                player.xScale = -abs(player.xScale) // Ensure negative x scale
+            }
             // Save last known position
             lastPosition = newPos
-      }
+        }
     }
+
     
     func touchUp(atPoint pos: CGPoint) { movingPlayer = false
     }
