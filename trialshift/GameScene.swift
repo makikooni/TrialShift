@@ -17,13 +17,14 @@
 //10. beggining of new level- change audio of muble
 //DONE ---- 11. change main font
 //DONE ---- 12. update banner
-//13. add flying cupcake (138)
+//13. change cupcake to donut  (138)
 //DONE ---- 14. Repair graphic for water and make it bigger
 //DONE ---- 15. Repair foreground placing
 //DONE ---- 16. Add various texts for player reaction when successed 
 // 17. Figure out why launch screen logo is not visible on my phone
 // DONE 18. Make background tad more green
-// 19. Make floor more interesting?
+// DONE 19. Make floor more interesting?
+// 20. Change donut to toad?
 
 import AVFoundation
 import SpriteKit
@@ -67,7 +68,7 @@ class GameScene: SKScene {
         // Decrease the audio engine's volume
         audioEngine.mainMixerNode.outputVolume = 0.0
         
-        // Run a delayed action to add bubble audio to the scene
+        // Run a delayed action to add kitchen audio to the scene
         run(SKAction.wait(forDuration: 1.5), completion: { [unowned self] in
             kitchenAudioNode.run(SKAction.changeVolume(to: 1.0, duration: 0.0))
             self.kitchenAudioNode.autoplayLooped = true
@@ -105,7 +106,7 @@ class GameScene: SKScene {
         let foreground = SKSpriteNode(imageNamed: "foreground_01")
         foreground.anchorPoint = CGPoint(x: 0, y: 0)
         foreground.zPosition = Layer.foreground.rawValue
-        foreground.position = CGPoint(x: 0, y: 60)
+        foreground.position = CGPoint(x: 0, y: 0)
         
         
         // Add physics body
@@ -116,8 +117,10 @@ class GameScene: SKScene {
         // Set up the banner
         let banner = SKSpriteNode(imageNamed: "banner")
         banner.zPosition = Layer.background.rawValue + 1 
-        banner.position = CGPoint(x: frame.midX, y: viewTop() - 20)
+        banner.position = CGPoint(x: frame.midX, y: viewTop() - 120)
         banner.anchorPoint = CGPoint(x: 0.5, y: 1.0)
+        banner.xScale = 1.5 // Increase width scale
+        banner.yScale = 1.5 
         addChild(banner)
         
         // Set up physics categories for contacts
@@ -140,6 +143,7 @@ class GameScene: SKScene {
         
        //Show message
         showMessage("Tap to start game")
+        sendCake()
         
     }
     func setupLabels() {
@@ -147,11 +151,11 @@ class GameScene: SKScene {
     scoreLabel.name = "score"
     scoreLabel.fontName = "ChalkboardSE-Bold"
     scoreLabel.fontColor = .black
-    scoreLabel.fontSize = 35.0
+    scoreLabel.fontSize = 65.0
     scoreLabel.horizontalAlignmentMode = .right
     scoreLabel.verticalAlignmentMode = .center
     scoreLabel.zPosition = Layer.ui.rawValue
-    scoreLabel.position = CGPoint(x: frame.maxX - 50, y: viewTop() - 35)
+    scoreLabel.position = CGPoint(x: frame.maxX - 230, y: viewTop() - 120)
     
     // Set the text and add the label node to scene
     scoreLabel.text = "Score: 0" 
@@ -161,11 +165,11 @@ class GameScene: SKScene {
     levelLabel.name = "level"
     levelLabel.fontName = "ChalkboardSE-Bold"
     levelLabel.fontColor = .black
-    levelLabel.fontSize = 35.0
+    levelLabel.fontSize = 65.0
     levelLabel.horizontalAlignmentMode = .right
     levelLabel.verticalAlignmentMode = .center
     levelLabel.zPosition = Layer.ui.rawValue
-    levelLabel.position = CGPoint(x: frame.maxX - 50, y: viewTop() - 80)
+    levelLabel.position = CGPoint(x: frame.maxX - 230, y: viewTop() - 200)
       // Set the text and add the label node to scene
     levelLabel.text = "Level: \(level)"
     addChild(levelLabel) }
@@ -185,7 +189,7 @@ class GameScene: SKScene {
         let attributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.black,
             .backgroundColor: UIColor.clear,
-            .font: UIFont(name: "ChalkboardSE-Bold", size: 50.0)!,
+            .font: UIFont(name: "ChalkboardSE-Bold", size: 65.0)!,
             .paragraphStyle: paragraph
         ]
         messageLabel.attributedText = NSAttributedString(string:
@@ -200,6 +204,52 @@ class GameScene: SKScene {
         if let messageLabel = childNode(withName: "//message") as? SKLabelNode {
             messageLabel.run(SKAction.sequence([SKAction.fadeOut(withDuration: 0.25), SKAction.removeFromParent()]))
         }
+    }
+    
+    func sendCake() {
+        
+      // Set up cake sprite node
+      let cake = SKSpriteNode(imageNamed: "cake")
+      cake.zPosition = Layer.foreground.rawValue
+      cake.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+      cake.position = CGPoint(x: frame.maxX + cake.size.width,
+                               y: frame.midY - 250)
+      let scaleFactor: CGFloat = 0.2
+      cake.setScale(scaleFactor)
+      addChild(cake)
+      """
+      // Set up audio node and make it a child of the robot sprite node
+      let audioNode = SKAudioNode(fileNamed: "robot.wav")
+      audioNode.autoplayLooped = true
+      audioNode.run(SKAction.changeVolume(to: 1.0, duration: 0.0))
+      robot.addChild(audioNode)
+      """
+        
+      // Create and run a sequence of actions that moves the cake up and down
+      let moveUp = SKAction.moveBy(x: 0, y: 15, duration: 0.25)
+      let moveDown = SKAction.moveBy(x: 0, y: -15, duration: 0.25)
+      let wobbleGroup = SKAction.sequence([moveDown, moveUp])
+      let wobbleAction = SKAction.repeatForever(wobbleGroup)
+      cake.run(wobbleAction)  // you can not run a completion handler on
+                               // on an action that runs forever, so you need
+                               // to run this action on its own.
+        
+      // Create an action that moves the cake left
+      let moveLeft = SKAction.moveTo(x: frame.minX - cake.size.width,
+                              duration: 6.50)
+        
+      // Create an action to remove the cake sprite node
+      let removeFromParent = SKAction.removeFromParent()
+      
+      // Combine the actions into a sequence
+      let moveSequence = SKAction.sequence([moveLeft, removeFromParent])
+
+      // Periodically run this method using a timed range
+      cake.run(moveSequence, completion: {
+        let wait = SKAction.wait(forDuration: 30, withRange: 60)
+        let codeBlock = SKAction.run({self.sendCake()})
+        self.run(SKAction.sequence([wait, codeBlock]))
+      })
     }
 
     // MARK: - GAME FUNCTIONS
@@ -270,44 +320,44 @@ class GameScene: SKScene {
         //Hide message
         hideMessage()
     }
-    
     func spawnWater() {
         let collectible = Collectible(collectibleType: CollectibleType.water)
         
-        
         // set random position
-        let margin = (collectible.size.width/5) * 1.5
+        let margin = (collectible.size.width / 5) * 1.5
         let dropRange = SKRange(lowerLimit: frame.minX + margin,
                                 upperLimit: frame.maxX - margin)
         
-        var randomX = CGFloat.random(in:
-                                        dropRange.lowerLimit...dropRange.upperLimit)
+        var randomX = CGFloat.random(in: dropRange.lowerLimit...dropRange.upperLimit)
         
-        /* START ENHANCED DROP MOVEMENT
-         this helps to create a "snake-like" pattern */
+        /* START ENHANCED DROP MOVEMENT */
         // Set a range
         let randomModifier = SKRange(lowerLimit: 50 + CGFloat(level), upperLimit: 60 * CGFloat(level))
         var modifier = CGFloat.random(in: randomModifier.lowerLimit...randomModifier.upperLimit)
         if modifier > 400 { modifier = 400 }
         
         // Set the previous drop location
-        if prevDropLocation == 0.0 { prevDropLocation = randomX
-        }
+        if prevDropLocation == 0.0 { prevDropLocation = randomX }
         
         // Clamp its x-position
         if prevDropLocation < randomX {
-        randomX = prevDropLocation + modifier
+            randomX = prevDropLocation + modifier
         } else {
-        randomX = prevDropLocation - modifier
+            randomX = prevDropLocation - modifier
         }
         // Make sure the collectible stays within the frame
-        if randomX <= (frame.minX + margin) { randomX = frame.minX + margin
-        } else if randomX >= (frame.maxX - margin) { randomX = frame.maxX - margin
-        }
+        if randomX <= (frame.minX + margin) { randomX = frame.minX + margin }
+        else if randomX >= (frame.maxX - margin) { randomX = frame.maxX - margin }
         
         // Store the location
         prevDropLocation = randomX
         /* END ENHANCED DROP MOVEMENT */
+        
+        // Set the horizontal position
+        collectible.position = CGPoint(x: randomX, y: player.position.y * 2.6)
+        
+        // Set the vertical position (adjust this as needed)
+        collectible.position.y = frame.maxY
         
         // Add the number tag to the collectible drop
         let xLabel = SKLabelNode()
@@ -320,19 +370,16 @@ class GameScene: SKScene {
         collectible.addChild(xLabel)
         numberOfDrops -= 1 // decrease drop count by 1
         
-        collectible.position = CGPoint(x: randomX,
-                                       y: player.position.y * 2.6)
-        
         // Set scale to make it 5 times smaller
-        collectible.setScale(0.2) // 1/5 of the original size
+        //collectible.setScale(0.8) // 1/5 of the original size
         
         addChild(collectible)
         
         //Changing the floorLevel value etc
-        collectible.drop(dropSpeed: TimeInterval(1.0),floorLevel: player.frame.minY + 40)
-
-      
+        collectible.drop(dropSpeed: TimeInterval(1.0), floorLevel: player.frame.minY + 40)
     }
+
+        
     
     func checkForRemainingDrops() {
     if dropsCollected >= (dropsExpected - 3) {

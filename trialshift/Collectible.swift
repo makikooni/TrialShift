@@ -25,6 +25,7 @@ class Collectible: SKSpriteNode {
     init(collectibleType: CollectibleType) {
         var texture: SKTexture!
         self.collectibleType = collectibleType
+
         
         // Set the texture based on the type
         switch self.collectibleType {
@@ -41,7 +42,7 @@ class Collectible: SKSpriteNode {
         self.name = "co_\(collectibleType)"
         self.anchorPoint = CGPoint(x: 0.5, y: 1.0)
         self.zPosition = Layer.collectible.rawValue
-        
+
         // Add physics body
         self.physicsBody = SKPhysicsBody(rectangleOf: self.size, center: CGPoint(x: 0.0, y: -self.size.height/2))
         self.physicsBody?.affectedByGravity = false
@@ -64,7 +65,7 @@ class Collectible: SKSpriteNode {
     // MARK: - FUNCTIONS
     func drop(dropSpeed: TimeInterval, floorLevel: CGFloat) {
         let scaledHeight = self.size.height * 0.2 // Adjusted scale factor to match the scaleFactor in changeTexture action
-        let pos = CGPoint(x: position.x, y: floorLevel - scaledHeight / 2) // Adjusted position calculation
+        let pos = CGPoint(x: position.x, y: floorLevel - 75) // Adjusted position calculation
         let scaleX = SKAction.scaleX(to: 0.22, duration: 1.0)
         let scaleY = SKAction.scaleY(to: 0.25, duration: 1.0)
         let scale = SKAction.group([scaleX, scaleY])
@@ -73,10 +74,10 @@ class Collectible: SKSpriteNode {
         let moveAction = SKAction.move(to: pos, duration: dropSpeed)
         
         let changeTexture = SKAction.run {
-            if self.position.y <= (floorLevel + 50) {
+            if self.position.y <= (floorLevel + 76) {
                 self.texture = SKTexture(imageNamed: "water_1")
                 
-                let scaleFactor: CGFloat = 0.2  // Set this to the desired percentage of the original size
+                let scaleFactor: CGFloat = 0.3  // Set this to the desired percentage of the original size
                 let newWidth = self.texture!.size().width * scaleFactor
                 let newHeight = self.texture!.size().height * scaleFactor
                 

@@ -37,8 +37,8 @@ class Player: SKSpriteNode {
         
         // Set up other properties after init
         self.name = "player"
-        self.setScale(0.8)
-        self.anchorPoint = CGPoint(x: 0.5, y: 0.05) // center-bottom
+        self.setScale(1.6)
+        self.anchorPoint = CGPoint(x: 0.5, y: 0.25) // center-bottom
         self.zPosition = Layer.player.rawValue
         
         // Add physics body
