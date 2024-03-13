@@ -24,7 +24,8 @@
 // 17. Figure out why launch screen logo is not visible on my phone
 // DONE 18. Make background tad more green
 // DONE 19. Make floor more interesting?
-// 20. Change donut to toad?
+// DONE 20. Change donut to toad?
+// 21. Animate Toad...
 
 import AVFoundation
 import SpriteKit
@@ -143,7 +144,8 @@ class GameScene: SKScene {
         
        //Show message
         showMessage("Tap to start game")
-        sendCake()
+        sendGreenToad()
+        sendBrownToad()
         
     }
     func setupLabels() {
@@ -205,52 +207,107 @@ class GameScene: SKScene {
             messageLabel.run(SKAction.sequence([SKAction.fadeOut(withDuration: 0.25), SKAction.removeFromParent()]))
         }
     }
-    
-    func sendCake() {
+    func sendGreenToad() {
+        // Load sprite atlas
+        let toadAtlas = SKTextureAtlas(named: "GreenToad")
+        var toadFrames: [SKTexture] = []
         
-      // Set up cake sprite node
-      let cake = SKSpriteNode(imageNamed: "cake")
-      cake.zPosition = Layer.foreground.rawValue
-      cake.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-      cake.position = CGPoint(x: frame.maxX + cake.size.width,
-                               y: frame.midY - 250)
-      let scaleFactor: CGFloat = 0.2
-      cake.setScale(scaleFactor)
-      addChild(cake)
-      """
-      // Set up audio node and make it a child of the robot sprite node
-      let audioNode = SKAudioNode(fileNamed: "robot.wav")
-      audioNode.autoplayLooped = true
-      audioNode.run(SKAction.changeVolume(to: 1.0, duration: 0.0))
-      robot.addChild(audioNode)
-      """
+        // Create array of textures from atlas
+        for index in 0...5 {
+            let textureName = "toad_\(index)"
+            toadFrames.append(toadAtlas.textureNamed(textureName))
+        }
         
-      // Create and run a sequence of actions that moves the cake up and down
-      let moveUp = SKAction.moveBy(x: 0, y: 15, duration: 0.25)
-      let moveDown = SKAction.moveBy(x: 0, y: -15, duration: 0.25)
-      let wobbleGroup = SKAction.sequence([moveDown, moveUp])
-      let wobbleAction = SKAction.repeatForever(wobbleGroup)
-      cake.run(wobbleAction)  // you can not run a completion handler on
-                               // on an action that runs forever, so you need
-                               // to run this action on its own.
+        // Set up cake sprite node with initial texture
+        let toad = SKSpriteNode(texture: toadFrames[0])
+        toad.zPosition = Layer.foreground.rawValue
+        toad.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        toad.position = CGPoint(x: frame.maxX + toad.size.width,
+                                 y: frame.midY - 350)
+        let scaleFactor: CGFloat = 0.8
+        toad.setScale(scaleFactor)
+        addChild(toad)
         
-      // Create an action that moves the cake left
-      let moveLeft = SKAction.moveTo(x: frame.minX - cake.size.width,
-                              duration: 6.50)
+        // Create animation action
+        let animateAction = SKAction.animate(with: toadFrames, timePerFrame: 0.1)
+        let repeatAction = SKAction.repeatForever(animateAction)
+        toad.run(repeatAction)
         
-      // Create an action to remove the cake sprite node
-      let removeFromParent = SKAction.removeFromParent()
-      
-      // Combine the actions into a sequence
-      let moveSequence = SKAction.sequence([moveLeft, removeFromParent])
+        // Create and run a sequence of actions that moves the cake up and down
+        let moveUp = SKAction.moveBy(x: 0, y: 15, duration: 0.25)
+        let moveDown = SKAction.moveBy(x: 0, y: -15, duration: 0.25)
+        let wobbleGroup = SKAction.sequence([moveDown, moveUp])
+        let wobbleAction = SKAction.repeatForever(wobbleGroup)
+        toad.run(wobbleAction)
+        
+        // Create an action that moves the cake left
+        let moveLeft = SKAction.moveTo(x: frame.minX - toad.size.width, duration: 6.50)
+        
+        // Create an action to remove the cake sprite node
+        let removeFromParent = SKAction.removeFromParent()
+        
+        // Combine the actions into a sequence
+        let moveSequence = SKAction.sequence([moveLeft, removeFromParent])
 
-      // Periodically run this method using a timed range
-      cake.run(moveSequence, completion: {
-        let wait = SKAction.wait(forDuration: 30, withRange: 60)
-        let codeBlock = SKAction.run({self.sendCake()})
-        self.run(SKAction.sequence([wait, codeBlock]))
-      })
+        // Periodically run this method using a timed range
+        toad.run(moveSequence, completion: {
+            let wait = SKAction.wait(forDuration: 5, withRange: 15)
+            let codeBlock = SKAction.run { self.sendGreenToad() }
+            self.run(SKAction.sequence([wait, codeBlock]))
+        })
     }
+
+    
+    func sendBrownToad() {
+        // Load sprite atlas
+        let toadAtlas = SKTextureAtlas(named: "BrownToad")
+        var toadFrames: [SKTexture] = []
+        
+        // Create array of textures from atlas
+        for index in 0...5 {
+            let textureName = "brown_toad_\(index)"
+            toadFrames.append(toadAtlas.textureNamed(textureName))
+        }
+        
+        // Set up cake sprite node with initial texture
+        let toad = SKSpriteNode(texture: toadFrames[0])
+        toad.zPosition = Layer.foreground.rawValue
+        toad.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        toad.position = CGPoint(x: frame.maxX + toad.size.width,
+                                 y: frame.midY - 450)
+        let scaleFactor: CGFloat = 3.0
+        toad.setScale(scaleFactor)
+        addChild(toad)
+        
+        // Create animation action
+        let animateAction = SKAction.animate(with: toadFrames, timePerFrame: 0.1)
+        let repeatAction = SKAction.repeatForever(animateAction)
+        toad.run(repeatAction)
+        
+        // Create and run a sequence of actions that moves the cake up and down
+        let moveUp = SKAction.moveBy(x: 0, y: 15, duration: 0.25)
+        let moveDown = SKAction.moveBy(x: 0, y: -15, duration: 0.25)
+        let wobbleGroup = SKAction.sequence([moveDown, moveUp])
+        let wobbleAction = SKAction.repeatForever(wobbleGroup)
+        toad.run(wobbleAction)
+        
+        // Create an action that moves the cake left
+        let moveLeft = SKAction.moveTo(x: frame.minX - toad.size.width, duration: 5.0)
+        
+        // Create an action to remove the cake sprite node
+        let removeFromParent = SKAction.removeFromParent()
+        
+        // Combine the actions into a sequence
+        let moveSequence = SKAction.sequence([moveLeft, removeFromParent])
+
+        // Periodically run this method using a timed range
+        toad.run(moveSequence, completion: {
+            let wait = SKAction.wait(forDuration: 8, withRange: 15)
+            let codeBlock = SKAction.run { self.sendBrownToad() }
+            self.run(SKAction.sequence([wait, codeBlock]))
+        })
+    }
+
 
     // MARK: - GAME FUNCTIONS
     /* ####################################################################### */
