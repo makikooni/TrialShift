@@ -21,5 +21,5 @@ https://github.com/makikooni/trialshift/assets/92479890/9cff578a-5959-44da-900a-
 - [ ] AppStore publishing 
 
 ## Project status
-In progress on 29 Mar 2024. <br>
+In progress on 29 Mar 2024. <br><br>
 Produced as a part of my studies at Apple Develpment L5 Diploma at UAL, Creative Computing Institute. 
