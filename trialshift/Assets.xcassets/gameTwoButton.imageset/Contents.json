@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "png-transparent-pink-clothes-button-button-t-shirt-clothing-button-purple-tshirt-cloth.png",
+      "filename" : "Asset 1.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "Asset 1@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "Asset 1@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
