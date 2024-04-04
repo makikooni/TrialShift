@@ -3,14 +3,7 @@
 //  trialshift
 //
 //  Created by Weronika E. Falinska on 07/03/2024.
-//
 
-//1. DONE Update sprite so it carries a bucket ?
-//2. DONE resize the textures of characters and remove scaling to avoid difference with physics body
-//3. DONE beggining of new level- change audio of muble
-//4. DONE  Figure out why launch screen logo is not visible on my phone
-//5. DONE Add toad sound
-//6. Make game start/level up fonts better
 
 import AVFoundation
 import SpriteKit
@@ -101,7 +94,7 @@ class GameOne: SKScene {
         addChild(foreground)
         
         // Set up the banner
-        let banner = SKSpriteNode(imageNamed: "banner")
+        let banner = SKSpriteNode(imageNamed: "banner_01")
         banner.zPosition = Layer.background.rawValue + 1
         banner.position = CGPoint(x: frame.midX, y: viewTop() - 120)
         banner.anchorPoint = CGPoint(x: 0.5, y: 1.0)

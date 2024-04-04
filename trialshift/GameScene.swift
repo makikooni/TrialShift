@@ -62,12 +62,11 @@ class GameScene: SKScene {
                     gameOne.scaleMode = .aspectFill
                     self.view?.presentScene(gameOne)
                 }
-                //if gameTwoButton.contains(location) {
-                    // Transition to the game scene when the start button is tapped
-                    //let gameTwo = GameTwo(size: self.size)
-                    //gameTwo.scaleMode = .aspectFill
-                    //self.view?.presentScene(gameTwo)
+                if gameTwoButton.contains(location) {
+                    let gameTwo = GameTwo(size: self.size)
+                    gameTwo.scaleMode = .aspectFill
+                    self.view?.presentScene(gameTwo)
                 }
             }
         }
-    //}
+    }
