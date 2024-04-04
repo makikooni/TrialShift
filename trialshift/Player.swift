@@ -120,7 +120,7 @@ class PlayerHead: SKSpriteNode {
         
         
         // Set default texture
-        let texture = SKTexture(imageNamed: "avatar_0") // Call to super.init
+        let texture = SKTexture(imageNamed: "half_chef_0") // Call to super.init
         print("Texture size: \(texture.size())")
 
         
@@ -128,10 +128,10 @@ class PlayerHead: SKSpriteNode {
         super.init(texture: texture, color: .clear, size: texture.size())
         
         // Set up animation textures
-        self.walkTextures = self.loadTextures(atlas: "Chef", prefix: "avatar_", startsAt: 0, stopsAt: 4)
+        self.walkTextures = self.loadTextures(atlas: "half_chef", prefix: "half_chef_0", startsAt: 0, stopsAt: 4)
         
         
-        self.dieTextures = self.loadTextures(atlas: "Chef", prefix: "avatar_",
+        self.dieTextures = self.loadTextures(atlas: "half_chef", prefix: "half_chef_",
                                              startsAt: 5, stopsAt: 5)
         
         // Set up other properties after init
