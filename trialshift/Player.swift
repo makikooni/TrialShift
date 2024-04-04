@@ -127,12 +127,16 @@ class PlayerHead: SKSpriteNode {
         
         super.init(texture: texture, color: .clear, size: texture.size())
         
-        // Set up animation textures
-        self.walkTextures = self.loadTextures(atlas: "half_chef", prefix: "half_chef_0", startsAt: 0, stopsAt: 4)
+        
+        //Right hand animation
+        self.rightHandAnimation = self.loadTextures(atlas: "half_chef", prefix: "half_chef_", startsAt: 5, stopsAt: 7)
+        
+        //Left hand animation
+        self.leftHandAnimation = self.loadTextures(atlas: "half_chef", prefix: "half_chef_", startsAt: 2, stopsAt: 4)
         
         
         self.dieTextures = self.loadTextures(atlas: "half_chef", prefix: "half_chef_",
-                                             startsAt: 5, stopsAt: 5)
+                                             startsAt: 8, stopsAt: 8)
         
         // Set up other properties after init
         self.name = "player"
@@ -155,7 +159,9 @@ class PlayerHead: SKSpriteNode {
         fatalError("init(coder:) has not been implemented")
     }
     // Textures (Animation)
-    private var walkTextures: [SKTexture]?
+    private var rightHandAnimation: [SKTexture]?
+    private var leftHandAnimation: [SKTexture]?
+
     
     func setupConstraints(floor: CGFloat) {
         let range = SKRange(lowerLimit: floor, upperLimit: floor)
@@ -165,19 +171,46 @@ class PlayerHead: SKSpriteNode {
     
     // MARK: - METHODS
 
-    func walk() {
+    func rightHandMove() {
+        print("Right hand move called")
+
         // Check for textures
-        guard let walkTextures = walkTextures else {
-            preconditionFailure("Could not find textures!") }
+        guard let rightHandAnimation = rightHandAnimation else {
+            preconditionFailure("Could not find textures!")
+        }
+
         // Stop the die animation
         removeAction(forKey: PlayerAnimationType.die.rawValue)
         
-        // Run animation (forever)
-        startAnimation(textures: walkTextures, speed: 0.25,
-                       name: PlayerAnimationType.walk.rawValue,
-                       count: 0, resize: true, restore: true)
+        // Create animation action
+        let animationAction = SKAction.animate(with: rightHandAnimation, timePerFrame: 0.4)
+        
+        // Run animation once
+        run(animationAction) {
+            print("Right hand animation completed")
+        }
     }
-    
+
+    func leftHandMove() {
+        print("Left hand move called")
+
+        // Check for textures
+        guard let leftHandAnimation = leftHandAnimation else {
+            preconditionFailure("Could not find textures!")
+        }
+
+        // Stop the die animation
+        removeAction(forKey: PlayerAnimationType.die.rawValue)
+        
+        // Create animation action
+        let animationAction = SKAction.animate(with: leftHandAnimation, timePerFrame: 0.4)
+        
+        // Run animation once
+        run(animationAction) {
+            print("Left hand animation completed")
+        }
+    }
+
     func die() {
         // Check for textures
         guard let dieTextures = dieTextures else {
@@ -190,19 +223,5 @@ class PlayerHead: SKSpriteNode {
         startAnimation(textures: dieTextures, speed: 0.25,
                        name: PlayerAnimationType.die.rawValue,
                        count: 0, resize: true, restore: true)
-    }
-    func moveToPosition(pos: CGPoint, direction: String, speed: TimeInterval) {
-        switch direction {
-        case "L":
-            if xScale > 0 {
-                xScale *= -1 // Flip the character horizontally
-            }
-        default:
-            if xScale < 0 {
-                xScale *= -1 // Reset the character's scale to its original state
-            }
-        }
-        let moveAction = SKAction.move(to: pos, duration: speed)
-        run(moveAction)
     }
 }

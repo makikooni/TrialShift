@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Half_body_0.png",
+      "filename" : "half_body_5.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Half_body_0@2x.png",
+      "filename" : "half_body_5@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Half_body_0@3x.png",
+      "filename" : "half_body_5@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

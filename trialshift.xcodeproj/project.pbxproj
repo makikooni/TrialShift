@@ -16,6 +16,7 @@
 		FB74330A2B9F447B0093ED6F /* blob_mumble-1.wav in Resources */ = {isa = PBXBuildFile; fileRef = FB7433042B9F447B0093ED6F /* blob_mumble-1.wav */; };
 		FB76CE7D2BA07CB100DB8BBF /* kitchen.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FB76CE7C2BA07CB100DB8BBF /* kitchen.mp3 */; };
 		FB76CE7F2BA0838100DB8BBF /* music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FB76CE7E2BA0838100DB8BBF /* music.mp3 */; };
+		FB7E68402BBF189600D07CD6 /* Collectible2.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7E683F2BBF189600D07CD6 /* Collectible2.swift */; };
 		FBC561712BBE04A800D8AF8F /* GameTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC561702BBE04A800D8AF8F /* GameTwo.swift */; };
 		FBDC0A342B9FD91F005B534B /* Flow.sks in Resources */ = {isa = PBXBuildFile; fileRef = FBDC0A332B9FD91F005B534B /* Flow.sks */; };
 		FBEB51482BA1D96B006A7943 /* quak.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FBEB51472BA1D96B006A7943 /* quak.mp3 */; };
@@ -40,6 +41,7 @@
 		FB7433042B9F447B0093ED6F /* blob_mumble-1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "blob_mumble-1.wav"; sourceTree = "<group>"; };
 		FB76CE7C2BA07CB100DB8BBF /* kitchen.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = kitchen.mp3; sourceTree = "<group>"; };
 		FB76CE7E2BA0838100DB8BBF /* music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = music.mp3; sourceTree = "<group>"; };
+		FB7E683F2BBF189600D07CD6 /* Collectible2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collectible2.swift; sourceTree = "<group>"; };
 		FBC561702BBE04A800D8AF8F /* GameTwo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTwo.swift; sourceTree = "<group>"; };
 		FBDC0A332B9FD91F005B534B /* Flow.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Flow.sks; sourceTree = "<group>"; };
 		FBEB51472BA1D96B006A7943 /* quak.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = quak.mp3; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 				FBF563C22B9A89ED007EC769 /* Main.storyboard */,
 				FBF563C52B9A89EE007EC769 /* Assets.xcassets */,
 				FBF563D32B9B4885007EC769 /* Collectible.swift */,
+				FB7E683F2BBF189600D07CD6 /* Collectible2.swift */,
 				FBF563CF2B9A9A20007EC769 /* Player.swift */,
 				FB5198E92BB73D5400F21342 /* GameScene.swift */,
 				FBF563D12B9A9A7D007EC769 /* SpriteKitHelper.swift */,
@@ -210,6 +213,7 @@
 				FBF563D02B9A9A20007EC769 /* Player.swift in Sources */,
 				FBF563BF2B9A89ED007EC769 /* GameOne.swift in Sources */,
 				FBF563D42B9B4885007EC769 /* Collectible.swift in Sources */,
+				FB7E68402BBF189600D07CD6 /* Collectible2.swift in Sources */,
 				FBF563C12B9A89ED007EC769 /* GameViewController.swift in Sources */,
 				FBC561712BBE04A800D8AF8F /* GameTwo.swift in Sources */,
 				FB5198EA2BB73D5400F21342 /* GameScene.swift in Sources */,

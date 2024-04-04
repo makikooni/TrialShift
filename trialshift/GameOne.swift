@@ -441,7 +441,6 @@ class GameOne: SKScene {
     }
     
     // Player FAILED level
-    //FIGURE OUT WHY DROPS ARE NOT STOPING TO DROP
     func gameOver() {
         missed = 0
         //Show message
