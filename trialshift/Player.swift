@@ -110,11 +110,11 @@ class Player: SKSpriteNode {
     }
 }
 
+// MARK: - PLAYER HEAD
 class PlayerHead: SKSpriteNode {
     // MARK: - PROPERTIES
     private var dieTextures: [SKTexture]?
     
-    // MARK: - INIT
     init() {
         
         
@@ -183,7 +183,7 @@ class PlayerHead: SKSpriteNode {
         removeAction(forKey: PlayerAnimationType.die.rawValue)
         
         // Create animation action
-        let animationAction = SKAction.animate(with: rightHandAnimation, timePerFrame: 0.4)
+        let animationAction = SKAction.animate(with: rightHandAnimation, timePerFrame: 0.2)
         
         // Run animation once
         run(animationAction) {
@@ -203,7 +203,7 @@ class PlayerHead: SKSpriteNode {
         removeAction(forKey: PlayerAnimationType.die.rawValue)
         
         // Create animation action
-        let animationAction = SKAction.animate(with: leftHandAnimation, timePerFrame: 0.4)
+        let animationAction = SKAction.animate(with: leftHandAnimation, timePerFrame: 0.2)
         
         // Run animation once
         run(animationAction) {

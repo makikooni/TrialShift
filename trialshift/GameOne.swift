@@ -117,9 +117,6 @@ class GameOne: SKScene {
         addChild(player)
         player.walk()
         
-        //Set up Game
-        //spawnMultipleWater()
-        
        //Show message
         showMessage("TAP TO START")
         sendGreenToad()
@@ -300,7 +297,6 @@ class GameOne: SKScene {
     /* ####################################################################### */
     
     func spawnMultipleWater() {
-        //player.mumble()
         // Start player walk animation
         player.walk()
         // Reset the level and score
