@@ -6,18 +6,15 @@
 //
 
 // 1. repair visibility of labels
-// 2. Add music
 // 3. Repair uneven size of chocolates
-// 4. Add starting message
-// 5. Add clock
-// 6. Game Over after 60 sec
-
+// 5. Add a button when game_over
 
 import AVFoundation
 import SpriteKit
 import GameplayKit
 
 class GameTwo: SKScene {
+    var gameInProgress = false
     let player = PlayerHead()
     var movingPlayer = false
     var righthand = false
@@ -26,17 +23,24 @@ class GameTwo: SKScene {
     var collectible: Collectible2?
     var color: Bool?
     var isCollectibleActive = false
-
+    var timer : Timer?
     
     
     //LABELS
     var scoreLabel: SKLabelNode = SKLabelNode()
-    var levelLabel: SKLabelNode = SKLabelNode()
+    var clockLabel: SKLabelNode = SKLabelNode()
     
     //VARIABLES
-    var level: Int = 1 {
+    let musicAudioNode = SKAudioNode(fileNamed: "music.mp3")
+    let kitchenAudioNode = SKAudioNode(fileNamed: "kitchen.mp3")
+    
+    //PROPERTY OBSERVERS
+    var time: Int = 60 {
         didSet {
-            levelLabel.text = "Level: \(level)"
+            clockLabel.text = "Time left: \(time)"
+            if time == 0{
+                timeUp()
+            }
         }
     }
     var score: Int = 0 {
@@ -48,11 +52,23 @@ class GameTwo: SKScene {
     // MARK: - SET UP
 
     override func didMove(to view: SKView) {
-        
-        //self.scaleMode = .aspectFit
-        
+        setupLabels()
+        showMessage("TAP TO START")
+        spawnChocolate()
+        //FIGURE OUT HOW TO START ONLY AFTER MESSAGE VANISHES 
+        startTimer()
         
         // AUDIO
+        musicAudioNode.autoplayLooped = true
+        musicAudioNode.isPositional = false
+        addChild(musicAudioNode)
+        musicAudioNode.run(SKAction.changeVolume(to: 0.0, duration: 0.0))
+        run(SKAction.wait(forDuration: 1.0), completion: { [unowned self] in self.audioEngine.mainMixerNode.outputVolume = 1.0
+            self.musicAudioNode.run(SKAction.changeVolume(to: 0.1, duration: 2.0))
+        })
+        
+        
+        
         
         // BACKGROUND
         let background = SKSpriteNode(imageNamed: "background_03")
@@ -70,12 +86,7 @@ class GameTwo: SKScene {
         banner.yScale = 1.5
         addChild(banner)
         
-        
-        
-        // USER INTERFACE
-        setupLabels()
-        //showMessage("TAP TO START")
-        
+                
         // SET UP PLAYER
         player.setupConstraints(floor: frame.minY + 370)
         // check minY later here - >
@@ -83,11 +94,24 @@ class GameTwo: SKScene {
         addChild(player)
         
         
-        spawnChocolate()
-
-        
-        
     }
+    //TIMER
+    func startTimer() {
+            timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] timer in
+                guard let self = self else { return }
+                self.time -= 1
+            }
+        }
+        
+        func stopTimer() {
+            timer?.invalidate()
+            timer = nil
+        }
+        
+        func timeUp() {
+            stopTimer()
+            gameOver()
+        }
     
     func setupLabels() {
         scoreLabel.name = "score"
@@ -101,24 +125,52 @@ class GameTwo: SKScene {
         scoreLabel.text = "Score: 0"
         addChild(scoreLabel)
         
-        levelLabel.name = "level"
-        levelLabel.fontName = "ChalkboardSE-Bold"
-        levelLabel.fontColor = .white
-        levelLabel.fontSize = 65.0
-        levelLabel.horizontalAlignmentMode = .right
-        levelLabel.verticalAlignmentMode = .center
-        levelLabel.zPosition = Layer.ui.rawValue
-        levelLabel.position = CGPoint(x: frame.maxX - 230, y: viewTop() - 200)
+        clockLabel.name = "clock"
+        clockLabel.fontName = "ChalkboardSE-Bold"
+        clockLabel.fontColor = .white
+        clockLabel.fontSize = 65.0
+        clockLabel.horizontalAlignmentMode = .right
+        clockLabel.verticalAlignmentMode = .center
+        clockLabel.zPosition = Layer.ui.rawValue
+        clockLabel.position = CGPoint(x: frame.maxX - 230, y: viewTop() - 200)
         // Set the text and add the label node to scene
-        levelLabel.text = "Level: \(level)"
-        addChild(levelLabel) }
+        clockLabel.text = "Time left: \(time)"
+        addChild(clockLabel) }
     
     
-    func showMessage(){
-    //UPDATE
+    func showMessage(_ message: String) {
+        // Set up message label
+        let messageLabel = SKLabelNode()
+        messageLabel.name = "message"
+        messageLabel.position = CGPoint(x: frame.midX, y: player.frame.maxY + 350)
+        messageLabel.zPosition = Layer.ui.rawValue
+        messageLabel.numberOfLines = 2
+        
+        // Set up attributed text
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.alignment = .center
+        
+        let attributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.white,
+            .backgroundColor:  UIColor(red: 0x50/255.0, green: 0x9c/255.0, blue: 0x9c/255.0, alpha: 1.0),
+            .font: UIFont(name: "ChalkboardSE-Bold", size: 90.0)!,
+            .paragraphStyle: paragraph
+        ]
+        messageLabel.attributedText = NSAttributedString(string:
+                                                            message, attributes: attributes)
+        // Run a fade action and add the label to the scene
+        messageLabel.run(SKAction.fadeIn(withDuration: 0.25))
+        addChild(messageLabel)
+    }
+     
+    func hideMessage() {
+        // Remove message label if it exists
+        if let messageLabel = childNode(withName: "//message") as? SKLabelNode {
+            messageLabel.run(SKAction.sequence([SKAction.fadeOut(withDuration: 0.25), SKAction.removeFromParent()]))
+        }
     }
     
-    
+  
     
     // MARK: - GAME FUNCTIONS
     
@@ -156,6 +208,7 @@ class GameTwo: SKScene {
                isCollectibleActive = true
 
            }
+        
        }
        
     
@@ -247,7 +300,11 @@ class GameTwo: SKScene {
     }
     
     func gameOver() {
-    //UPDATE based on time clock
+        showMessage("GAME OVER")
+        //ADD A BUTTON?
+        //let gamescene = GameScene(size: self.size)
+        //gamescene.scaleMode = .aspectFill
+        //self.view?.presentScene(gamescene)
     }
     
     
@@ -277,6 +334,8 @@ class GameTwo: SKScene {
             player.rightHandMove() // Call left hand move method on the player instance
             righthand = true
         }
+        hideMessage()
+        
     }
         
         override func touchesEnded(_ touches: Set<UITouch>, with event:
