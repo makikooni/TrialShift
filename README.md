@@ -15,7 +15,7 @@ https://github.com/makikooni/trialshift/assets/92479890/9cff578a-5959-44da-900a-
 ## Goals
 - [x] Welcome Screen Code Layout
 - [x] 1sr mini games
-- [ ] 50% 2nd mini game
+- [ ] 75% 2nd mini game
 - [ ] 3rd mini games
 - [ ] 4th mini games
 - [ ] 5th mini games
