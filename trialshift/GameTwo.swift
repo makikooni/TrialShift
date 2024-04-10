@@ -5,9 +5,9 @@
 //  Created by Weronika E. Falinska on 03/04/2024.
 //
 
-// 1. check if collection sound works
-// 5. Add a button when game_over <- make it work, finish the game when clock, disabe movement 
+// 5. Add a button when game_over <- make it work, finish the game when clock, disabe movement
 // 6. make clock start only after first click
+// 10. figure out why game_over so hifh
 
 import AVFoundation
 import SpriteKit
@@ -18,6 +18,7 @@ class GameTwo: SKScene {
     let player = PlayerHead()
     var movingPlayer = false
     var righthand = false
+    var gameover = false
     var lefthand = false
     var count = 0
     var collectible: Collectible2?
@@ -51,8 +52,16 @@ class GameTwo: SKScene {
         }
     }
     
+    var fails: Int = 0 {
+        didSet {
+            if fails >= 3{
+                gameOver()
+            }
+        }
+    }
+    
     // MARK: - SET UP
-
+    
     override func didMove(to view: SKView) {
         setupLabels()
         showMessage("TAP TO START")
@@ -60,9 +69,9 @@ class GameTwo: SKScene {
         
         //FIGURE OUT HOW TO START ONLY AFTER MESSAGE VANISHES; then remove below
         DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
-                       // Start the timer after a delay of 5 seconds
-                       self.startTimer()
-                   }
+            // Start the timer after a delay of 5 seconds
+            self.startTimer()
+        }
         
         // AUDIO
         musicAudioNode.autoplayLooped = true
@@ -92,7 +101,7 @@ class GameTwo: SKScene {
         banner.yScale = 1.5
         addChild(banner)
         
-                
+        
         // SET UP PLAYER
         player.setupConstraints(floor: frame.minY + 370)
         // check minY later here - >
@@ -103,21 +112,23 @@ class GameTwo: SKScene {
     }
     //TIMER
     func startTimer() {
-            timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] timer in
-                guard let self = self else { return }
-                self.time -= 1
-            }
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] timer in
+            guard let self = self else { return }
+            self.time -= 1
         }
+    }
+    
+    func stopTimer() {
+        timer?.invalidate()
+        timer = nil
+    }
+    
+    func timeUp() {
+        stopTimer()
+        gameOver()
         
-        func stopTimer() {
-            timer?.invalidate()
-            timer = nil
-        }
         
-        func timeUp() {
-            stopTimer()
-            gameOver()
-        }
+    }
     
     func setupLabels() {
         scoreLabel.name = "score"
@@ -148,7 +159,7 @@ class GameTwo: SKScene {
         // Set up message label
         let messageLabel = SKLabelNode()
         messageLabel.name = "message"
-        messageLabel.position = CGPoint(x: frame.midX, y: player.frame.maxY + 350)
+        messageLabel.position = CGPoint(x: frame.midX, y: player.frame.maxY + 320)
         messageLabel.zPosition = Layer.ui.rawValue
         messageLabel.numberOfLines = 2
         
@@ -168,7 +179,7 @@ class GameTwo: SKScene {
         messageLabel.run(SKAction.fadeIn(withDuration: 0.25))
         addChild(messageLabel)
     }
-     
+    
     func hideMessage() {
         // Remove message label if it exists
         if let messageLabel = childNode(withName: "//message") as? SKLabelNode {
@@ -176,60 +187,60 @@ class GameTwo: SKScene {
         }
     }
     
-  
+    
     
     // MARK: - GAME FUNCTIONS
     
     func spawnChocolate() {
         guard !isCollectibleActive else { return }
-
-           // Generate a random number to determine chocolate type
-           let random = Int.random(in: 1...2)  // Generates either 1 or 2 (for dark or white chocolate)
-           
-           // Determine the collectible type based on the random number
-           var collectibleType: CollectibleType2 = .dark_chocolate
-           
-           switch random {
-           case 1:
-               collectibleType = .dark_chocolate
-               color = true
-               print("Spawned dark chocolate")
-           case 2:
-               collectibleType = .white_chocolate
-               color = false
-               print("Spawned white chocolate")
-           default:
-               break
-           }
-           
-           // Create a new collectible instance
-           collectible = Collectible2(collectibleType2: collectibleType)
-           
-           // Add collectible to scene
-           if let collectible = collectible {
-               addChild(collectible)
-               count += 1
-               print("Spawned")
-               print(collectible.position)
-               isCollectibleActive = true
-
-           }
         
-       }
-       
+        // Generate a random number to determine chocolate type
+        let random = Int.random(in: 1...2)  // Generates either 1 or 2 (for dark or white chocolate)
+        
+        // Determine the collectible type based on the random number
+        var collectibleType: CollectibleType2 = .dark_chocolate
+        
+        switch random {
+        case 1:
+            collectibleType = .dark_chocolate
+            color = true
+            print("Spawned dark chocolate")
+        case 2:
+            collectibleType = .white_chocolate
+            color = false
+            print("Spawned white chocolate")
+        default:
+            break
+        }
+        
+        // Create a new collectible instance
+        collectible = Collectible2(collectibleType2: collectibleType)
+        
+        // Add collectible to scene
+        if let collectible = collectible {
+            addChild(collectible)
+            count += 1
+            print("Spawned")
+            print(collectible.position)
+            isCollectibleActive = true
+            
+        }
+        
+    }
+    
     
     func gameLogic() {
-        //unpacking optional boolean value 
+        //unpacking optional boolean value
         if let color = color {
             // Define an array of possible texts
             let texts = ["YAY!", "HURRAY!", "WOW!", "AWESOME!","COOL!"]
-
+            
             // Keep track of the index of the last displayed text
             var lastIndex = UserDefaults.standard.integer(forKey: "lastIndex") // Retrieve the last index from UserDefaults
-
+            
             // Get the next text to display
             let nextText = texts[lastIndex]
-
+            
             // Create the chomp label with the next text
             let chomp = SKLabelNode(fontNamed: "ChalkboardSE-Bold")
             chomp.name = "chomp"
@@ -241,13 +252,13 @@ class GameTwo: SKScene {
             chomp.position = CGPoint(x: player.position.x, y: player.frame.maxY + 25)
             chomp.zRotation = CGFloat.random(in: -0.15...0.15)
             addChild(chomp)
-
+            
             // Update the index for the next cycle
             lastIndex = (lastIndex + 1) % texts.count
-
+            
             // Save the updated index to UserDefaults
             UserDefaults.standard.set(lastIndex, forKey: "lastIndex")
-
+            
             // Add actions to fade in, rise up, and fade out
             let fadeIn = SKAction.fadeAlpha(to: 1.0, duration: 0.05)
             let fadeOut = SKAction.fadeAlpha(to: 0.0, duration: 0.45)
@@ -273,20 +284,20 @@ class GameTwo: SKScene {
                         SKAction.run {
                             collectible.removeFromParent()
                             
-
+                            
                         }
                     ])
                     
                     // Run the sequence action on the collectible
                     collectible.run(sequenceAction)
                     isCollectibleActive = false
-
                     
                     // Schedule the next spawn after a delay (e.g., 1.0 second)
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                         self.spawnChocolate() // Spawn a new collectible after the delay
-                    }
-                }
+                        
+                        
+                    }}
                 
             } else if righthand && !color{
                 righthand = false
@@ -308,9 +319,9 @@ class GameTwo: SKScene {
                     // Run the sequence action on the collectible
                     collectible.run(sequenceAction)
                     isCollectibleActive = false
-
+                    
                     // Schedule the next spawn after a delay (e.g., 1.0 second)
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                         self.spawnChocolate() // Spawn a new collectible after the delay
                     }
                 }
@@ -319,6 +330,7 @@ class GameTwo: SKScene {
             else if righthand || lefthand{
                 righthand = false
                 lefthand = false
+                fails += 1
                 if let collectible = collectible {
                     let moveAction = SKAction.moveBy(x: 0, y: -150, duration: 0.5)
                     
@@ -332,22 +344,25 @@ class GameTwo: SKScene {
                     // Run the sequence action on the collectible
                     collectible.run(sequenceAction)
                     isCollectibleActive = false
-
+                    
                     // Schedule the next spawn after a delay (e.g., 1.0 second)
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                         self.spawnChocolate() // Spawn a new collectible after the delay
                     }
                 }
             } }
     }
-
+    
     
     func sentFlyingToad() {
-    //UPDATE
+        //UPDATE
     }
     
     func gameOver() {
+        gameover = true
         showMessage("GAME OVER")
+        stopTimer()
+        isCollectibleActive = false
         //ADD A BUTTON?
         
         backToMainScreenButton = SKSpriteNode(imageNamed: "gameOneButton") // Replace with your button image name
@@ -371,42 +386,47 @@ class GameTwo: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard !gameover else { return } // Ignore touches if game is over
+        
         guard let touch = touches.first else { return }
         
         let touchLocation = touch.location(in: self)
         let halfScreenWidth = self.size.width / 2
-        print(touchLocation)
+        
         if touchLocation.x < halfScreenWidth {
             // Touch on the left side
-            print("Touch on the left side")
-            // Perform action A here
-            player.leftHandMove() // Call right hand move method on the player instance
+            player.leftHandMove()
             lefthand = true
         } else {
             // Touch on the right side
-            print("Touch on the right side")
-            // Perform action B here
-            player.rightHandMove() // Call left hand move method on the player instance
+            player.rightHandMove()
             righthand = true
         }
+        
+        if !gameover {
+            gameLogic() // Only call game logic if the game is not over
+        }
+        
         hideMessage()
-
-        
     }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard !gameover else { return } // Ignore touches if game is over
         
-        override func touchesEnded(_ touches: Set<UITouch>, with event:
-                                   UIEvent?) {
-            for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-        }
-        override func touchesCancelled(_ touches: Set<UITouch>,
-                                       with event: UIEvent?) {
-            
-            for t in touches { self.touchUp(atPoint: t.location(in: self)) } }
+        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
         
-        override func update(_ currentTime: TimeInterval) {
-            gameLogic()
+        if !gameover {
+            gameLogic() // Only call game logic if the game is not over
         }
     }
     
-    
-
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard !gameover else { return } // Ignore touches if game is over
+        
+        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
+        
+        if !gameover {
+            gameLogic() // Only call game logic if the game is not over
+        }
+    }
+}
