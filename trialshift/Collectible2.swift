@@ -38,7 +38,10 @@ class Collectible2: SKSpriteNode {
             break
         }
         // Call to super.init
-        super.init(texture: texture, color: SKColor.clear, size: texture.size())
+        // Ensure consistent size for both textures
+        let size = CGSize(width: 50, height: 50) // Adjust size as needed
+        super.init(texture: texture, color: SKColor.clear, size: size)
+  
         
         // Set up collectible
         self.name = "co_\(collectibleType2)"

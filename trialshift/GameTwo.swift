@@ -5,9 +5,9 @@
 //  Created by Weronika E. Falinska on 03/04/2024.
 //
 
-// 1. repair visibility of labels
-// 3. Repair uneven size of chocolates
-// 5. Add a button when game_over
+// 1. check if collection sound works
+// 5. Add a button when game_over <- make it work, finish the game when clock, disabe movement 
+// 6. make clock start only after first click
 
 import AVFoundation
 import SpriteKit
@@ -24,6 +24,8 @@ class GameTwo: SKScene {
     var color: Bool?
     var isCollectibleActive = false
     var timer : Timer?
+    var backToMainScreenButton: SKSpriteNode!
+    private let playCollectSound = SKAction.playSoundFileNamed("collect.wav", waitForCompletion: false)
     
     
     //LABELS
@@ -55,8 +57,12 @@ class GameTwo: SKScene {
         setupLabels()
         showMessage("TAP TO START")
         spawnChocolate()
-        //FIGURE OUT HOW TO START ONLY AFTER MESSAGE VANISHES 
-        startTimer()
+        
+        //FIGURE OUT HOW TO START ONLY AFTER MESSAGE VANISHES; then remove below
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+                       // Start the timer after a delay of 5 seconds
+                       self.startTimer()
+                   }
         
         // AUDIO
         musicAudioNode.autoplayLooped = true
@@ -121,7 +127,7 @@ class GameTwo: SKScene {
         scoreLabel.horizontalAlignmentMode = .right
         scoreLabel.verticalAlignmentMode = .center
         scoreLabel.zPosition = Layer.ui.rawValue
-        scoreLabel.position = CGPoint(x: frame.maxX - 230, y: viewTop() - 120)
+        scoreLabel.position = CGPoint(x: frame.maxX - 230, y: viewTop() - 470)
         scoreLabel.text = "Score: 0"
         addChild(scoreLabel)
         
@@ -132,7 +138,7 @@ class GameTwo: SKScene {
         clockLabel.horizontalAlignmentMode = .right
         clockLabel.verticalAlignmentMode = .center
         clockLabel.zPosition = Layer.ui.rawValue
-        clockLabel.position = CGPoint(x: frame.maxX - 230, y: viewTop() - 200)
+        clockLabel.position = CGPoint(x: frame.maxX - 230, y: viewTop() - 550)
         // Set the text and add the label node to scene
         clockLabel.text = "Time left: \(time)"
         addChild(clockLabel) }
@@ -215,10 +221,49 @@ class GameTwo: SKScene {
     func gameLogic() {
         //unpacking optional boolean value 
         if let color = color {
+            // Define an array of possible texts
+            let texts = ["YAY!", "HURRAY!", "WOW!", "AWESOME!","COOL!"]
+
+            // Keep track of the index of the last displayed text
+            var lastIndex = UserDefaults.standard.integer(forKey: "lastIndex") // Retrieve the last index from UserDefaults
+
+            // Get the next text to display
+            let nextText = texts[lastIndex]
+
+            // Create the chomp label with the next text
+            let chomp = SKLabelNode(fontNamed: "ChalkboardSE-Bold")
+            chomp.name = "chomp"
+            chomp.alpha = 0.0
+            chomp.fontSize = 50.0
+            chomp.text = nextText
+            chomp.horizontalAlignmentMode = .center
+            chomp.verticalAlignmentMode = .bottom
+            chomp.position = CGPoint(x: player.position.x, y: player.frame.maxY + 25)
+            chomp.zRotation = CGFloat.random(in: -0.15...0.15)
+            addChild(chomp)
+
+            // Update the index for the next cycle
+            lastIndex = (lastIndex + 1) % texts.count
+
+            // Save the updated index to UserDefaults
+            UserDefaults.standard.set(lastIndex, forKey: "lastIndex")
+
+            // Add actions to fade in, rise up, and fade out
+            let fadeIn = SKAction.fadeAlpha(to: 1.0, duration: 0.05)
+            let fadeOut = SKAction.fadeAlpha(to: 0.0, duration: 0.45)
+            let moveUp = SKAction.moveBy(x: 0.0, y: 45, duration: 0.45)
+            let groupAction = SKAction.group([fadeOut, moveUp])
+            let removeFromParent = SKAction.removeFromParent()
+            let chompAction = SKAction.sequence([fadeIn, groupAction, removeFromParent])
+            
+            let actionGroup = SKAction.group([playCollectSound, removeFromParent])
+            
             if lefthand && color {
                 lefthand = false
                 score += 1
                 print("Left hand action completed")
+                chomp.run(chompAction)
+                self.run(actionGroup)
                 
                 if let collectible = collectible {
                     let moveAction = SKAction.moveBy(x: -300, y: 0, duration: 0.5)
@@ -247,6 +292,8 @@ class GameTwo: SKScene {
                 righthand = false
                 score += 1
                 print("Right hand action completed")
+                chomp.run(chompAction)
+                self.run(actionGroup)
                 
                 if let collectible = collectible {
                     let moveAction = SKAction.moveBy(x: 300, y: 0, duration: 0.5)
@@ -302,6 +349,14 @@ class GameTwo: SKScene {
     func gameOver() {
         showMessage("GAME OVER")
         //ADD A BUTTON?
+        
+        backToMainScreenButton = SKSpriteNode(imageNamed: "gameOneButton") // Replace with your button image name
+        backToMainScreenButton.name = "backToMainScreen" // Assign a name for identification
+        backToMainScreenButton.position = CGPoint(x: frame.midX - 300, y: frame.midY - 50)
+        backToMainScreenButton.zPosition = Layer.ui.rawValue + 1
+        backToMainScreenButton.setScale(2.5) // Adjust scale if needed
+        addChild(backToMainScreenButton)
+        
         //let gamescene = GameScene(size: self.size)
         //gamescene.scaleMode = .aspectFill
         //self.view?.presentScene(gamescene)
@@ -335,6 +390,7 @@ class GameTwo: SKScene {
             righthand = true
         }
         hideMessage()
+
         
     }
         
