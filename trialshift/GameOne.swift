@@ -10,6 +10,7 @@ import SpriteKit
 import GameplayKit
 
 class GameOne: SKScene {
+    var backToMainScreenButton: SKSpriteNode?
     var gameInProgress = false
     var missed: Int = 0
     let player = Player()
@@ -53,7 +54,7 @@ class GameOne: SKScene {
             self.kitchenAudioNode.autoplayLooped = true
             self.addChild(self.kitchenAudioNode)
         })
-
+        
         
         // Set up the background music audio node
         musicAudioNode.autoplayLooped = true
@@ -79,7 +80,7 @@ class GameOne: SKScene {
         background.zPosition = Layer.background.rawValue
         background.position = CGPoint(x: 0, y: 0)
         addChild(background)
-
+        
         
         // Set up foreground
         let foreground = SKSpriteNode(imageNamed: "foreground_01")
@@ -117,39 +118,39 @@ class GameOne: SKScene {
         addChild(player)
         player.walk()
         
-       //Show message
+        //Show message
         showMessage("TAP TO START")
         sendGreenToad()
         sendBrownToad()
         
     }
     func setupLabels() {
-    /* SCORE LABEL */
-    scoreLabel.name = "score"
-    scoreLabel.fontName = "ChalkboardSE-Bold"
-    scoreLabel.fontColor = .white
-    scoreLabel.fontSize = 65.0
-    scoreLabel.horizontalAlignmentMode = .right
-    scoreLabel.verticalAlignmentMode = .center
-    scoreLabel.zPosition = Layer.ui.rawValue
-    scoreLabel.position = CGPoint(x: frame.maxX - 230, y: viewTop() - 120)
-    
-    // Set the text and add the label node to scene
-    scoreLabel.text = "Score: 0"
-    addChild(scoreLabel)
-      
-    /* LEVEL LABEL */
-    levelLabel.name = "level"
-    levelLabel.fontName = "ChalkboardSE-Bold"
-    levelLabel.fontColor = .white
-    levelLabel.fontSize = 65.0
-    levelLabel.horizontalAlignmentMode = .right
-    levelLabel.verticalAlignmentMode = .center
-    levelLabel.zPosition = Layer.ui.rawValue
-    levelLabel.position = CGPoint(x: frame.maxX - 230, y: viewTop() - 200)
-      // Set the text and add the label node to scene
-    levelLabel.text = "Level: \(level)"
-    addChild(levelLabel) }
+        /* SCORE LABEL */
+        scoreLabel.name = "score"
+        scoreLabel.fontName = "ChalkboardSE-Bold"
+        scoreLabel.fontColor = .white
+        scoreLabel.fontSize = 65.0
+        scoreLabel.horizontalAlignmentMode = .right
+        scoreLabel.verticalAlignmentMode = .center
+        scoreLabel.zPosition = Layer.ui.rawValue
+        scoreLabel.position = CGPoint(x: frame.maxX - 230, y: viewTop() - 120)
+        
+        // Set the text and add the label node to scene
+        scoreLabel.text = "Score: 0"
+        addChild(scoreLabel)
+        
+        /* LEVEL LABEL */
+        levelLabel.name = "level"
+        levelLabel.fontName = "ChalkboardSE-Bold"
+        levelLabel.fontColor = .white
+        levelLabel.fontSize = 65.0
+        levelLabel.horizontalAlignmentMode = .right
+        levelLabel.verticalAlignmentMode = .center
+        levelLabel.zPosition = Layer.ui.rawValue
+        levelLabel.position = CGPoint(x: frame.maxX - 230, y: viewTop() - 200)
+        // Set the text and add the label node to scene
+        levelLabel.text = "Level: \(level)"
+        addChild(levelLabel) }
     
     func showMessage(_ message: String) {
         // Set up message label
@@ -175,7 +176,7 @@ class GameOne: SKScene {
         messageLabel.run(SKAction.fadeIn(withDuration: 0.25))
         addChild(messageLabel)
     }
-     
+    
     func hideMessage() {
         // Remove message label if it exists
         if let messageLabel = childNode(withName: "//message") as? SKLabelNode {
@@ -198,7 +199,7 @@ class GameOne: SKScene {
         toad.zPosition = Layer.foreground.rawValue
         toad.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         toad.position = CGPoint(x: frame.maxX + toad.size.width,
-                                 y: frame.midY - 350)
+                                y: frame.midY - 350)
         let scaleFactor: CGFloat = 0.8
         toad.setScale(scaleFactor)
         addChild(toad)
@@ -208,7 +209,7 @@ class GameOne: SKScene {
         audioNode.autoplayLooped = true
         audioNode.run(SKAction.changeVolume(to: 1.0, duration: 0.0))
         toad.addChild(audioNode)
-             
+        
         
         // Create animation action
         let animateAction = SKAction.animate(with: toadFrames, timePerFrame: 0.1)
@@ -230,7 +231,7 @@ class GameOne: SKScene {
         
         // Combine the actions into a sequence
         let moveSequence = SKAction.sequence([moveLeft, removeFromParent])
-
+        
         // Periodically run this method using a timed range
         toad.run(moveSequence, completion: {
             let wait = SKAction.wait(forDuration: 5, withRange: 15)
@@ -238,7 +239,7 @@ class GameOne: SKScene {
             self.run(SKAction.sequence([wait, codeBlock]))
         })
     }
-
+    
     
     func sendBrownToad() {
         // Load sprite atlas
@@ -256,7 +257,7 @@ class GameOne: SKScene {
         toad.zPosition = Layer.foreground.rawValue
         toad.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         toad.position = CGPoint(x: frame.maxX + toad.size.width,
-                                 y: frame.midY - 450)
+                                y: frame.midY - 450)
         let scaleFactor: CGFloat = 3.0
         toad.setScale(scaleFactor)
         addChild(toad)
@@ -281,7 +282,7 @@ class GameOne: SKScene {
         
         // Combine the actions into a sequence
         let moveSequence = SKAction.sequence([moveLeft, removeFromParent])
-
+        
         // Periodically run this method using a timed range
         toad.run(moveSequence, completion: {
             let wait = SKAction.wait(forDuration: 8, withRange: 15)
@@ -289,8 +290,8 @@ class GameOne: SKScene {
             self.run(SKAction.sequence([wait, codeBlock]))
         })
     }
-
-
+    
+    
     // MARK: - GAME FUNCTIONS
     /* ####################################################################### */
     /*                      GAME FUNCTIONS START HERE                          */
@@ -301,26 +302,26 @@ class GameOne: SKScene {
         player.walk()
         // Reset the level and score
         if gameInProgress == false { score = 0
-        level = 1
+            level = 1
         }
-
+        
         
         // Set number of drops based on the level
         switch level {
         case 1, 2, 3:
-        numberOfDrops = level * 10
+            numberOfDrops = level * 10
         case 4:
-        numberOfDrops = 35
+            numberOfDrops = 35
         case 5:
-        numberOfDrops = 40
+            numberOfDrops = 40
         case 6:
-        numberOfDrops = 45
+            numberOfDrops = 45
         case 7:
-        numberOfDrops = 50
+            numberOfDrops = 50
         case 8:
-        numberOfDrops = 55
+            numberOfDrops = 55
         default:
-        numberOfDrops = 55
+            numberOfDrops = 55
         }
         
         // Reset and update the collected and expected drop count
@@ -341,20 +342,20 @@ class GameOne: SKScene {
         let spawn = SKAction.run { [unowned self] in self.spawnWater() }
         let spawnSequence = SKAction.sequence([spawn, wait])
         let repeatAction = SKAction.repeat(spawnSequence, count: numberOfDrops)
-
+        
         // Create a custom action to call checkForRemainingDrops
         let callCheckAction = SKAction.run { [unowned self] in self.checkForRemainingDrops() }
-
+        
         // Add a delay of 2 seconds before calling checkForRemainingDrops ( so the last drop can drop fully)
         let delayAction = SKAction.wait(forDuration: 2.0)
-
+        
         // Run action
         let sequence = SKAction.sequence([repeatAction, delayAction, callCheckAction])
         run(sequence, withKey: "drop")
         
         gameInProgress = true
         
-    
+        
         //Hide message
         hideMessage()
     }
@@ -416,14 +417,14 @@ class GameOne: SKScene {
         //Changing the floorLevel value etc
         collectible.drop(dropSpeed: TimeInterval(1.0), floorLevel: player.frame.minY + 40)
     }
-
-        
+    
+    
     
     func checkForRemainingDrops() {
-    if dropsCollected >= (dropsExpected - 3) {
-    // if dropsCollected >= (dropsExpected - 3) {
-
-        nextLevel() }
+        if dropsCollected >= (dropsExpected - 3) {
+            // if dropsCollected >= (dropsExpected - 3) {
+            
+            nextLevel() }
     }
     // Player PASSED level
     func nextLevel() {
@@ -434,6 +435,23 @@ class GameOne: SKScene {
         run(wait, completion:{[unowned self] in self.level += 1
             
             self.spawnMultipleWater()})
+    }
+    
+    
+    func setupBackToMainScreenButton() {
+        // Configure the button
+        backToMainScreenButton = SKSpriteNode(imageNamed: "backToMainScreenButton")
+        backToMainScreenButton?.name = "backToMainScreen"
+        backToMainScreenButton?.position = CGPoint(x: frame.midX, y: frame.midY - 50)
+        backToMainScreenButton?.zPosition = Layer.ui.rawValue + 1
+        backToMainScreenButton?.setScale(2.5)
+        addChild(backToMainScreenButton!)
+    }
+    
+    func removeBackToMainScreenButton() {
+        // Remove the button from the scene
+        backToMainScreenButton?.removeFromParent()
+        backToMainScreenButton = nil
     }
     
     // Player FAILED level
@@ -466,15 +484,17 @@ class GameOne: SKScene {
         // Reset game
         resetPlayerPosition()
         popRemainingDrops()
+        setupBackToMainScreenButton()
+
         
     }
-
+    
     
     func resetPlayerPosition() {
         let resetPoint = CGPoint(x: frame.midX, y: player.position.y)
         let distance = hypot(resetPoint.x-player.position.x, 0)
         let calculatedSpeed = TimeInterval(distance / (playerSpeed * 2)) / 255
-
+        
         if player.position.x > frame.midX { player.moveToPosition(pos: resetPoint, direction: "L",
                                                                   speed: calculatedSpeed)
             
@@ -482,7 +502,7 @@ class GameOne: SKScene {
             player.moveToPosition(pos: resetPoint, direction: "R",
                                   speed: calculatedSpeed)
         }
-        }
+    }
     
     func popRemainingDrops() {
         var i = 0
@@ -500,19 +520,18 @@ class GameOne: SKScene {
     }
     
     // MARK: - TOUCH HANDLING
-    /* ####################################################################### */
-    /*                        TOUCH HANDLERS STARTS HERE                       */
-    /* ####################################################################### */
-    func touchDown(atPoint pos: CGPoint) { let touchedNode = atPoint(pos)
-    if touchedNode.name == "player" {
+    
+    func touchDown(atPoint pos: CGPoint) {
+        let touchedNode = atPoint(pos)
         
-        
-        if gameInProgress == false {
-            spawnMultipleWater()
-            return
+        if touchedNode.name == "player" {
+            if gameInProgress == false {
+                spawnMultipleWater()
+                return
+            }
+            
+            movingPlayer = true
         }
-        
-    movingPlayer = true }
     }
     
     func touchMoved(toPoint pos: CGPoint) {
@@ -520,7 +539,7 @@ class GameOne: SKScene {
             // Clamp position
             let newPos = CGPoint(x: pos.x, y: player.position.y)
             player.position = newPos
-
+            
             // Check last position; if empty set it
             let recordedPosition = lastPosition ?? player.position
             if recordedPosition.x > newPos.x {
@@ -532,30 +551,48 @@ class GameOne: SKScene {
             lastPosition = newPos
         }
     }
-
     
-    func touchUp(atPoint pos: CGPoint) { movingPlayer = false
+    func touchUp(atPoint pos: CGPoint) {
+        movingPlayer = false
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event:
-                               UIEvent?) { for t in touches { self.touchDown(atPoint: t.location(in: self)) }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        
+        for t in touches {
+            let location = t.location(in: self)
+            self.touchDown(atPoint: location)
+            
+            // Check if the touch is on the button
+            if let backToMainScreenButton = backToMainScreenButton, backToMainScreenButton.contains(location) {
+                // Transition to another scene when the button is tapped
+                let gameScene = GameScene(size: self.size)
+                gameScene.scaleMode = .aspectFill
+                self.view?.presentScene(gameScene)
+            }
+        }
     }
     
-    override func touchesMoved(_ touches: Set<UITouch>, with event:
-                               UIEvent?) {
-        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for t in touches {
+            let location = t.location(in: self)
+            self.touchMoved(toPoint: location)
+        }
     }
-    override func touchesEnded(_ touches: Set<UITouch>, with event:
-                               UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-    }
-    override func touchesCancelled(_ touches: Set<UITouch>,
-                                   with event: UIEvent?) {
-
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) } }
     
-    //override func update(_ currentTime: TimeInterval) { checkForRemainingDrops()
-    //}
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for t in touches {
+            let location = t.location(in: self)
+            self.touchUp(atPoint: location)
+        }
+    }
+    
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for t in touches {
+            let location = t.location(in: self)
+            self.touchUp(atPoint: location)
+        }
+    }
 }
 
 

@@ -17,6 +17,7 @@
 		FB76CE7D2BA07CB100DB8BBF /* kitchen.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FB76CE7C2BA07CB100DB8BBF /* kitchen.mp3 */; };
 		FB76CE7F2BA0838100DB8BBF /* music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FB76CE7E2BA0838100DB8BBF /* music.mp3 */; };
 		FB7E68402BBF189600D07CD6 /* Collectible2.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7E683F2BBF189600D07CD6 /* Collectible2.swift */; };
+		FBB0AD202BE5835D00398031 /* GameThree.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB0AD1F2BE5835D00398031 /* GameThree.swift */; };
 		FBC561712BBE04A800D8AF8F /* GameTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC561702BBE04A800D8AF8F /* GameTwo.swift */; };
 		FBDC0A342B9FD91F005B534B /* Flow.sks in Resources */ = {isa = PBXBuildFile; fileRef = FBDC0A332B9FD91F005B534B /* Flow.sks */; };
 		FBEB51482BA1D96B006A7943 /* quak.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FBEB51472BA1D96B006A7943 /* quak.mp3 */; };
@@ -33,6 +34,7 @@
 
 /* Begin PBXFileReference section */
 		FB5198E92BB73D5400F21342 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		FB5CD63E2BEA9D5400004D18 /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
 		FB7432FF2B9F447B0093ED6F /* bubbles.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bubbles.mp3; sourceTree = "<group>"; };
 		FB7433002B9F447B0093ED6F /* collect.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = collect.wav; sourceTree = "<group>"; };
 		FB7433012B9F447B0093ED6F /* miss.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = miss.wav; sourceTree = "<group>"; };
@@ -42,6 +44,7 @@
 		FB76CE7C2BA07CB100DB8BBF /* kitchen.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = kitchen.mp3; sourceTree = "<group>"; };
 		FB76CE7E2BA0838100DB8BBF /* music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = music.mp3; sourceTree = "<group>"; };
 		FB7E683F2BBF189600D07CD6 /* Collectible2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collectible2.swift; sourceTree = "<group>"; };
+		FBB0AD1F2BE5835D00398031 /* GameThree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameThree.swift; sourceTree = "<group>"; };
 		FBC561702BBE04A800D8AF8F /* GameTwo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTwo.swift; sourceTree = "<group>"; };
 		FBDC0A332B9FD91F005B534B /* Flow.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Flow.sks; sourceTree = "<group>"; };
 		FBEB51472BA1D96B006A7943 /* quak.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = quak.mp3; sourceTree = "<group>"; };
@@ -94,6 +97,7 @@
 		FBF563AC2B9A89ED007EC769 = {
 			isa = PBXGroup;
 			children = (
+				FB5CD63E2BEA9D5400004D18 /* TODO.md */,
 				FBF563B72B9A89ED007EC769 /* trialshift */,
 				FBF563B62B9A89ED007EC769 /* Products */,
 			);
@@ -113,6 +117,7 @@
 				FBF563B82B9A89ED007EC769 /* AppDelegate.swift */,
 				FBF563BE2B9A89ED007EC769 /* GameOne.swift */,
 				FBC561702BBE04A800D8AF8F /* GameTwo.swift */,
+				FBB0AD1F2BE5835D00398031 /* GameThree.swift */,
 				FBF563C02B9A89ED007EC769 /* GameViewController.swift */,
 				FBF563C22B9A89ED007EC769 /* Main.storyboard */,
 				FBF563C52B9A89EE007EC769 /* Assets.xcassets */,
@@ -212,6 +217,7 @@
 			files = (
 				FBF563D02B9A9A20007EC769 /* Player.swift in Sources */,
 				FBF563BF2B9A89ED007EC769 /* GameOne.swift in Sources */,
+				FBB0AD202BE5835D00398031 /* GameThree.swift in Sources */,
 				FBF563D42B9B4885007EC769 /* Collectible.swift in Sources */,
 				FB7E68402BBF189600D07CD6 /* Collectible2.swift in Sources */,
 				FBF563C12B9A89ED007EC769 /* GameViewController.swift in Sources */,

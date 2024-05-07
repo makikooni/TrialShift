@@ -5,9 +5,6 @@
 //  Created by Weronika E. Falinska on 03/04/2024.
 //
 
-// 5. Add a button when game_over <- make it work, finish the game when clock, disabe movement
-// 6. make clock start only after first click
-// 10. figure out why game_over so hifh
 
 import AVFoundation
 import SpriteKit
@@ -25,7 +22,7 @@ class GameTwo: SKScene {
     var color: Bool?
     var isCollectibleActive = false
     var timer : Timer?
-    var backToMainScreenButton: SKSpriteNode!
+    var backToMainScreenButton: SKSpriteNode?
     private let playCollectSound = SKAction.playSoundFileNamed("collect.wav", waitForCompletion: false)
     
     
@@ -111,6 +108,7 @@ class GameTwo: SKScene {
         
     }
     //TIMER
+    // The game features a timer that counts down the player's time allowance
     func startTimer() {
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] timer in
             guard let self = self else { return }
@@ -118,11 +116,13 @@ class GameTwo: SKScene {
         }
     }
     
+    // Function used to prevent timer going below zero
     func stopTimer() {
         timer?.invalidate()
         timer = nil
     }
     
+    // Function used to run gameover() when timer reaches 0
     func timeUp() {
         stopTimer()
         gameOver()
@@ -130,6 +130,7 @@ class GameTwo: SKScene {
         
     }
     
+    // Function used to set up visuals of labels
     func setupLabels() {
         scoreLabel.name = "score"
         scoreLabel.fontName = "ChalkboardSE-Bold"
@@ -358,24 +359,35 @@ class GameTwo: SKScene {
         //UPDATE
     }
     
+    
+    
+    func setupBackToMainScreenButton() {
+        // Configure the button
+        backToMainScreenButton = SKSpriteNode(imageNamed: "backToMainScreenButton")
+        backToMainScreenButton?.name = "backToMainScreen"
+        backToMainScreenButton?.position = CGPoint(x: frame.midX, y: frame.midY - 50)
+        backToMainScreenButton?.zPosition = Layer.ui.rawValue + 1
+        backToMainScreenButton?.setScale(2.5)
+        addChild(backToMainScreenButton!)
+    }
+
+    func removeBackToMainScreenButton() {
+        // Remove the button from the scene
+        backToMainScreenButton?.removeFromParent()
+        backToMainScreenButton = nil
+    }
+    
     func gameOver() {
         gameover = true
         showMessage("GAME OVER")
         stopTimer()
         isCollectibleActive = false
-        //ADD A BUTTON?
-        
-        backToMainScreenButton = SKSpriteNode(imageNamed: "gameOneButton") // Replace with your button image name
-        backToMainScreenButton.name = "backToMainScreen" // Assign a name for identification
-        backToMainScreenButton.position = CGPoint(x: frame.midX - 300, y: frame.midY - 50)
-        backToMainScreenButton.zPosition = Layer.ui.rawValue + 1
-        backToMainScreenButton.setScale(2.5) // Adjust scale if needed
-        addChild(backToMainScreenButton)
-        
-        //let gamescene = GameScene(size: self.size)
-        //gamescene.scaleMode = .aspectFill
-        //self.view?.presentScene(gamescene)
+        setupBackToMainScreenButton()
+
     }
+        
+    
+    
     
     
     
@@ -386,29 +398,50 @@ class GameTwo: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard !gameover else { return } // Ignore touches if game is over
+        super.touchesBegan(touches, with: event)
         
-        guard let touch = touches.first else { return }
-        
-        let touchLocation = touch.location(in: self)
-        let halfScreenWidth = self.size.width / 2
-        
-        if touchLocation.x < halfScreenWidth {
-            // Touch on the left side
-            player.leftHandMove()
-            lefthand = true
-        } else {
-            // Touch on the right side
-            player.rightHandMove()
-            righthand = true
+        // Check if the game is over and the button is present
+        guard gameover, let backToMainScreenButton = backToMainScreenButton else {
+            // Your existing touch handling logic for player's movement
+            for touch in touches {
+                guard !gameover else { return } // Ignore touches if game is over
+                
+                let touchLocation = touch.location(in: self)
+                let halfScreenWidth = self.size.width / 2
+                
+                if touchLocation.x < halfScreenWidth {
+                    // Touch on the left side
+                    player.leftHandMove()
+                    lefthand = true
+                } else {
+                    // Touch on the right side
+                    player.rightHandMove()
+                    righthand = true
+                }
+                
+                if !gameover {
+                    gameLogic() // Only call game logic if the game is not over
+                }
+                
+                hideMessage()
+            }
+            return
         }
         
-        if !gameover {
-            gameLogic() // Only call game logic if the game is not over
+        // Iterate through all touches
+        for touch in touches {
+            let location = touch.location(in: self)
+            
+            // Check if the touch is on the backToMainScreenButton
+            if backToMainScreenButton.contains(location) {
+                // Transition to another scene when the button is tapped
+                let gameScene = GameScene(size: self.size)
+                gameScene.scaleMode = .aspectFill
+                self.view?.presentScene(gameScene)
+            }
         }
-        
-        hideMessage()
     }
+    
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard !gameover else { return } // Ignore touches if game is over

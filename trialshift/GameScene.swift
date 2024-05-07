@@ -15,6 +15,7 @@ class GameScene: SKScene {
     var gameTitleLabel: SKLabelNode!
     var gameOneButton: SKSpriteNode!
     var gameTwoButton: SKSpriteNode!
+    var gameThreeButton: SKSpriteNode!
     
     override func didMove(to view: SKView) {
         
@@ -39,20 +40,28 @@ class GameScene: SKScene {
            // Create game one button
            gameOneButton = SKSpriteNode(imageNamed: "gameOneButton") // Replace with your button image name
            gameOneButton.name = "gameOneButton" // Assign a name for identification
-           gameOneButton.position = CGPoint(x: frame.midX - 300, y: frame.midY - 50)
+           gameOneButton.position = CGPoint(x: frame.midX - 600, y: frame.midY - 50)
            gameOneButton.zPosition = Layer.ui.rawValue + 1
         gameOneButton.setScale(2.5) // Adjust scale if needed
            addChild(gameOneButton)
 
-           // Create game two button (similar to gameOneButton)
+           // Create game two button
            gameTwoButton = SKSpriteNode(imageNamed: "gameTwoButton") // Replace with your button image name
            gameTwoButton.name = "gameTwoButton" // Assign a name for identification
-           gameTwoButton.position = CGPoint(x: frame.midX + 300, y: frame.midY - 50)
+           gameTwoButton.position = CGPoint(x: frame.midX , y: frame.midY - 50)
            gameTwoButton.zPosition = Layer.ui.rawValue + 1
-        gameTwoButton.setScale(2.5) // Adjust scale if needed
+            gameTwoButton.setScale(2.5) // Adjust scale if needed
            addChild(gameTwoButton)
+        
+            // Create game three button
+            gameThreeButton = SKSpriteNode(imageNamed: "gameThreeButton") // Replace with your button image name
+            gameThreeButton.name = "gameThreeButton" // Assign a name for identification
+            gameThreeButton.position = CGPoint(x: frame.midX + 600, y: frame.midY - 50)
+            gameThreeButton.zPosition = Layer.ui.rawValue + 1
+            gameThreeButton.setScale(2.5) // Adjust scale if needed
+            addChild(gameThreeButton)
     }
-    
+    //Functions activating buttons 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
             for touch in touches {
                 let location = touch.location(in: self)
@@ -66,6 +75,11 @@ class GameScene: SKScene {
                     let gameTwo = GameTwo(size: self.size)
                     gameTwo.scaleMode = .aspectFill
                     self.view?.presentScene(gameTwo)
+                }
+                if gameThreeButton.contains(location) {
+                    let gameThree = GameThree(size: self.size)
+                    gameThree.scaleMode = .aspectFill
+                    self.view?.presentScene(gameThree)
                 }
             }
         }
