@@ -1,8 +1,9 @@
 #  <#Title#>
 
 Assets:
-1. Update logo for Game3 button
-2. Update logo "Back to Main Screen " button
+1. DONE Update logo for Game3 button
+2. DONE Update logo "Back to Main Screen " button
+3. DONE Update Tittle  for Game3
 
 General:
 1. Retain High Score to the main screen ( text file? )
@@ -21,10 +22,12 @@ GameTwo:
 
 GameThree:
 1.  make return button work
-2. Change game banner
+2. DONE Change game banner
 3. DONE Change game background
 4. 3x chefs
 5. 5? x ingredients
-6. Update player asset
-7. 
+6. DONE Update player asset chef_3
+7. Update label positions
+8. Repair back colours for Start Game 
+9. Allow movement up and down (touch methods )
 
