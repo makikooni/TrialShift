@@ -11,7 +11,6 @@ import SpriteKit
 import GameplayKit
 
 class GameTwo: SKScene {
-    var gameInProgress = false
     let player = PlayerHead()
     var movingPlayer = false
     var righthand = false
@@ -354,10 +353,6 @@ class GameTwo: SKScene {
             } }
     }
     
-    
-    func sentFlyingToad() {
-        //UPDATE
-    }
     
     
     
