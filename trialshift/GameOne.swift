@@ -33,7 +33,7 @@ class GameOne: SKScene {
     var dropsExpected = 10
     var dropsCollected = 0
     var dropSpeed: CGFloat = 1.0
-    var minDropSpeed: CGFloat = 0.12 // (fastest drop)
+    var minDropSpeed: CGFloat = 0.01 // (fastest drop)
     var maxDropSpeed: CGFloat = 1.0 // (slowest drop)
     
     // Labels
@@ -297,6 +297,12 @@ class GameOne: SKScene {
 
     
     func spawnMultipleWater() {
+        
+        if level > 11 {
+                gameWon()
+            return
+            }
+        
         // Start player walk animation
         player.walk()
         // Reset the level and score
@@ -323,13 +329,19 @@ class GameOne: SKScene {
             numberOfDrops = 55
         }
         
+        
         // Reset and update the collected and expected drop count
         dropsCollected = 0
         dropsExpected = numberOfDrops
         
         // Set up drop speed
-        dropSpeed = 1 / (CGFloat(level) + (CGFloat(level) /
-                                           CGFloat(numberOfDrops)))
+        dropSpeed = 1 / (CGFloat(level) + (CGFloat(level) / CGFloat(numberOfDrops)))
+
+        // Adjust the drop speed to your desired range
+        let speedMultiplier: CGFloat = 0.5  // Adjust this value as needed
+        dropSpeed *= speedMultiplier
+
+        // Ensure drop speed stays within the specified bounds
         if dropSpeed < minDropSpeed {
             dropSpeed = minDropSpeed
         } else if dropSpeed > maxDropSpeed {
@@ -427,14 +439,15 @@ class GameOne: SKScene {
     }
     // Player PASSED level
     func nextLevel() {
-        missed = 0
-        //Show message
-        showMessage("LEVELING UP!")
-        let wait = SKAction.wait(forDuration: 2.25)
-        run(wait, completion:{[unowned self] in self.level += 1
-            
-            self.spawnMultipleWater()})
-    }
+        if level < 11 {
+            missed = 0
+            //Show message
+            showMessage("LEVELING UP!")
+            let wait = SKAction.wait(forDuration: 2.25)
+            run(wait, completion:{[unowned self] in self.level += 1
+                
+                self.spawnMultipleWater()})
+        }}
     
     
     func setupBackToMainScreenButton() {
@@ -455,6 +468,7 @@ class GameOne: SKScene {
     
     // Player FAILED level
     func gameOver() {
+        print(score)
         missed = 0
         //Show message
         showMessage("GAME OVER")
@@ -488,6 +502,42 @@ class GameOne: SKScene {
         
     }
     
+    
+    func gameWon() {
+        print(score)
+        missed = 0
+        hideMessage()
+        //Show message
+        showMessage("CONGRATS")
+        // Update game states
+        gameInProgress = false
+        
+    //Happy player animation?
+        
+        // Remove repeatable action on main scene
+        removeAction(forKey: "drop")
+        // Loop through child nodes and stop actions on collectibles
+        enumerateChildNodes(withName: "//co_*") { (node, stop) in
+            // Check if the node's name starts with "co_" and its texture is not equal to the excluded texture
+            if let spriteNode = node as? SKSpriteNode,
+               node.name?.starts(with: "co_") == true,
+               let nodeTexture = spriteNode.texture,
+               nodeTexture.description != SKTexture(imageNamed: "water_1").description {
+                // Stop and remove drops
+                node.removeAction(forKey: "drop") // remove action
+                node.physicsBody = nil // remove body so no collisions occur
+                // Remove the node from the scene
+                node.removeFromParent()
+            }
+        }
+        
+        // Reset game
+        resetPlayerPosition()
+        popRemainingDrops()
+        setupBackToMainScreenButton()
+
+        
+    }
     
     func resetPlayerPosition() {
         let resetPoint = CGPoint(x: frame.midX, y: player.position.y)

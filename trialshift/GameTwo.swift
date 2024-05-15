@@ -374,6 +374,7 @@ class GameTwo: SKScene {
     
     func gameOver() {
         gameover = true
+        print(score)
         showMessage("GAME OVER")
         stopTimer()
         isCollectibleActive = false

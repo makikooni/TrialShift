@@ -4,15 +4,21 @@ Assets:
 -
 
 General:
-1. Retain High Score to the main screen ( text file? )
+1. Retain High Score to the main screen 
+    a. DONE Prepare main screen
+    b. transfer data
+    c. update data after replay
+    
 2. Add starting screens with "How to Play"
 3. put spritekit into swift ui ?
+4. Center the tittle 
 
     Extras:
     a. Allow character selection
 
 GameOne: 
-2. Challenge up Game - maximum 10 levels?  
+1. DONE Adjust so game has max 10 levels
+2. DONE Challenge up Game - maximum 10 levels?  
 3. Set up score system based on feedback 
 
 GameTwo:
