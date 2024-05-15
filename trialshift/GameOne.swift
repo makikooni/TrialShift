@@ -56,7 +56,7 @@ class GameOne: SKScene {
         })
         
         
-        // Set up the background music audio node
+        // AUDIO
         musicAudioNode.autoplayLooped = true
         musicAudioNode.isPositional = false
         
@@ -74,7 +74,7 @@ class GameOne: SKScene {
         // Set up the physics world contact delegate
         physicsWorld.contactDelegate = self
         
-        // Set up background
+        // BACKGROUND
         let background = SKSpriteNode(imageNamed: "background_01")
         background.anchorPoint = CGPoint(x: 0, y: 0)
         background.zPosition = Layer.background.rawValue
@@ -82,7 +82,7 @@ class GameOne: SKScene {
         addChild(background)
         
         
-        // Set up foreground
+        // FOREGROUND
         let foreground = SKSpriteNode(imageNamed: "foreground_01")
         foreground.anchorPoint = CGPoint(x: 0, y: 0)
         foreground.zPosition = Layer.foreground.rawValue
@@ -94,7 +94,7 @@ class GameOne: SKScene {
         foreground.physicsBody?.affectedByGravity = false
         addChild(foreground)
         
-        // Set up the banner
+        // BANNER
         let banner = SKSpriteNode(imageNamed: "banner_01")
         banner.zPosition = Layer.background.rawValue + 1
         banner.position = CGPoint(x: frame.midX, y: viewTop() - 120)
@@ -112,13 +112,13 @@ class GameOne: SKScene {
         // Set up User Interface
         setupLabels()
         
-        // Set up player
+        // PLAYER
         player.setupConstraints(floor: foreground.frame.maxY)
         player.position = CGPoint(x: size.width/2, y: foreground.frame.maxY)
         addChild(player)
         player.walk()
         
-        //Show message
+        //VISUALS
         showMessage("TAP TO START")
         sendGreenToad()
         sendBrownToad()
@@ -293,9 +293,8 @@ class GameOne: SKScene {
     
     
     // MARK: - GAME FUNCTIONS
-    /* ####################################################################### */
-    /*                      GAME FUNCTIONS START HERE                          */
-    /* ####################################################################### */
+    /* ################################################################# */
+
     
     func spawnMultipleWater() {
         // Start player walk animation
