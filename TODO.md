@@ -1,39 +1,33 @@
 #  To-do
 
 Assets:
--
 
 General:
 1. Retain High Score to the main screen 
     a. DONE Prepare main screen
-    b. transfer data
-    c. update data after replay
+    c. transfer data
+    d. update data after replay
     
 2. Add starting screens with "How to Play"
 3. put spritekit into swift ui ?
-4. Center the tittle 
-
     Extras:
     a. Allow character selection
 
 GameOne: 
-1. DONE Adjust so game has max 10 levels
-2. DONE Challenge up Game - maximum 10 levels?  
-3. Set up score system based on feedback 
+1. Set up score system based on feedback (chris - 268)
+2. DONE Change score system to A-F after game over
 
 GameTwo:
-2. make clock start only after first click <- temporary solution
-3. Consider changing timer to 30 seconds instead of 60
-4. Set up score system based on feedback 
-( me - 92 )
+1. make clock start only after first click <- temporary solution
+2. Consider changing timer to 30 seconds instead of 60
+3. DONE Set up score system based on feedback  ( me - 92 )(chris - 35)
+2. DONE Change score system to A-F after game over
 
 GameThree:
 1. Make return button work
-2. DONE Update label positions
-3. DONE Repair back colours for Start Game and move to the middle
-4. Allow movement up and down (touch methods )
-5. DONE Make message vanished
-6. Allow up and down movement 
+2. Add Chefs
+3. Allow up and down movement 
     Extras:
     a. Live scalling of the player when it moves closer
-7. Add chefs
+4. Add collectible
+

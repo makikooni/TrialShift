@@ -13,6 +13,7 @@ class GameOne: SKScene {
     var backToMainScreenButton: SKSpriteNode?
     var gameInProgress = false
     var missed: Int = 0
+    var newscore = ""
     let player = Player()
     let playerSpeed: CGFloat = 1.5
     // Player movement
@@ -178,7 +179,6 @@ class GameOne: SKScene {
     }
     
     func hideMessage() {
-        // Remove message label if it exists
         if let messageLabel = childNode(withName: "//message") as? SKLabelNode {
             messageLabel.run(SKAction.sequence([SKAction.fadeOut(withDuration: 0.25), SKAction.removeFromParent()]))
         }
@@ -325,8 +325,12 @@ class GameOne: SKScene {
             numberOfDrops = 50
         case 8:
             numberOfDrops = 55
-        default:
+        case 9:
             numberOfDrops = 55
+        case 10:
+            numberOfDrops = 60
+        default:
+            numberOfDrops = 60
         }
         
         
@@ -466,35 +470,44 @@ class GameOne: SKScene {
         backToMainScreenButton = nil
     }
     
-    // Player FAILED level
+    //Score recount for the A-F grade system
+    func scoreRecount(){
+        if score >= 380{
+            newscore = "A"
+        } else if score >= 300{
+            newscore = "B"
+        } else if score >= 200{
+            newscore = "C"
+        } else if score >= 140{
+            newscore = "D"
+        } else if score >= 90{
+            newscore = "E"
+        } else if score <= 89{
+            newscore = "F"
+        }}
+    
+    // Game Over when player fails
     func gameOver() {
-        print(score)
+        scoreRecount()
+        //print(newscore)
         missed = 0
-        //Show message
         showMessage("GAME OVER")
-        // Update game states
-        gameInProgress = false
-        
-        // Start player die animation
         player.die()
-        // Remove repeatable action on main scene
+        
+        // Resetting all related game settings
+        gameInProgress = false
         removeAction(forKey: "drop")
-        // Loop through child nodes and stop actions on collectibles
         enumerateChildNodes(withName: "//co_*") { (node, stop) in
-            // Check if the node's name starts with "co_" and its texture is not equal to the excluded texture
             if let spriteNode = node as? SKSpriteNode,
                node.name?.starts(with: "co_") == true,
                let nodeTexture = spriteNode.texture,
                nodeTexture.description != SKTexture(imageNamed: "water_1").description {
-                // Stop and remove drops
-                node.removeAction(forKey: "drop") // remove action
-                node.physicsBody = nil // remove body so no collisions occur
-                // Remove the node from the scene
+                node.removeAction(forKey: "drop")
+                node.physicsBody = nil
                 node.removeFromParent()
             }
         }
-        
-        // Reset game
+    
         resetPlayerPosition()
         popRemainingDrops()
         setupBackToMainScreenButton()
@@ -502,36 +515,30 @@ class GameOne: SKScene {
         
     }
     
-    
+    // Game over when player wins
     func gameWon() {
-        print(score)
+        scoreRecount()
         missed = 0
         hideMessage()
-        //Show message
         showMessage("CONGRATS")
-        // Update game states
-        gameInProgress = false
+        
         
     //Happy player animation?
+    //------------------------------------------------
         
-        // Remove repeatable action on main scene
+        // Resetting all related game settings
+        gameInProgress = false
         removeAction(forKey: "drop")
-        // Loop through child nodes and stop actions on collectibles
         enumerateChildNodes(withName: "//co_*") { (node, stop) in
-            // Check if the node's name starts with "co_" and its texture is not equal to the excluded texture
             if let spriteNode = node as? SKSpriteNode,
                node.name?.starts(with: "co_") == true,
                let nodeTexture = spriteNode.texture,
                nodeTexture.description != SKTexture(imageNamed: "water_1").description {
-                // Stop and remove drops
-                node.removeAction(forKey: "drop") // remove action
-                node.physicsBody = nil // remove body so no collisions occur
-                // Remove the node from the scene
+                node.removeAction(forKey: "drop")
+                node.physicsBody = nil
                 node.removeFromParent()
             }
         }
-        
-        // Reset game
         resetPlayerPosition()
         popRemainingDrops()
         setupBackToMainScreenButton()
@@ -646,9 +653,6 @@ class GameOne: SKScene {
 
 
 // MARK: - COLLISION DETECTION
-/* ####################################################################### */
-/*                 COLLISION DETECTION METHODS START HERE                  */
-/* ####################################################################### */
 extension GameOne: SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
         

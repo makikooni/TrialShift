@@ -12,6 +12,7 @@ import GameplayKit
 
 class GameTwo: SKScene {
     let player = PlayerHead()
+    var newscore = ""
     var movingPlayer = false
     var righthand = false
     var gameover = false
@@ -372,9 +373,25 @@ class GameTwo: SKScene {
         backToMainScreenButton = nil
     }
     
+    func scoreRecount(){
+        if score >= 85{
+            newscore = "A"
+        } else if score >= 75{
+            newscore = "B"
+        } else if score >= 65{
+            newscore = "C"
+        } else if score >= 50{
+            newscore = "D"
+        } else if score >= 40{
+            newscore = "E"
+        } else if score <= 39{
+            newscore = "F"
+        }}
+    
     func gameOver() {
         gameover = true
-        print(score)
+        scoreRecount()
+        //print(newscore)
         showMessage("GAME OVER")
         stopTimer()
         isCollectibleActive = false
@@ -382,11 +399,6 @@ class GameTwo: SKScene {
 
     }
         
-    
-    
-    
-    
-    
     
     // MARK: - TOUCH HANDLING
     
