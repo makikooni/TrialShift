@@ -580,14 +580,14 @@ class GameOne: SKScene {
     func touchDown(atPoint pos: CGPoint) {
         let touchedNode = atPoint(pos)
         
-        if touchedNode.name == "player" {
+        //if touchedNode.name == "player" {}
             if gameInProgress == false {
                 spawnMultipleWater()
                 return
             }
             
             movingPlayer = true
-        }
+        
     }
     
     func touchMoved(toPoint pos: CGPoint) {

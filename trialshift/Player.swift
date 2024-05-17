@@ -161,7 +161,7 @@ class Player3: SKSpriteNode {
     }
 
     func setupConstraints(floor: CGFloat) {
-        let range = SKRange(lowerLimit: floor, upperLimit: floor)
+        let range = SKRange(lowerLimit: 275, upperLimit: 600)
         let lockToPlatform = SKConstraint.positionY(range)
         constraints = [ lockToPlatform ]
     }

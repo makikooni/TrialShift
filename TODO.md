@@ -25,9 +25,18 @@ GameTwo:
 
 GameThree:
 1. Make return button work
-2. Add Chefs
-3. Allow up and down movement 
+2. DONE  Allow up and down movement 
     Extras:
     a. Live scalling of the player when it moves closer
-4. Add collectible
+3. DONE Add 3x collectibles
+4. DONE Repair the start on click anywhere instead of player movement 
+5. Add collecting action for all collectibles
+6. Add chefs 
+7. Add chefs requests 
+8. Add game function
+9. DONE Run the clock
+10. Change name of labels
+11. Change variabales used in score label 
+12. Calculate score based on time passed 
+
 
