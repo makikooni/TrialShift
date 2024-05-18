@@ -12,6 +12,7 @@ import GameplayKit
 class GameOne: SKScene {
     var backToMainScreenButton: SKSpriteNode?
     var gameInProgress = false
+    var gameover = false
     var missed: Int = 0
     var newscore = ""
     let player = Player()
@@ -298,9 +299,9 @@ class GameOne: SKScene {
     
     func spawnMultipleWater() {
         
-        if level > 11 {
+        if level > 10 {
                 gameWon()
-            return
+            //return
             }
         
         // Start player walk animation
@@ -443,7 +444,7 @@ class GameOne: SKScene {
     }
     // Player PASSED level
     func nextLevel() {
-        if level < 11 {
+        if level < 10 {
             missed = 0
             //Show message
             showMessage("LEVELING UP!")
@@ -496,6 +497,7 @@ class GameOne: SKScene {
         
         // Resetting all related game settings
         gameInProgress = false
+        gameover = true
         removeAction(forKey: "drop")
         enumerateChildNodes(withName: "//co_*") { (node, stop) in
             if let spriteNode = node as? SKSpriteNode,
@@ -520,6 +522,7 @@ class GameOne: SKScene {
         scoreRecount()
         missed = 0
         hideMessage()
+        gameover = true
         showMessage("CONGRATS")
         
         
@@ -579,16 +582,16 @@ class GameOne: SKScene {
     
     func touchDown(atPoint pos: CGPoint) {
         let touchedNode = atPoint(pos)
-        
-        //if touchedNode.name == "player" {}
+        if !gameover{
+            //if touchedNode.name == "player" {}
             if gameInProgress == false {
                 spawnMultipleWater()
                 return
             }
             
             movingPlayer = true
-        
-    }
+            
+        }}
     
     func touchMoved(toPoint pos: CGPoint) {
         if movingPlayer == true {

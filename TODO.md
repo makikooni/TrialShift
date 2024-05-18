@@ -16,6 +16,8 @@ General:
 GameOne: 
 1. Set up score system based on feedback (chris - 268)
 2. DONE Change score system to A-F after game over
+3. DONE Remove "leveling up" message after beating 10th level
+4. DONE Repair possibility of playing in the background of gamewon/gamovver
 
 GameTwo:
 1. make clock start only after first click <- temporary solution
@@ -35,7 +37,7 @@ GameThree:
 7. Add chefs requests 
 8. Add game function
 9. DONE Run the clock
-10. Change name of labels
+10. DONE Change name of labels
 11. Change variabales used in score label 
 12. Calculate score based on time passed 
 13. Move middle bowl and character to the left
