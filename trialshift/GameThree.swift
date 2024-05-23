@@ -202,7 +202,7 @@ class GameThree: SKScene {
             let chefB = SKSpriteNode(texture: chefBFrames[0])
             chefB.zPosition = Layer.foreground.rawValue
             chefB.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-            chefB.position = CGPoint(x: frame.midX + 850,
+            chefB.position = CGPoint(x: frame.midX + 230,
                                      y: frame.minY + 110)
             let scaleFactor: CGFloat = 1.3
             chefB.setScale(scaleFactor)
@@ -220,7 +220,7 @@ class GameThree: SKScene {
             let chefC = SKSpriteNode(texture: chefCFrames[0])
             chefC.zPosition = Layer.foreground.rawValue
             chefC.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-            chefC.position = CGPoint(x: frame.midX + 230,
+            chefC.position = CGPoint(x: frame.midX + 850,
                                      y: frame.minY + 120)
             let scaleFactor: CGFloat = 1.3
             chefC.setScale(scaleFactor)
@@ -415,17 +415,17 @@ class GameThree: SKScene {
             case 1:
                 requestedCollectible = "milk"
                 let board = SKSpriteNode(imageNamed: "board_milk")
-                setupBoard(board)
+                setupBoard(board, chef: requestedby) // Pass the chef information
                 print("milk request")
             case 2:
                 requestedCollectible = "egg"
                 let board = SKSpriteNode(imageNamed: "board_egg")
-                setupBoard(board)
+                setupBoard(board, chef: requestedby) // Pass the chef information
                 print("egg request")
             case 3:
                 requestedCollectible = "strawberry"
                 let board = SKSpriteNode(imageNamed: "board_strawberry")
-                setupBoard(board)
+                setupBoard(board, chef: requestedby) // Pass the chef information
                 print("strawberry request")
             default:
                 break
@@ -435,14 +435,59 @@ class GameThree: SKScene {
         }
     }
 
-    func setupBoard(_ board: SKSpriteNode) {
-        // CHANGE POSITION BASED ON CHEF THAT REQUESTED
+
+    func setupBoard(_ board: SKSpriteNode, chef: String) {
+        // Set position based on chef
+        var position = CGPoint.zero
+        switch chef {
+        case "chefA":
+            position = CGPoint(x: frame.midX - 770, y: frame.midY - 470)
+        case "chefB":
+            position = CGPoint(x: frame.midX + 85, y: frame.midY - 470)
+        case "chefC":
+            position = CGPoint(x: frame.midX + 685, y: frame.midY - 470)
+        default:
+            break
+        }
+        
+        // Set up board
         board.zPosition = Layer.background.rawValue + 1
-        board.position = CGPoint(x: frame.midX  , y: frame.midY)
-        board.anchorPoint = CGPoint(x: 0.5, y: 1.0)
-        board.xScale = 1.5 // Increase width scale
-        board.yScale = 1.5
+        board.position = CGPoint(x: position.x, y: -500)
+        board.anchorPoint = CGPoint(x: 0.5, y: 0.0)
+        board.xScale = 1.0
+        board.yScale = 1.0
+        
+        let moveAction = SKAction.moveTo(y: position.y, duration: 1.0)
+        let rotationAction = SKAction.rotate(byAngle: CGFloat.pi / 12, duration: 0.5) // Rotate while moving
+        let groupAction = SKAction.group([moveAction, rotationAction]) // Perform both actions simultaneously
+        
+        board.run(groupAction)
+        
         addChild(board)
+    }
+
+
+    func removeBoard(_ board: SKSpriteNode) {
+        // Add rotation animation
+        let rotationAngle1: CGFloat = CGFloat.pi / -12 // First rotation angle
+        let rotateAction1 = SKAction.rotate(byAngle: rotationAngle1, duration: 0.5)
+        
+        let rotationAngle2: CGFloat = CGFloat.pi / 12 // Second rotation angle
+        let rotateAction2 = SKAction.rotate(byAngle: rotationAngle2, duration: 0.5)
+        
+        let rotateSequence = SKAction.sequence([rotateAction1, rotateAction2])
+        
+        // Wait action
+        let waitAction = SKAction.wait(forDuration: 0.5) // Adjust as needed
+        
+        // Remove from parent action
+        let removeAction = SKAction.removeFromParent()
+        
+        // Sequence of actions: rotate, wait, remove
+        let sequence = SKAction.sequence([rotateSequence, waitAction, removeAction])
+        
+        // Run the sequence on the board
+        board.run(sequence)
     }
 
     
