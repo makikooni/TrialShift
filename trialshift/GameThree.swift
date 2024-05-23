@@ -19,6 +19,9 @@ class GameThree: SKScene {
     var collectible: Collectible3?
     var color: Bool?
     let verticalSpeed: CGFloat = 150.0
+    var requestcount = 0
+    var requestedby = ""
+    var requestedCollectible = ""
     
     //LABELS
     var requestsLabel: SKLabelNode = SKLabelNode()
@@ -58,7 +61,8 @@ class GameThree: SKScene {
         musicAudioNode.isPositional = false
         addChild(musicAudioNode)
         musicAudioNode.run(SKAction.changeVolume(to: 0.0, duration: 0.0))
-        run(SKAction.wait(forDuration: 1.0), completion: { [unowned self] in self.audioEngine.mainMixerNode.outputVolume = 1.0
+        run(SKAction.wait(forDuration: 1.0), completion: { [unowned self] in
+            self.audioEngine.mainMixerNode.outputVolume = 1.0
             self.musicAudioNode.run(SKAction.changeVolume(to: 0.1, duration: 2.0))
         })
         
@@ -384,24 +388,52 @@ class GameThree: SKScene {
             
         }
     }
-/*
+
     func spawnRequest(){
-        gameInProgress = true
-        let random = Int.random(in: 1...3)
-        
-        switch random {
-        case 1:
-            chefA
-        case 2:
-            chefB
-        case 3:
-            chefC
-        default:
-            break
+        //check if max amount of requests was not exceeded
+        if gameInProgress == true && requestcount < 20{
+            requestcount += 1
+            let randomChef = Int.random(in: 1...3)
+            
+            switch randomChef {
+            case 1:
+                //chefA // animation
+                requestedby = "chefA"
+                print("chef a request")
+            case 2:
+                //chefB
+                requestedby = "chefB"
+                print("chef b request")
+            case 3:
+                //chefC
+                requestedby = "chefC"
+                print("chef c request")
+            default:
+                break
+            }
+            
+            let randomCollectible = Int.random(in: 1...3)
+            
+            switch randomCollectible {
+            case 1:
+                requestedCollectible = "milk"
+                print("milk request")
+            case 2:
+                requestedCollectible = "egg"
+                print("egg request")
+            case 3:
+                requestedCollectible = "strawberry"
+                print("strawberry request")
+            default:
+                break
+                
+            }
         }
-        
+        else {
+            gameOver()
+        }
     }
-*/
+    
     func gameLogic(){
         gameInProgress = true
         spawnCollectible_strawberry()
@@ -410,11 +442,43 @@ class GameThree: SKScene {
         showChefA()
         showChefB()
         showChefC()
-        //spawnRequest()
+        spawnRequest()
         startTimer()
-    }
-    
-    
+        
+        //check if request was fullfilled
+        if requestedby == "chefA" {
+            if requestedCollectible == "milk"{
+                return
+            }
+            else if requestedCollectible == "egg"{
+                return
+            }
+            else if requestedCollectible == "strawberry"{
+                return
+            }
+        } else if requestedby == "chefB" {
+            if requestedCollectible == "milk"{
+                return
+            }
+            else if requestedCollectible == "egg"{
+                return
+            }
+            else if requestedCollectible == "strawberry"{
+                return
+            }
+        } else if requestedby == "chefC" {
+            if requestedCollectible == "milk"{
+                return
+            }
+            else if requestedCollectible == "egg"{
+                return
+            }
+            else if requestedCollectible == "strawberry"{
+                return
+            }
+            
+        }}
+        
     func setupBackToMainScreenButton() {
         // Configure the button
         backToMainScreenButton = SKSpriteNode(imageNamed: "backToMainScreenButton")
