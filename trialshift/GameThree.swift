@@ -389,50 +389,62 @@ class GameThree: SKScene {
         }
     }
 
-    func spawnRequest(){
-        //check if max amount of requests was not exceeded
-        if gameInProgress == true && requestcount < 20{
+    func spawnRequest() {
+        // Check if max amount of requests was not exceeded
+        if gameInProgress && requestcount < 20 {
             requestcount += 1
             let randomChef = Int.random(in: 1...3)
-            
+
             switch randomChef {
             case 1:
-                //chefA // animation
                 requestedby = "chefA"
                 print("chef a request")
             case 2:
-                //chefB
                 requestedby = "chefB"
                 print("chef b request")
             case 3:
-                //chefC
                 requestedby = "chefC"
                 print("chef c request")
             default:
                 break
             }
-            
+
             let randomCollectible = Int.random(in: 1...3)
-            
+
             switch randomCollectible {
             case 1:
                 requestedCollectible = "milk"
+                let board = SKSpriteNode(imageNamed: "board_milk")
+                setupBoard(board)
                 print("milk request")
             case 2:
                 requestedCollectible = "egg"
+                let board = SKSpriteNode(imageNamed: "board_egg")
+                setupBoard(board)
                 print("egg request")
             case 3:
                 requestedCollectible = "strawberry"
+                let board = SKSpriteNode(imageNamed: "board_strawberry")
+                setupBoard(board)
                 print("strawberry request")
             default:
                 break
-                
             }
-        }
-        else {
+        } else {
             gameOver()
         }
     }
+
+    func setupBoard(_ board: SKSpriteNode) {
+        // CHANGE POSITION BASED ON CHEF THAT REQUESTED
+        board.zPosition = Layer.background.rawValue + 1
+        board.position = CGPoint(x: frame.midX  , y: frame.midY)
+        board.anchorPoint = CGPoint(x: 0.5, y: 1.0)
+        board.xScale = 1.5 // Increase width scale
+        board.yScale = 1.5
+        addChild(board)
+    }
+
     
     func gameLogic(){
         gameInProgress = true
