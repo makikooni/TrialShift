@@ -18,10 +18,11 @@ enum CollectibleType3: String {
 
 class Collectible3: SKSpriteNode {
     // MARK: - PROPERTIES
-    private var collectibleType3: CollectibleType3 = .none
+    private(set) var collectibleType3: CollectibleType3 = .none
+
     //CHANGE SOUNDS
     private let playCollectSound = SKAction.playSoundFileNamed("collect.wav", waitForCompletion: false)
-    
+
     
     // MARK: - INIT
     init(collectibleType3: CollectibleType3) {
@@ -75,5 +76,10 @@ class Collectible3: SKSpriteNode {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func getCollectibleType() -> CollectibleType3 {
+            return collectibleType3
+        }
+
 }
     

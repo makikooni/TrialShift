@@ -27,13 +27,14 @@ GameTwo:
 
 GameThree:
 1. Make return button work
-2. Add collecting action for all collectibles
-3. Add game main functionality ( board shows, go pick up, return, next board)
 4. Change variabales used in score label 
 5. Calculate score based on time passed 
 6. Move middle bowl and character to the left
-7. DONE Add Boards placement based on chef requests. 
 8. Add sounds upon completion of request
+9. Add rubbish to remove wrongly collected items
+10. Cut requests to 10 ? 
+11. Remove issue with not vanishing boards 
+
     Extras:
     a. Live scalling of the player when it moves closer
     b. Chef smiles/jumps up upon completion of request

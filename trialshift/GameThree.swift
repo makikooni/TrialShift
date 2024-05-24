@@ -8,6 +8,9 @@ import GameplayKit
 
 class GameThree: SKScene {
     let player = Player3()
+    var chefANode: SKSpriteNode?
+    var chefBNode: SKSpriteNode?
+    var chefCNode: SKSpriteNode?
     var gameInProgress = false
     var gameover = false
     var isCollectibleActive = true
@@ -17,11 +20,13 @@ class GameThree: SKScene {
     var timer : Timer?
     var backToMainScreenButton: SKSpriteNode?
     var collectible: Collectible3?
-    var color: Bool?
     let verticalSpeed: CGFloat = 150.0
     var requestcount = 0
+    
     var requestedby = ""
     var requestedCollectible = ""
+    var holding = ""
+    var collected = false
     
     //LABELS
     var requestsLabel: SKLabelNode = SKLabelNode()
@@ -55,7 +60,7 @@ class GameThree: SKScene {
     override func didMove(to view: SKView) {
         
         player.name = "player"
-
+        
         // AUDIO
         musicAudioNode.autoplayLooped = true
         musicAudioNode.isPositional = false
@@ -90,7 +95,7 @@ class GameThree: SKScene {
         // check minY later here - >
         player.position = CGPoint(x: size.width/2, y: frame.minY + 370)
         addChild(player)
-
+        
         player.walk()
         
         // VISUALS
@@ -170,7 +175,7 @@ class GameThree: SKScene {
         }
     }
     
-  
+    
     func showChefA(){
         let chefAAtlas = SKTextureAtlas(named: "ChefA")
         var chefAFrames: [SKTexture] = []
@@ -184,49 +189,53 @@ class GameThree: SKScene {
         chefA.zPosition = Layer.foreground.rawValue
         chefA.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         chefA.position = CGPoint(x: frame.midX - 620,
-                                y: frame.minY + 110)
+                                 y: frame.minY + 110)
         let scaleFactor: CGFloat = 1.3
         chefA.setScale(scaleFactor)
         addChild(chefA)
-        print(chefA.position)
+        chefANode = chefA
     }
+    
+    func showChefB(){
+        let chefBAtlas = SKTextureAtlas(named: "ChefB")
+        var chefBFrames: [SKTexture] = []
+        for index in 0...3 {
+            let textureName = "chefB_\(index)"
+            chefBFrames.append(chefBAtlas.textureNamed(textureName))
+        }
         
-        func showChefB(){
-            let chefBAtlas = SKTextureAtlas(named: "ChefB")
-            var chefBFrames: [SKTexture] = []
-            for index in 0...3 {
-                let textureName = "chefB_\(index)"
-                chefBFrames.append(chefBAtlas.textureNamed(textureName))
-            }
-            
-            let chefB = SKSpriteNode(texture: chefBFrames[0])
-            chefB.zPosition = Layer.foreground.rawValue
-            chefB.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-            chefB.position = CGPoint(x: frame.midX + 230,
-                                     y: frame.minY + 110)
-            let scaleFactor: CGFloat = 1.3
-            chefB.setScale(scaleFactor)
-            addChild(chefB)
+        let chefB = SKSpriteNode(texture: chefBFrames[0])
+        chefB.zPosition = Layer.foreground.rawValue
+        chefB.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        chefB.position = CGPoint(x: frame.midX + 230,
+                                 y: frame.minY + 110)
+        let scaleFactor: CGFloat = 1.3
+        chefB.setScale(scaleFactor)
+        addChild(chefB)
+        chefBNode = chefB
+        
+    }
+    
+    func showChefC(){
+        let chefCAtlas = SKTextureAtlas(named: "ChefC")
+        var chefCFrames: [SKTexture] = []
+        
+        for index in 0...3 {
+            let textureName = "chefC_\(index)"
+            chefCFrames.append(chefCAtlas.textureNamed(textureName))
         }
-
-        func showChefC(){
-            let chefCAtlas = SKTextureAtlas(named: "ChefC")
-            var chefCFrames: [SKTexture] = []
-            
-            for index in 0...3 {
-                let textureName = "chefC_\(index)"
-                chefCFrames.append(chefCAtlas.textureNamed(textureName))
-            }
-            let chefC = SKSpriteNode(texture: chefCFrames[0])
-            chefC.zPosition = Layer.foreground.rawValue
-            chefC.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-            chefC.position = CGPoint(x: frame.midX + 850,
-                                     y: frame.minY + 120)
-            let scaleFactor: CGFloat = 1.3
-            chefC.setScale(scaleFactor)
-            addChild(chefC)
-        }
-
+        let chefC = SKSpriteNode(texture: chefCFrames[0])
+        chefC.zPosition = Layer.foreground.rawValue
+        chefC.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        chefC.position = CGPoint(x: frame.midX + 850,
+                                 y: frame.minY + 120)
+        let scaleFactor: CGFloat = 1.3
+        chefC.setScale(scaleFactor)
+        addChild(chefC)
+        chefCNode = chefC
+        
+    }
+    
     func sendGreenToad() {
         // Load sprite atlas
         let toadAtlas = SKTextureAtlas(named: "GreenToad")
@@ -334,65 +343,218 @@ class GameThree: SKScene {
             self.run(SKAction.sequence([wait, codeBlock]))
         })
     }
+    func checkProximityAndCollect() {
+        // Iterate over all child nodes in the scene
+        for case let collectible as Collectible3 in children {
+            let proximityThreshold: CGFloat = 80.0 // Define a suitable proximity threshold
+            
+            let distance = hypot(player.position.x - collectible.position.x, player.position.y - collectible.position.y)
+            
+            if distance < proximityThreshold {
+                // Perform the action when the player is near the collectible
+                collectItem(collectible)
+            }
+        }
+    }
+    
+    func checkProximityToChefs() {
+        let proximityThreshold: CGFloat = 100.0 // Define a suitable proximity threshold
+        
+        // Assuming you have references to ChefA, ChefB, and ChefC nodes
+        if let chefA = chefANode, let chefB = chefBNode, let chefC = chefCNode {
+            let distanceToChefA = hypot(player.position.x - chefA.position.x, player.position.y - chefA.position.y)
+            let distanceToChefB = hypot(player.position.x - chefB.position.x, player.position.y - chefB.position.y)
+            let distanceToChefC = hypot(player.position.x - chefC.position.x, player.position.y - chefC.position.y)
+            
+            // Check proximity to ChefA
+            if distanceToChefA < proximityThreshold {
+                checkFulfillment()
+            }
+            
+            // Check proximity to ChefB
+            if distanceToChefB < proximityThreshold {
+                checkFulfillment()
+            }
+            
+            // Check proximity to ChefC
+            if distanceToChefC < proximityThreshold {
+                checkFulfillment()
+            }
+        }
+    }
+    
+    func collectItem(_ collectible: Collectible3) {
+        // Check if the collectible has already been collected
+        guard !collected else { return }
+        
+        // Process the collection based on the type of collectible
+        switch collectible.collectibleType3 {
+        case .strawberry:
+            holding = "strawberry"
+            print("Collected strawberry")
+            // Additional actions specific to strawberry collection
+        case .egg:
+            holding = "egg"
+            print("Collected egg")
+            // Additional actions specific to egg collection
+        case .milk:
+            holding = "milk"
+            print("Collected milk")
+            // Additional actions specific to milk collection
+        case .none:
+            break
+        }
+        
+        // Common actions for any collectible
+        collected = true
+        collectible.removeFromParent()
+        
+    }
+    
+    func checkFulfillment(){
+        if holding != ""{
+            
+            if requestedby == "chefA" {
+                if requestedCollectible == "milk" && holding == "milk"{
+                    print("chefA happy milk")
+                    spawnRequest()
+                }
+                else if requestedCollectible == "egg" && holding == "egg"{
+                    print("chefA happy egg")
+                    spawnRequest()
+                }
+                else if requestedCollectible == "strawberry" && holding == "strawberry"{
+                    print("chefA happy str")
+                    spawnRequest()
+                }
+            } else if requestedby == "chefB" {
+                if requestedCollectible == "milk" && holding == "milk"{
+                    print("chefB happy milk")
+                    spawnRequest()
+                }
+                else if requestedCollectible == "egg" && holding == "egg"{
+                    print("chefB happy egg")
+                    spawnRequest()
+                }
+                else if requestedCollectible == "strawberry" && holding == "strawberry"{
+                    print("chefB happy str")
+                    spawnRequest()
+                }
+            } else if requestedby == "chefC" {
+                if requestedCollectible == "milk" && holding == "milk"{
+                    print("chefC happy milk")
+                    spawnRequest()
+                }
+                else if requestedCollectible == "egg" && holding == "egg"{
+                    print("chefC happy egg")
+                    spawnRequest()
+                }
+                else if requestedCollectible == "strawberry" && holding == "strawberry"{
+                    print("chefC happy str")
+                    spawnRequest()
+                    
+                    
+                }
+                
+                
+            }
+            //changeBoardName()
+            removeBoard()
+            respawnCollectibles()
+        }
+    }
+
+    /*
+    func changeBoardName() {
+        // Iterate through all children nodes
+        for case let node as SKSpriteNode in children {
+            // Check if the node is a board
+                node.name = "board"
+            }
+        }
+
+*/
+
+    override func update(_ currentTime: TimeInterval) {
+        if movingPlayer {
+            if let lastPosition = lastPosition {
+                let deltaX = player.position.x - lastPosition.x
+                player.xScale = deltaX > 0 ? abs(player.xScale) : -abs(player.xScale)
+            }
+            lastPosition = player.position
+        }
+        
+        // Call the proximity check method
+        checkProximityAndCollect()
+        checkProximityToChefs()
+        
+    }
+
     
     // MARK: - GAME FUNCTIONS
     /* ################################################################# */
     
-    func spawnCollectible_strawberry(){
+    func spawnCollectible_strawberry() {
         guard isCollectibleActive else { return }
-        var collectibleType: CollectibleType3 = .strawberry
-        // Create a new collectible instance
-        collectible = Collectible3(collectibleType3: collectibleType)
+        let collectibleType: CollectibleType3 = .strawberry
+        // Create a new strawberry collectible instance
+        let strawberryCollectible = Collectible3(collectibleType3: collectibleType)
         
-        // Add collectible to scene
-        if let collectible = collectible {
-            addChild(collectible)
-            //count += 1
-            print("Spawned")
-            print(collectible.position)
-            isCollectibleActive = true
-            
-        }
+        // Add strawberry collectible to scene
+        addChild(strawberryCollectible)
+        
+        print("Spawned strawberry collectible")
+        
+        isCollectibleActive = true
+    }
+
+    func spawnCollectible_egg() {
+        guard isCollectibleActive else { return }
+        let collectibleType: CollectibleType3 = .egg
+        // Create a new egg collectible instance
+        let eggCollectible = Collectible3(collectibleType3: collectibleType)
+        
+        // Add egg collectible to scene
+        addChild(eggCollectible)
+        
+        print("Spawned egg collectible")
+        
+        isCollectibleActive = true
+    }
+
+    func spawnCollectible_milk() {
+        guard isCollectibleActive else { return }
+        let collectibleType: CollectibleType3 = .milk
+        // Create a new milk collectible instance
+        let milkCollectible = Collectible3(collectibleType3: collectibleType)
+        
+        // Add milk collectible to scene
+        addChild(milkCollectible)
+        
+        print("Spawned milk collectible")
+        
+        isCollectibleActive = true
     }
     
-    func spawnCollectible_egg(){
-        guard isCollectibleActive else { return }
-        var collectibleType: CollectibleType3 = .egg
-        // Create a new collectible instance
-        collectible = Collectible3(collectibleType3: collectibleType)
-        
-        // Add collectible to scene
-        if let collectible = collectible {
-            addChild(collectible)
-            //count += 1
-            print("Spawned")
-            print(collectible.position)
-            isCollectibleActive = true
-            
-        }
-    }
-    
-    func spawnCollectible_milk(){
-        guard isCollectibleActive else { return }
-        var collectibleType: CollectibleType3 = .milk
-        // Create a new collectible instance
-        collectible = Collectible3(collectibleType3: collectibleType)
-        
-        // Add collectible to scene
-        if let collectible = collectible {
-            addChild(collectible)
-            //count += 1
-            print("Spawned")
-            print(collectible.position)
-            isCollectibleActive = true
-            
-        }
+    func respawnCollectibles() {
+        //remove all remaining collectibles to avoid duplication on screen
+        for case let collectible as Collectible3 in children {
+
+             collectible.removeFromParent()
+         }
+        spawnCollectible_strawberry()
+        spawnCollectible_egg()
+        spawnCollectible_milk()
     }
 
     func spawnRequest() {
+        collected = false
+        holding = ""
+
         // Check if max amount of requests was not exceeded
         if gameInProgress && requestcount < 20 {
             requestcount += 1
+            requests -= 1
             let randomChef = Int.random(in: 1...3)
 
             switch randomChef {
@@ -457,6 +619,8 @@ class GameThree: SKScene {
         board.xScale = 1.0
         board.yScale = 1.0
         
+
+        
         let moveAction = SKAction.moveTo(y: position.y, duration: 1.0)
         let rotationAction = SKAction.rotate(byAngle: CGFloat.pi / 12, duration: 0.5) // Rotate while moving
         let groupAction = SKAction.group([moveAction, rotationAction]) // Perform both actions simultaneously
@@ -467,27 +631,33 @@ class GameThree: SKScene {
     }
 
 
-    func removeBoard(_ board: SKSpriteNode) {
-        // Add rotation animation
-        let rotationAngle1: CGFloat = CGFloat.pi / -12 // First rotation angle
-        let rotateAction1 = SKAction.rotate(byAngle: rotationAngle1, duration: 0.5)
-        
-        let rotationAngle2: CGFloat = CGFloat.pi / 12 // Second rotation angle
-        let rotateAction2 = SKAction.rotate(byAngle: rotationAngle2, duration: 0.5)
-        
-        let rotateSequence = SKAction.sequence([rotateAction1, rotateAction2])
-        
-        // Wait action
-        let waitAction = SKAction.wait(forDuration: 0.5) // Adjust as needed
-        
-        // Remove from parent action
-        let removeAction = SKAction.removeFromParent()
-        
-        // Sequence of actions: rotate, wait, remove
-        let sequence = SKAction.sequence([rotateSequence, waitAction, removeAction])
-        
-        // Run the sequence on the board
-        board.run(sequence)
+    func removeBoard() {
+        for case let node as SKSpriteNode in children {
+            print("Checking node with name: \(node.name ?? "No Name")")
+            // Check if the node is a board (assuming the name of the board node is "board")
+            if node.name == "board" {
+                // Add rotation animation
+                let rotationAngle1: CGFloat = CGFloat.pi / -12 // First rotation angle
+                let rotateAction1 = SKAction.rotate(byAngle: rotationAngle1, duration: 0.5)
+                
+                let rotationAngle2: CGFloat = CGFloat.pi / 12 // Second rotation angle
+                let rotateAction2 = SKAction.rotate(byAngle: rotationAngle2, duration: 0.5)
+                
+                let rotateSequence = SKAction.sequence([rotateAction1, rotateAction2])
+                
+                // Wait action
+                let waitAction = SKAction.wait(forDuration: 0.5) // Adjust as needed
+                
+                // Remove from parent action
+                let removeAction = SKAction.removeFromParent()
+                
+                // Sequence of actions: rotate, wait, remove
+                let sequence = SKAction.sequence([rotateSequence, waitAction, removeAction])
+                
+                // Run the sequence on the board node
+                node.run(sequence)
+            }
+        }
     }
 
     
@@ -502,39 +672,7 @@ class GameThree: SKScene {
         spawnRequest()
         startTimer()
         
-        //check if request was fullfilled
-        if requestedby == "chefA" {
-            if requestedCollectible == "milk"{
-                return
-            }
-            else if requestedCollectible == "egg"{
-                return
-            }
-            else if requestedCollectible == "strawberry"{
-                return
-            }
-        } else if requestedby == "chefB" {
-            if requestedCollectible == "milk"{
-                return
-            }
-            else if requestedCollectible == "egg"{
-                return
-            }
-            else if requestedCollectible == "strawberry"{
-                return
-            }
-        } else if requestedby == "chefC" {
-            if requestedCollectible == "milk"{
-                return
-            }
-            else if requestedCollectible == "egg"{
-                return
-            }
-            else if requestedCollectible == "strawberry"{
-                return
-            }
-            
-        }}
+    }
         
     func setupBackToMainScreenButton() {
         // Configure the button
