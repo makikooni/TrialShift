@@ -12,12 +12,12 @@
 		FB7433052B9F447B0093ED6F /* bubbles.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FB7432FF2B9F447B0093ED6F /* bubbles.mp3 */; };
 		FB7433062B9F447B0093ED6F /* collect.wav in Resources */ = {isa = PBXBuildFile; fileRef = FB7433002B9F447B0093ED6F /* collect.wav */; };
 		FB7433072B9F447B0093ED6F /* miss.wav in Resources */ = {isa = PBXBuildFile; fileRef = FB7433012B9F447B0093ED6F /* miss.wav */; };
-		FB7433082B9F447B0093ED6F /* blob_mumble-2.wav in Resources */ = {isa = PBXBuildFile; fileRef = FB7433022B9F447B0093ED6F /* blob_mumble-2.wav */; };
-		FB7433092B9F447B0093ED6F /* blob_mumble-3.wav in Resources */ = {isa = PBXBuildFile; fileRef = FB7433032B9F447B0093ED6F /* blob_mumble-3.wav */; };
-		FB74330A2B9F447B0093ED6F /* blob_mumble-1.wav in Resources */ = {isa = PBXBuildFile; fileRef = FB7433042B9F447B0093ED6F /* blob_mumble-1.wav */; };
 		FB76CE7D2BA07CB100DB8BBF /* kitchen.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FB76CE7C2BA07CB100DB8BBF /* kitchen.mp3 */; };
 		FB76CE7F2BA0838100DB8BBF /* music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FB76CE7E2BA0838100DB8BBF /* music.mp3 */; };
 		FB7E68402BBF189600D07CD6 /* Collectible2.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7E683F2BBF189600D07CD6 /* Collectible2.swift */; };
+		FB82BF6A2C01064F0011AE9A /* item_given.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FB82BF692C01064F0011AE9A /* item_given.mp3 */; };
+		FB82BF6C2C0106A90011AE9A /* item_collected.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FB82BF6B2C0106A90011AE9A /* item_collected.mp3 */; };
+		FB82BF6E2C0106FA0011AE9A /* game_won.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FB82BF6D2C0106FA0011AE9A /* game_won.mp3 */; };
 		FBB0AD202BE5835D00398031 /* GameThree.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB0AD1F2BE5835D00398031 /* GameThree.swift */; };
 		FBC561712BBE04A800D8AF8F /* GameTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC561702BBE04A800D8AF8F /* GameTwo.swift */; };
 		FBEB51482BA1D96B006A7943 /* quak.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FBEB51472BA1D96B006A7943 /* quak.mp3 */; };
@@ -39,12 +39,12 @@
 		FB7432FF2B9F447B0093ED6F /* bubbles.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bubbles.mp3; sourceTree = "<group>"; };
 		FB7433002B9F447B0093ED6F /* collect.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = collect.wav; sourceTree = "<group>"; };
 		FB7433012B9F447B0093ED6F /* miss.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = miss.wav; sourceTree = "<group>"; };
-		FB7433022B9F447B0093ED6F /* blob_mumble-2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "blob_mumble-2.wav"; sourceTree = "<group>"; };
-		FB7433032B9F447B0093ED6F /* blob_mumble-3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "blob_mumble-3.wav"; sourceTree = "<group>"; };
-		FB7433042B9F447B0093ED6F /* blob_mumble-1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "blob_mumble-1.wav"; sourceTree = "<group>"; };
 		FB76CE7C2BA07CB100DB8BBF /* kitchen.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = kitchen.mp3; sourceTree = "<group>"; };
 		FB76CE7E2BA0838100DB8BBF /* music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = music.mp3; sourceTree = "<group>"; };
 		FB7E683F2BBF189600D07CD6 /* Collectible2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collectible2.swift; sourceTree = "<group>"; };
+		FB82BF692C01064F0011AE9A /* item_given.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = item_given.mp3; sourceTree = "<group>"; };
+		FB82BF6B2C0106A90011AE9A /* item_collected.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = item_collected.mp3; sourceTree = "<group>"; };
+		FB82BF6D2C0106FA0011AE9A /* game_won.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = game_won.mp3; sourceTree = "<group>"; };
 		FBB0AD1F2BE5835D00398031 /* GameThree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameThree.swift; sourceTree = "<group>"; };
 		FBC561702BBE04A800D8AF8F /* GameTwo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTwo.swift; sourceTree = "<group>"; };
 		FBEB51472BA1D96B006A7943 /* quak.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = quak.mp3; sourceTree = "<group>"; };
@@ -78,10 +78,10 @@
 				FB76CE7C2BA07CB100DB8BBF /* kitchen.mp3 */,
 				FB7432FF2B9F447B0093ED6F /* bubbles.mp3 */,
 				FB7433002B9F447B0093ED6F /* collect.wav */,
+				FB82BF692C01064F0011AE9A /* item_given.mp3 */,
 				FB7433012B9F447B0093ED6F /* miss.wav */,
-				FB7433022B9F447B0093ED6F /* blob_mumble-2.wav */,
-				FB7433032B9F447B0093ED6F /* blob_mumble-3.wav */,
-				FB7433042B9F447B0093ED6F /* blob_mumble-1.wav */,
+				FB82BF6B2C0106A90011AE9A /* item_collected.mp3 */,
+				FB82BF6D2C0106FA0011AE9A /* game_won.mp3 */,
 			);
 			path = Sounds;
 			sourceTree = "<group>";
@@ -192,16 +192,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB7433082B9F447B0093ED6F /* blob_mumble-2.wav in Resources */,
-				FB74330A2B9F447B0093ED6F /* blob_mumble-1.wav in Resources */,
 				FB7433072B9F447B0093ED6F /* miss.wav in Resources */,
+				FB82BF6C2C0106A90011AE9A /* item_collected.mp3 in Resources */,
 				FB7433062B9F447B0093ED6F /* collect.wav in Resources */,
+				FB82BF6E2C0106FA0011AE9A /* game_won.mp3 in Resources */,
 				FB7433052B9F447B0093ED6F /* bubbles.mp3 in Resources */,
 				FB76CE7D2BA07CB100DB8BBF /* kitchen.mp3 in Resources */,
 				FBF563C42B9A89ED007EC769 /* Main.storyboard in Resources */,
 				FB76CE7F2BA0838100DB8BBF /* music.mp3 in Resources */,
-				FB7433092B9F447B0093ED6F /* blob_mumble-3.wav in Resources */,
 				FBF563C62B9A89EE007EC769 /* Assets.xcassets in Resources */,
+				FB82BF6A2C01064F0011AE9A /* item_given.mp3 in Resources */,
 				FBEB51482BA1D96B006A7943 /* quak.mp3 in Resources */,
 				FBF563C92B9A89EE007EC769 /* LaunchScreen.storyboard in Resources */,
 			);

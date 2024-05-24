@@ -20,9 +20,6 @@ class Collectible3: SKSpriteNode {
     // MARK: - PROPERTIES
     private(set) var collectibleType3: CollectibleType3 = .none
 
-    //CHANGE SOUNDS
-    private let playCollectSound = SKAction.playSoundFileNamed("collect.wav", waitForCompletion: false)
-
     
     // MARK: - INIT
     init(collectibleType3: CollectibleType3) {
@@ -80,6 +77,8 @@ class Collectible3: SKSpriteNode {
     func getCollectibleType() -> CollectibleType3 {
             return collectibleType3
         }
+    
+ 
 
 }
     

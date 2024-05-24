@@ -61,16 +61,33 @@ class GameThree: SKScene {
         
         player.name = "player"
         
+      
+        // Decrease the audio engine's volume
+        audioEngine.mainMixerNode.outputVolume = 0.0
+        
+        // Run a delayed action to add kitchen audio to the scene
+        run(SKAction.wait(forDuration: 1.5), completion: { [unowned self] in
+            kitchenAudioNode.run(SKAction.changeVolume(to: 1.0, duration: 0.0))
+            self.kitchenAudioNode.autoplayLooped = true
+            self.addChild(self.kitchenAudioNode)
+        })
+        
+        
         // AUDIO
         musicAudioNode.autoplayLooped = true
         musicAudioNode.isPositional = false
+        
+        
+        // Add the audio node to the scene
         addChild(musicAudioNode)
+        
+        // Use an action to adjust the audio node's volume to 0
         musicAudioNode.run(SKAction.changeVolume(to: 0.0, duration: 0.0))
-        run(SKAction.wait(forDuration: 1.0), completion: { [unowned self] in
-            self.audioEngine.mainMixerNode.outputVolume = 1.0
+        // Run a delayed action on the scene that fades in the music
+        run(SKAction.wait(forDuration: 1.0), completion: { [unowned self] in self.audioEngine.mainMixerNode.outputVolume = 1.0
             self.musicAudioNode.run(SKAction.changeVolume(to: 0.1, duration: 2.0))
         })
-        
+
         
         // BACKGROUND
         let background = SKSpriteNode(imageNamed: "background_04")
@@ -252,7 +269,7 @@ class GameThree: SKScene {
         toad.zPosition = Layer.foreground.rawValue
         toad.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         toad.position = CGPoint(x: frame.maxX + toad.size.width,
-                                y: frame.midY - 350)
+                                y: frame.midY + 110)
         let scaleFactor: CGFloat = 0.8
         toad.setScale(scaleFactor)
         addChild(toad)
@@ -310,7 +327,7 @@ class GameThree: SKScene {
         toad.zPosition = Layer.foreground.rawValue
         toad.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         toad.position = CGPoint(x: frame.maxX + toad.size.width,
-                                y: frame.midY - 450)
+                                y: frame.midY - 100)
         let scaleFactor: CGFloat = 3.0
         toad.setScale(scaleFactor)
         addChild(toad)
@@ -405,8 +422,11 @@ class GameThree: SKScene {
             break
         }
         
-        // Common actions for any collectible
+        // Common actions for any collectible (var setting, sound playback, removal)
         collected = true
+        let playSoundAction = SKAction.playSoundFileNamed("item_collected.mp3", waitForCompletion: false)
+                run(playSoundAction)
+                print("Playing Sound")
         collectible.removeFromParent()
         
     }
@@ -459,6 +479,10 @@ class GameThree: SKScene {
                 
             }
             //changeBoardName()
+            
+            //Common actions for all ( sound, removal of board, respawning)
+            let playSoundAction = SKAction.playSoundFileNamed("item_given.mp3", waitForCompletion: false)
+                    run(playSoundAction)
             removeBoard()
             respawnCollectibles()
         }
@@ -666,6 +690,8 @@ class GameThree: SKScene {
         spawnCollectible_strawberry()
         spawnCollectible_egg()
         spawnCollectible_milk()
+        sendGreenToad()
+        sendBrownToad()
         showChefA()
         showChefB()
         showChefC()
@@ -709,8 +735,11 @@ class GameThree: SKScene {
     
     func gameOver() {
         gameover = true
+        let playSoundAction = SKAction.playSoundFileNamed("game_won.mp3", waitForCompletion: false)
+                run(playSoundAction)
+                print("Playing Sound")
         print(score)
-        showMessage("GAME OVER")
+        showMessage("CONGRATS")
         stopTimer()
         isCollectibleActive = false
         setupBackToMainScreenButton()

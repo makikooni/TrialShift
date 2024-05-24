@@ -520,6 +520,9 @@ class GameOne: SKScene {
     // Game over when player wins
     func gameWon() {
         scoreRecount()
+        let playSoundAction = SKAction.playSoundFileNamed("game_won.mp3", waitForCompletion: false)
+                run(playSoundAction)
+                print("Playing Sound")
         missed = 0
         hideMessage()
         gameover = true
