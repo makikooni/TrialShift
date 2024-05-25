@@ -18,26 +18,25 @@ General:
 
 GameOne: 
 1. Set up score system based on feedback (chris - 268)
-2. Add sound for GameOver
+2. DONE Add sound for GameOver
 3. DONE Add sound for GameWon
 
 GameTwo:
 1. make clock start only after first click <- temporary solution
 2. Consider changing timer to 30 seconds instead of 60 ( me - 92 )(chris - 35)
 3. Add sounds for correct/incorrect
-4. Add sound for end of game 
+4. DONE Add sound for end of game 
 
 GameThree:
 1. Make return button work THIS 
 2. Change variabales used in score label 
-3. Calculate score based amount of requests fulfilled  
 4. Move middle bowl and character to the left
 5. Add rubbish to remove wrongly collected items
-6. Cut requests to 10 ? 
 7. Remove issue with not vanishing boards 
 9. Repair proximity settings (milk?)
-10. Change soudns for colletion and giving 
 
+3. DONE Calculate score based amount of requests fulfilled  
+10. DONE Change soudns for colletion and giving 
 11. DONE Send toads (placement, not in front of chefs)
 8. DONE Add sounds upon completion of request 
 12. DONE Add sound upon winning 

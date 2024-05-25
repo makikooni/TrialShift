@@ -61,7 +61,7 @@ class GameThree: SKScene {
         
         player.name = "player"
         
-      
+        
         // Decrease the audio engine's volume
         audioEngine.mainMixerNode.outputVolume = 0.0
         
@@ -87,7 +87,7 @@ class GameThree: SKScene {
         run(SKAction.wait(forDuration: 1.0), completion: { [unowned self] in self.audioEngine.mainMixerNode.outputVolume = 1.0
             self.musicAudioNode.run(SKAction.changeVolume(to: 0.1, duration: 2.0))
         })
-
+        
         
         // BACKGROUND
         let background = SKSpriteNode(imageNamed: "background_04")
@@ -385,17 +385,17 @@ class GameThree: SKScene {
             
             // Check proximity to ChefA
             if distanceToChefA < proximityThreshold {
-                checkFulfillment()
+                checkFulfillmentA()
             }
             
             // Check proximity to ChefB
             if distanceToChefB < proximityThreshold {
-                checkFulfillment()
+                checkFulfillmentB()
             }
             
             // Check proximity to ChefC
             if distanceToChefC < proximityThreshold {
-                checkFulfillment()
+                checkFulfillmentC()
             }
         }
     }
@@ -408,16 +408,13 @@ class GameThree: SKScene {
         switch collectible.collectibleType3 {
         case .strawberry:
             holding = "strawberry"
-            print("Collected strawberry")
-            // Additional actions specific to strawberry collection
+            
         case .egg:
             holding = "egg"
-            print("Collected egg")
-            // Additional actions specific to egg collection
+            
         case .milk:
             holding = "milk"
-            print("Collected milk")
-            // Additional actions specific to milk collection
+            
         case .none:
             break
         }
@@ -425,80 +422,105 @@ class GameThree: SKScene {
         // Common actions for any collectible (var setting, sound playback, removal)
         collected = true
         let playSoundAction = SKAction.playSoundFileNamed("item_collected.mp3", waitForCompletion: false)
-                run(playSoundAction)
-                print("Playing Sound")
+        run(playSoundAction)
         collectible.removeFromParent()
         
     }
     
-    func checkFulfillment(){
+    func checkFulfillmentA(){
         if holding != ""{
             
             if requestedby == "chefA" {
                 if requestedCollectible == "milk" && holding == "milk"{
-                    print("chefA happy milk")
-                    spawnRequest()
-                }
-                else if requestedCollectible == "egg" && holding == "egg"{
-                    print("chefA happy egg")
-                    spawnRequest()
-                }
-                else if requestedCollectible == "strawberry" && holding == "strawberry"{
-                    print("chefA happy str")
-                    spawnRequest()
-                }
-            } else if requestedby == "chefB" {
-                if requestedCollectible == "milk" && holding == "milk"{
-                    print("chefB happy milk")
-                    spawnRequest()
-                }
-                else if requestedCollectible == "egg" && holding == "egg"{
-                    print("chefB happy egg")
-                    spawnRequest()
-                }
-                else if requestedCollectible == "strawberry" && holding == "strawberry"{
-                    print("chefB happy str")
-                    spawnRequest()
-                }
-            } else if requestedby == "chefC" {
-                if requestedCollectible == "milk" && holding == "milk"{
-                    print("chefC happy milk")
-                    spawnRequest()
-                }
-                else if requestedCollectible == "egg" && holding == "egg"{
-                    print("chefC happy egg")
-                    spawnRequest()
-                }
-                else if requestedCollectible == "strawberry" && holding == "strawberry"{
-                    print("chefC happy str")
-                    spawnRequest()
-                    
-                    
-                }
-                
-                
-            }
-            //changeBoardName()
-            
-            //Common actions for all ( sound, removal of board, respawning)
-            let playSoundAction = SKAction.playSoundFileNamed("item_given.mp3", waitForCompletion: false)
+                    let playSoundAction = SKAction.playSoundFileNamed("item_given.mp3", waitForCompletion: false)
                     run(playSoundAction)
-            removeBoard()
-            respawnCollectibles()
+                    removeBoard()
+                    respawnCollectibles()
+                    spawnRequest()
+                }
+                else if requestedCollectible == "egg" && holding == "egg"{
+                    let playSoundAction = SKAction.playSoundFileNamed("item_given.mp3", waitForCompletion: false)
+                    run(playSoundAction)
+                    removeBoard()
+                    respawnCollectibles()
+                    spawnRequest()
+                }
+                else if requestedCollectible == "strawberry" && holding == "strawberry"{
+                    let playSoundAction = SKAction.playSoundFileNamed("item_given.mp3", waitForCompletion: false)
+                    run(playSoundAction)
+                    removeBoard()
+                    respawnCollectibles()
+                    spawnRequest()
+                }
+            }
+            
         }
     }
-
-    /*
-    func changeBoardName() {
-        // Iterate through all children nodes
-        for case let node as SKSpriteNode in children {
-            // Check if the node is a board
-                node.name = "board"
+    
+    
+    func checkFulfillmentB(){
+        if holding != ""{
+            
+            if requestedby == "chefB" {
+                if requestedCollectible == "milk" && holding == "milk"{
+                    let playSoundAction = SKAction.playSoundFileNamed("item_given.mp3", waitForCompletion: false)
+                    run(playSoundAction)
+                    removeBoard()
+                    respawnCollectibles()
+                    spawnRequest()
+                }
+                else if requestedCollectible == "egg" && holding == "egg"{
+                    let playSoundAction = SKAction.playSoundFileNamed("item_given.mp3", waitForCompletion: false)
+                    run(playSoundAction)
+                    removeBoard()
+                    respawnCollectibles()
+                    spawnRequest()
+                }
+                else if requestedCollectible == "strawberry" && holding == "strawberry"{
+                    let playSoundAction = SKAction.playSoundFileNamed("item_given.mp3", waitForCompletion: false)
+                    run(playSoundAction)
+                    removeBoard()
+                    respawnCollectibles()
+                    spawnRequest()
+                }
             }
+            
         }
-
-*/
-
+    }
+    
+    func checkFulfillmentC(){
+        if holding != ""{
+            if requestedby == "chefC" {
+                if requestedCollectible == "milk" && holding == "milk"{
+                    let playSoundAction = SKAction.playSoundFileNamed("item_given.mp3", waitForCompletion: false)
+                    run(playSoundAction)
+                    removeBoard()
+                    respawnCollectibles()
+                    spawnRequest()
+                }
+                else if requestedCollectible == "egg" && holding == "egg"{
+                    let playSoundAction = SKAction.playSoundFileNamed("item_given.mp3", waitForCompletion: false)
+                    run(playSoundAction)
+                    removeBoard()
+                    respawnCollectibles()
+                    spawnRequest()
+                }
+                else if requestedCollectible == "strawberry" && holding == "strawberry"{
+                    let playSoundAction = SKAction.playSoundFileNamed("item_given.mp3", waitForCompletion: false)
+                    run(playSoundAction)
+                    removeBoard()
+                    respawnCollectibles()
+                    spawnRequest()
+                    
+                    
+                }
+                
+                
+            }
+            
+        }
+    }
+    
     override func update(_ currentTime: TimeInterval) {
         if movingPlayer {
             if let lastPosition = lastPosition {
@@ -513,7 +535,7 @@ class GameThree: SKScene {
         checkProximityToChefs()
         
     }
-
+    
     
     // MARK: - GAME FUNCTIONS
     /* ################################################################# */
@@ -527,11 +549,9 @@ class GameThree: SKScene {
         // Add strawberry collectible to scene
         addChild(strawberryCollectible)
         
-        print("Spawned strawberry collectible")
-        
         isCollectibleActive = true
     }
-
+    
     func spawnCollectible_egg() {
         guard isCollectibleActive else { return }
         let collectibleType: CollectibleType3 = .egg
@@ -541,11 +561,9 @@ class GameThree: SKScene {
         // Add egg collectible to scene
         addChild(eggCollectible)
         
-        print("Spawned egg collectible")
-        
         isCollectibleActive = true
     }
-
+    
     func spawnCollectible_milk() {
         guard isCollectibleActive else { return }
         let collectibleType: CollectibleType3 = .milk
@@ -555,7 +573,6 @@ class GameThree: SKScene {
         // Add milk collectible to scene
         addChild(milkCollectible)
         
-        print("Spawned milk collectible")
         
         isCollectibleActive = true
     }
@@ -563,56 +580,50 @@ class GameThree: SKScene {
     func respawnCollectibles() {
         //remove all remaining collectibles to avoid duplication on screen
         for case let collectible as Collectible3 in children {
-
-             collectible.removeFromParent()
-         }
+            
+            collectible.removeFromParent()
+        }
         spawnCollectible_strawberry()
         spawnCollectible_egg()
         spawnCollectible_milk()
     }
-
+    
     func spawnRequest() {
         collected = false
         holding = ""
-
+        
         // Check if max amount of requests was not exceeded
         if gameInProgress && requestcount < 20 {
             requestcount += 1
             requests -= 1
             let randomChef = Int.random(in: 1...3)
-
+            
             switch randomChef {
             case 1:
                 requestedby = "chefA"
-                print("chef a request")
             case 2:
                 requestedby = "chefB"
-                print("chef b request")
             case 3:
                 requestedby = "chefC"
-                print("chef c request")
             default:
                 break
             }
-
+            
             let randomCollectible = Int.random(in: 1...3)
-
+            
             switch randomCollectible {
             case 1:
                 requestedCollectible = "milk"
                 let board = SKSpriteNode(imageNamed: "board_milk")
                 setupBoard(board, chef: requestedby) // Pass the chef information
-                print("milk request")
             case 2:
                 requestedCollectible = "egg"
                 let board = SKSpriteNode(imageNamed: "board_egg")
                 setupBoard(board, chef: requestedby) // Pass the chef information
-                print("egg request")
             case 3:
                 requestedCollectible = "strawberry"
                 let board = SKSpriteNode(imageNamed: "board_strawberry")
                 setupBoard(board, chef: requestedby) // Pass the chef information
-                print("strawberry request")
             default:
                 break
             }
@@ -620,8 +631,8 @@ class GameThree: SKScene {
             gameOver()
         }
     }
-
-
+    
+    
     func setupBoard(_ board: SKSpriteNode, chef: String) {
         // Set position based on chef
         var position = CGPoint.zero
@@ -643,7 +654,7 @@ class GameThree: SKScene {
         board.xScale = 1.0
         board.yScale = 1.0
         
-
+        
         
         let moveAction = SKAction.moveTo(y: position.y, duration: 1.0)
         let rotationAction = SKAction.rotate(byAngle: CGFloat.pi / 12, duration: 0.5) // Rotate while moving
@@ -653,11 +664,10 @@ class GameThree: SKScene {
         
         addChild(board)
     }
-
-
+    
+    
     func removeBoard() {
         for case let node as SKSpriteNode in children {
-            print("Checking node with name: \(node.name ?? "No Name")")
             // Check if the node is a board (assuming the name of the board node is "board")
             if node.name == "board" {
                 // Add rotation animation
@@ -683,7 +693,7 @@ class GameThree: SKScene {
             }
         }
     }
-
+    
     
     func gameLogic(){
         gameInProgress = true
@@ -699,7 +709,7 @@ class GameThree: SKScene {
         startTimer()
         
     }
-        
+    
     func setupBackToMainScreenButton() {
         // Configure the button
         backToMainScreenButton = SKSpriteNode(imageNamed: "backToMainScreenButton")
@@ -718,27 +728,26 @@ class GameThree: SKScene {
     
     //redo -->>>>
     func scoreCount(){
-        if time >= 85{
+        if time >= 50{
             score = "A"
-        } else if time >= 75{
+        } else if time >= 55{
             score = "B"
-        } else if time >= 65{
+        } else if time >= 60{
             score = "C"
-        } else if time >= 50{
+        } else if time >= 65{
             score = "D"
-        } else if time >= 40{
+        } else if time >= 75{
             score = "E"
-        } else if time <= 39{
+        } else if time <= 76{
             score = "F"
         }}
     
     
+    // GameOver function only, as GameWon unavailable in this game
     func gameOver() {
         gameover = true
         let playSoundAction = SKAction.playSoundFileNamed("game_won.mp3", waitForCompletion: false)
-                run(playSoundAction)
-                print("Playing Sound")
-        print(score)
+        run(playSoundAction)
         showMessage("CONGRATS")
         stopTimer()
         isCollectibleActive = false
@@ -751,16 +760,38 @@ class GameThree: SKScene {
     // TOUCH HANDLING
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
+        // Check if the game is over and the button is present
+        guard gameover, let backToMainScreenButton = backToMainScreenButton else {
+            // Your existing touch handling logic for player's movement
+            for touch in touches {
+                guard !gameover else { return } // Ignore touches if game is over
+                
+                
+                for touch in touches {
+                    let location = touch.location(in: self)
+                    touchDown(atPoint: location)
+                }
+            }
+            return 
+        }
         
         for touch in touches {
             let location = touch.location(in: self)
-            touchDown(atPoint: location)
-            print("Touch began at: \(location)")
+            
+            // Check if the touch is on the backToMainScreenButton
+            if backToMainScreenButton.contains(location) {
+                // Transition to another scene when the button is tapped
+                let gameScene = GameScene(size: self.size)
+                gameScene.scaleMode = .aspectFill
+                self.view?.presentScene(gameScene)
+            }
         }
+         
     }
-
     var lastTouchTimestamp: TimeInterval?
-
+            
+            
+    
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             let location = touch.location(in: self)
@@ -772,37 +803,34 @@ class GameThree: SKScene {
             }
             
             lastTouchTimestamp = currentTimeStamp
-            print("Touch moved to: \(location)")
         }
     }
-
-
-
-
-
+    
+    
+    
+    
+    
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             let location = touch.location(in: self)
             touchUp(atPoint: location)
-            print("Touch ended at: \(location)")
         }
     }
-
+    
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             let location = touch.location(in: self)
             touchUp(atPoint: location)
-            print("Touch cancelled at: \(location)")
         }
     }
     
     
-
+    
     
     func touchDown(atPoint pos: CGPoint) {
         let touchedNode = atPoint(pos)
         
-            hideMessage() // Hide the message when the player touches the character
+        hideMessage() // Hide the message when the player touches the character
         if gameInProgress == false {
             gameLogic()
             return
@@ -826,5 +854,5 @@ class GameThree: SKScene {
     func touchUp(atPoint pos: CGPoint) {
         movingPlayer = false
     }
-
+    
 }

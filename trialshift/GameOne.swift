@@ -295,14 +295,14 @@ class GameOne: SKScene {
     
     // MARK: - GAME FUNCTIONS
     /* ################################################################# */
-
+    
     
     func spawnMultipleWater() {
         
         if level > 10 {
-                gameWon()
+            gameWon()
             //return
-            }
+        }
         
         // Start player walk animation
         player.walk()
@@ -341,11 +341,11 @@ class GameOne: SKScene {
         
         // Set up drop speed
         dropSpeed = 1 / (CGFloat(level) + (CGFloat(level) / CGFloat(numberOfDrops)))
-
+        
         // Adjust the drop speed to your desired range
         let speedMultiplier: CGFloat = 0.5  // Adjust this value as needed
         dropSpeed *= speedMultiplier
-
+        
         // Ensure drop speed stays within the specified bounds
         if dropSpeed < minDropSpeed {
             dropSpeed = minDropSpeed
@@ -492,6 +492,9 @@ class GameOne: SKScene {
         scoreRecount()
         //print(newscore)
         missed = 0
+        let playSoundAction = SKAction.playSoundFileNamed("game_over.mp3", waitForCompletion: false)
+        run(playSoundAction)
+        print("Playing Sound")
         showMessage("GAME OVER")
         player.die()
         
@@ -509,11 +512,11 @@ class GameOne: SKScene {
                 node.removeFromParent()
             }
         }
-    
+        
         resetPlayerPosition()
         popRemainingDrops()
         setupBackToMainScreenButton()
-
+        
         
     }
     
@@ -521,16 +524,16 @@ class GameOne: SKScene {
     func gameWon() {
         scoreRecount()
         let playSoundAction = SKAction.playSoundFileNamed("game_won.mp3", waitForCompletion: false)
-                run(playSoundAction)
-                print("Playing Sound")
+        run(playSoundAction)
+        print("Playing Sound")
         missed = 0
         hideMessage()
         gameover = true
         showMessage("CONGRATS")
         
         
-    //Happy player animation?
-    //------------------------------------------------
+        //Happy player animation?
+        //------------------------------------------------
         
         // Resetting all related game settings
         gameInProgress = false
@@ -548,7 +551,7 @@ class GameOne: SKScene {
         resetPlayerPosition()
         popRemainingDrops()
         setupBackToMainScreenButton()
-
+        
         
     }
     
@@ -671,52 +674,52 @@ extension GameOne: SKPhysicsContactDelegate {
             let body = contact.bodyA.categoryBitMask == PhysicsCategory.collectible ?
             contact.bodyA.node :
             contact.bodyB.node
-                // Verify the object is a collectible
-                if let sprite = body as? Collectible {
-                    sprite.collected()
-                    dropsCollected += 1
-                    score += 1
-                    
-                    // Define an array of possible texts
-                    let texts = ["YAY!", "HURRAY!", "WOW!", "AWESOME!","COOL!"]
-
-                    // Keep track of the index of the last displayed text
-                    var lastIndex = UserDefaults.standard.integer(forKey: "lastIndex") // Retrieve the last index from UserDefaults
-
-                    // Get the next text to display
-                    let nextText = texts[lastIndex]
-
-                    // Create the chomp label with the next text
-                    let chomp = SKLabelNode(fontNamed: "ChalkboardSE-Bold")
-                    chomp.name = "chomp"
-                    chomp.alpha = 0.0
-                    chomp.fontSize = 50.0
-                    chomp.text = nextText
-                    chomp.horizontalAlignmentMode = .center
-                    chomp.verticalAlignmentMode = .bottom
-                    chomp.position = CGPoint(x: player.position.x, y: player.frame.maxY + 25)
-                    chomp.zRotation = CGFloat.random(in: -0.15...0.15)
-                    addChild(chomp)
-
-                    // Update the index for the next cycle
-                    lastIndex = (lastIndex + 1) % texts.count
-
-                    // Save the updated index to UserDefaults
-                    UserDefaults.standard.set(lastIndex, forKey: "lastIndex")
-
-                    // Add actions to fade in, rise up, and fade out
-                    let fadeIn = SKAction.fadeAlpha(to: 1.0, duration: 0.05)
-                    let fadeOut = SKAction.fadeAlpha(to: 0.0, duration: 0.45)
-                    let moveUp = SKAction.moveBy(x: 0.0, y: 45, duration: 0.45)
-                    let groupAction = SKAction.group([fadeOut, moveUp])
-                    let removeFromParent = SKAction.removeFromParent()
-                    let chompAction = SKAction.sequence([fadeIn, groupAction, removeFromParent])
-                    chomp.run(chompAction)
-                    
-                    //score += level
-                }
+            // Verify the object is a collectible
+            if let sprite = body as? Collectible {
+                sprite.collected()
+                dropsCollected += 1
+                score += 1
+                
+                // Define an array of possible texts
+                let texts = ["YAY!", "HURRAY!", "WOW!", "AWESOME!","COOL!"]
+                
+                // Keep track of the index of the last displayed text
+                var lastIndex = UserDefaults.standard.integer(forKey: "lastIndex") // Retrieve the last index from UserDefaults
+                
+                // Get the next text to display
+                let nextText = texts[lastIndex]
+                
+                // Create the chomp label with the next text
+                let chomp = SKLabelNode(fontNamed: "ChalkboardSE-Bold")
+                chomp.name = "chomp"
+                chomp.alpha = 0.0
+                chomp.fontSize = 50.0
+                chomp.text = nextText
+                chomp.horizontalAlignmentMode = .center
+                chomp.verticalAlignmentMode = .bottom
+                chomp.position = CGPoint(x: player.position.x, y: player.frame.maxY + 25)
+                chomp.zRotation = CGFloat.random(in: -0.15...0.15)
+                addChild(chomp)
+                
+                // Update the index for the next cycle
+                lastIndex = (lastIndex + 1) % texts.count
+                
+                // Save the updated index to UserDefaults
+                UserDefaults.standard.set(lastIndex, forKey: "lastIndex")
+                
+                // Add actions to fade in, rise up, and fade out
+                let fadeIn = SKAction.fadeAlpha(to: 1.0, duration: 0.05)
+                let fadeOut = SKAction.fadeAlpha(to: 0.0, duration: 0.45)
+                let moveUp = SKAction.moveBy(x: 0.0, y: 45, duration: 0.45)
+                let groupAction = SKAction.group([fadeOut, moveUp])
+                let removeFromParent = SKAction.removeFromParent()
+                let chompAction = SKAction.sequence([fadeIn, groupAction, removeFromParent])
+                chomp.run(chompAction)
+                
+                //score += level
             }
-            
+        }
+        
         
         // Or did the [COLLECTIBLE] collide with the [FOREGROUND]?
         if collision == PhysicsCategory.foreground + UInt32(0.01) | PhysicsCategory.collectible { print("collectible hit foreground")

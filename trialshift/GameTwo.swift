@@ -366,7 +366,7 @@ class GameTwo: SKScene {
         backToMainScreenButton?.setScale(2.5)
         addChild(backToMainScreenButton!)
     }
-
+    
     func removeBackToMainScreenButton() {
         // Remove the button from the scene
         backToMainScreenButton?.removeFromParent()
@@ -390,15 +390,18 @@ class GameTwo: SKScene {
     
     func gameOver() {
         gameover = true
+        let playSoundAction = SKAction.playSoundFileNamed("game_over.mp3", waitForCompletion: false)
+        run(playSoundAction)
+        print("Playing Sound")
         scoreRecount()
         //print(newscore)
         showMessage("GAME OVER")
         stopTimer()
         isCollectibleActive = false
         setupBackToMainScreenButton()
-
-    }
         
+    }
+    
     
     // MARK: - TOUCH HANDLING
     
