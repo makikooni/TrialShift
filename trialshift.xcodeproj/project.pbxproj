@@ -19,6 +19,7 @@
 		FB82BF6C2C0106A90011AE9A /* item_collected.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FB82BF6B2C0106A90011AE9A /* item_collected.mp3 */; };
 		FB82BF6E2C0106FA0011AE9A /* game_won.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FB82BF6D2C0106FA0011AE9A /* game_won.mp3 */; };
 		FB82BF702C0120930011AE9A /* gameover.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FB82BF6F2C0120930011AE9A /* gameover.mp3 */; };
+		FBA2AAC62C01684D00EED121 /* error.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FBA2AAC52C01684D00EED121 /* error.mp3 */; };
 		FBB0AD202BE5835D00398031 /* GameThree.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB0AD1F2BE5835D00398031 /* GameThree.swift */; };
 		FBC561712BBE04A800D8AF8F /* GameTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC561702BBE04A800D8AF8F /* GameTwo.swift */; };
 		FBEB51482BA1D96B006A7943 /* quak.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FBEB51472BA1D96B006A7943 /* quak.mp3 */; };
@@ -47,6 +48,7 @@
 		FB82BF6B2C0106A90011AE9A /* item_collected.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = item_collected.mp3; sourceTree = "<group>"; };
 		FB82BF6D2C0106FA0011AE9A /* game_won.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = game_won.mp3; sourceTree = "<group>"; };
 		FB82BF6F2C0120930011AE9A /* gameover.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gameover.mp3; sourceTree = "<group>"; };
+		FBA2AAC52C01684D00EED121 /* error.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = error.mp3; sourceTree = "<group>"; };
 		FBB0AD1F2BE5835D00398031 /* GameThree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameThree.swift; sourceTree = "<group>"; };
 		FBC561702BBE04A800D8AF8F /* GameTwo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTwo.swift; sourceTree = "<group>"; };
 		FBEB51472BA1D96B006A7943 /* quak.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = quak.mp3; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 				FB82BF6B2C0106A90011AE9A /* item_collected.mp3 */,
 				FB82BF6D2C0106FA0011AE9A /* game_won.mp3 */,
 				FB82BF6F2C0120930011AE9A /* gameover.mp3 */,
+				FBA2AAC52C01684D00EED121 /* error.mp3 */,
 			);
 			path = Sounds;
 			sourceTree = "<group>";
@@ -200,6 +203,7 @@
 				FB7433062B9F447B0093ED6F /* collect.wav in Resources */,
 				FB82BF6E2C0106FA0011AE9A /* game_won.mp3 in Resources */,
 				FB7433052B9F447B0093ED6F /* bubbles.mp3 in Resources */,
+				FBA2AAC62C01684D00EED121 /* error.mp3 in Resources */,
 				FB76CE7D2BA07CB100DB8BBF /* kitchen.mp3 in Resources */,
 				FBF563C42B9A89ED007EC769 /* Main.storyboard in Resources */,
 				FB82BF702C0120930011AE9A /* gameover.mp3 in Resources */,

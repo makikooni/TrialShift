@@ -492,7 +492,7 @@ class GameOne: SKScene {
         scoreRecount()
         //print(newscore)
         missed = 0
-        let playSoundAction = SKAction.playSoundFileNamed("game_over.mp3", waitForCompletion: false)
+        let playSoundAction = SKAction.playSoundFileNamed("gameover.mp3", waitForCompletion: false)
         run(playSoundAction)
         print("Playing Sound")
         showMessage("GAME OVER")

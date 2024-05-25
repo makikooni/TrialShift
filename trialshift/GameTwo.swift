@@ -332,6 +332,9 @@ class GameTwo: SKScene {
                 righthand = false
                 lefthand = false
                 fails += 1
+                let playSoundAction = SKAction.playSoundFileNamed("error.mp3", waitForCompletion: false)
+                run(playSoundAction)
+                
                 if let collectible = collectible {
                     let moveAction = SKAction.moveBy(x: 0, y: -150, duration: 0.5)
                     
@@ -390,7 +393,7 @@ class GameTwo: SKScene {
     
     func gameOver() {
         gameover = true
-        let playSoundAction = SKAction.playSoundFileNamed("game_over.mp3", waitForCompletion: false)
+        let playSoundAction = SKAction.playSoundFileNamed("gameover.mp3", waitForCompletion: false)
         run(playSoundAction)
         print("Playing Sound")
         scoreRecount()

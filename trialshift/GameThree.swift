@@ -707,6 +707,7 @@ class GameThree: SKScene {
         showChefC()
         spawnRequest()
         startTimer()
+
         
     }
     
