@@ -4,6 +4,7 @@
 import AVFoundation
 import SpriteKit
 import GameplayKit
+import Foundation
 
 
 class GameThree: SKScene {
@@ -120,6 +121,9 @@ class GameThree: SKScene {
         showMessage("TAP TO START")
     }
     
+    func updateScore(newScore: String) {
+         GameData.shared.scoreGameThree = score
+     }
     //TIMER
     // The game features a timer that counts amount of time that takes player to complete the task.
     func startTimer() {
@@ -729,17 +733,17 @@ class GameThree: SKScene {
     
     //redo -->>>>
     func scoreCount(){
-        if time >= 50{
+        if time <= 50{
             score = "A"
-        } else if time >= 55{
+        } else if time <= 55{
             score = "B"
-        } else if time >= 60{
+        } else if time <= 60{
             score = "C"
-        } else if time >= 65{
+        } else if time <= 65{
             score = "D"
-        } else if time >= 75{
+        } else if time <= 75{
             score = "E"
-        } else if time <= 76{
+        } else if time >= 76{
             score = "F"
         }}
     
@@ -749,6 +753,8 @@ class GameThree: SKScene {
         gameover = true
         let playSoundAction = SKAction.playSoundFileNamed("game_won.mp3", waitForCompletion: false)
         run(playSoundAction)
+        scoreCount()
+        updateScore(newScore: score)
         showMessage("CONGRATS")
         stopTimer()
         isCollectibleActive = false
@@ -783,6 +789,7 @@ class GameThree: SKScene {
             if backToMainScreenButton.contains(location) {
                 // Transition to another scene when the button is tapped
                 let gameScene = GameScene(size: self.size)
+                gameScene.scoreGameOne = score
                 gameScene.scaleMode = .aspectFill
                 self.view?.presentScene(gameScene)
             }

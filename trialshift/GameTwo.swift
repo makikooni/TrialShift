@@ -9,6 +9,7 @@
 import AVFoundation
 import SpriteKit
 import GameplayKit
+import Foundation
 
 class GameTwo: SKScene {
     let player = PlayerHead()
@@ -105,8 +106,12 @@ class GameTwo: SKScene {
         player.position = CGPoint(x: size.width/2, y: frame.minY + 370)
         addChild(player)
         
-        
     }
+    
+    func updateScore(newScore: String) {
+           GameData.shared.scoreGameTwo = newScore
+       }
+    
     //TIMER
     // The game features a timer that counts down the player's time allowance
     func startTimer() {
@@ -397,6 +402,7 @@ class GameTwo: SKScene {
         run(playSoundAction)
         print("Playing Sound")
         scoreRecount()
+        updateScore(newScore: newscore)
         //print(newscore)
         showMessage("GAME OVER")
         stopTimer()

@@ -20,6 +20,7 @@
 		FB82BF6E2C0106FA0011AE9A /* game_won.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FB82BF6D2C0106FA0011AE9A /* game_won.mp3 */; };
 		FB82BF702C0120930011AE9A /* gameover.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FB82BF6F2C0120930011AE9A /* gameover.mp3 */; };
 		FBA2AAC62C01684D00EED121 /* error.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FBA2AAC52C01684D00EED121 /* error.mp3 */; };
+		FBA2AAC82C04A7BF00EED121 /* GameData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA2AAC72C04A62100EED121 /* GameData.swift */; };
 		FBB0AD202BE5835D00398031 /* GameThree.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB0AD1F2BE5835D00398031 /* GameThree.swift */; };
 		FBC561712BBE04A800D8AF8F /* GameTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC561702BBE04A800D8AF8F /* GameTwo.swift */; };
 		FBEB51482BA1D96B006A7943 /* quak.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FBEB51472BA1D96B006A7943 /* quak.mp3 */; };
@@ -49,6 +50,7 @@
 		FB82BF6D2C0106FA0011AE9A /* game_won.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = game_won.mp3; sourceTree = "<group>"; };
 		FB82BF6F2C0120930011AE9A /* gameover.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gameover.mp3; sourceTree = "<group>"; };
 		FBA2AAC52C01684D00EED121 /* error.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = error.mp3; sourceTree = "<group>"; };
+		FBA2AAC72C04A62100EED121 /* GameData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameData.swift; sourceTree = "<group>"; };
 		FBB0AD1F2BE5835D00398031 /* GameThree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameThree.swift; sourceTree = "<group>"; };
 		FBC561702BBE04A800D8AF8F /* GameTwo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTwo.swift; sourceTree = "<group>"; };
 		FBEB51472BA1D96B006A7943 /* quak.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = quak.mp3; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 		FBF563B72B9A89ED007EC769 /* trialshift */ = {
 			isa = PBXGroup;
 			children = (
+				FBA2AAC72C04A62100EED121 /* GameData.swift */,
 				FBF563B82B9A89ED007EC769 /* AppDelegate.swift */,
 				FBF563BE2B9A89ED007EC769 /* GameOne.swift */,
 				FBC561702BBE04A800D8AF8F /* GameTwo.swift */,
@@ -223,6 +226,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBF563D02B9A9A20007EC769 /* Player.swift in Sources */,
+				FBA2AAC82C04A7BF00EED121 /* GameData.swift in Sources */,
 				FBF563BF2B9A89ED007EC769 /* GameOne.swift in Sources */,
 				FBB0AD202BE5835D00398031 /* GameThree.swift in Sources */,
 				FB68D93E2BEE59AE00E19E32 /* Collectible3.swift in Sources */,

@@ -8,6 +8,7 @@
 import AVFoundation
 import SpriteKit
 import GameplayKit
+import Foundation
 
 class GameOne: SKScene {
     var backToMainScreenButton: SKSpriteNode?
@@ -126,6 +127,10 @@ class GameOne: SKScene {
         sendBrownToad()
         
     }
+    func updateScore(newScore: String) {
+           GameData.shared.scoreGameOne = newScore
+       }
+    
     func setupLabels() {
         /* SCORE LABEL */
         scoreLabel.name = "score"
@@ -300,8 +305,7 @@ class GameOne: SKScene {
     func spawnMultipleWater() {
         
         if level > 10 {
-            gameWon()
-            //return
+            return
         }
         
         // Start player walk animation
@@ -452,6 +456,9 @@ class GameOne: SKScene {
             run(wait, completion:{[unowned self] in self.level += 1
                 
                 self.spawnMultipleWater()})
+        }
+        else {
+            gameWon()
         }}
     
     
@@ -490,6 +497,7 @@ class GameOne: SKScene {
     // Game Over when player fails
     func gameOver() {
         scoreRecount()
+        updateScore(newScore: newscore)
         //print(newscore)
         missed = 0
         let playSoundAction = SKAction.playSoundFileNamed("gameover.mp3", waitForCompletion: false)
@@ -523,6 +531,8 @@ class GameOne: SKScene {
     // Game over when player wins
     func gameWon() {
         scoreRecount()
+        updateScore(newScore: newscore)
+
         let playSoundAction = SKAction.playSoundFileNamed("game_won.mp3", waitForCompletion: false)
         run(playSoundAction)
         print("Playing Sound")
@@ -633,6 +643,7 @@ class GameOne: SKScene {
                 // Transition to another scene when the button is tapped
                 let gameScene = GameScene(size: self.size)
                 gameScene.scaleMode = .aspectFill
+                gameScene.scoreGameOne = newscore
                 self.view?.presentScene(gameScene)
             }
         }

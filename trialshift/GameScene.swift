@@ -19,10 +19,18 @@ class GameScene: SKScene {
     var gameOneButton: SKSpriteNode!
     var gameTwoButton: SKSpriteNode!
     var gameThreeButton: SKSpriteNode!
+    var scoreGameOne: String = ""
+    var scoreGameTwo: String = ""
+    var scoreGameThree: String = ""
+
     
     override func didMove(to view: SKView) {
         
         self.scaleMode = .aspectFit
+        
+        scoreGameOne = GameData.shared.scoreGameOne
+        scoreGameTwo = GameData.shared.scoreGameTwo
+        scoreGameThree = GameData.shared.scoreGameThree
         
         //BACKGROUND
         let background = SKSpriteNode(imageNamed: "background_02")
@@ -50,7 +58,7 @@ class GameScene: SKScene {
         
         // Top Score 1
         gameOneTopScore = SKLabelNode(fontNamed: "ChalkboardSE-Bold") // Replace with your font name
-        gameOneTopScore.text = "Top: "
+        gameOneTopScore.text = "Top: " + scoreGameOne
         gameOneTopScore.fontSize = 60.0
         gameOneTopScore.position = CGPoint(x: frame.midX - 600 , y: frame.midY - 250)
         gameOneTopScore.zPosition = Layer.ui.rawValue
@@ -66,7 +74,7 @@ class GameScene: SKScene {
         
         // Top Score 2
         gameTwoTopScore = SKLabelNode(fontNamed: "ChalkboardSE-Bold") // Replace with your font name
-        gameTwoTopScore.text = "Top: "
+        gameTwoTopScore.text = "Top: " + scoreGameTwo
         gameTwoTopScore.fontSize = 60.0
         gameTwoTopScore.position = CGPoint(x: frame.midX, y: frame.midY - 250)
         gameTwoTopScore.zPosition = Layer.ui.rawValue
@@ -82,7 +90,7 @@ class GameScene: SKScene {
         
         // Top Score 3
         gameThreeTopScore = SKLabelNode(fontNamed: "ChalkboardSE-Bold") // Replace with your font name
-        gameThreeTopScore.text = "Top: "
+        gameThreeTopScore.text = "Top: " + scoreGameThree
         gameThreeTopScore.fontSize = 60.0
         gameThreeTopScore.position = CGPoint(x: frame.midX + 600, y: frame.midY - 250)
         gameThreeTopScore.zPosition = Layer.ui.rawValue
