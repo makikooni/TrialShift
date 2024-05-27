@@ -11,7 +11,9 @@ class GameThree: SKScene {
     let player = Player3()
     var chefANode: SKSpriteNode?
     var chefBNode: SKSpriteNode?
-    var chefCNode: SKSpriteNode?
+    var chefCNode: SKSpriteNode?    
+    var rubbishNode: SKSpriteNode?
+
     var gameInProgress = false
     var gameover = false
     var isCollectibleActive = true
@@ -23,6 +25,7 @@ class GameThree: SKScene {
     var collectible: Collectible3?
     let verticalSpeed: CGFloat = 150.0
     var requestcount = 0
+    var boardIn = false
     
     var requestedby = ""
     var requestedCollectible = ""
@@ -196,6 +199,26 @@ class GameThree: SKScene {
         }
     }
     
+    func showRubbish(){
+        let rubbishAtlas = SKTextureAtlas(named: "rubbish")
+        var rubbishFrames: [SKTexture] = []
+        
+        
+        for index in 0...3 {
+            let textureName = "rubbish_\(index)"
+            rubbishFrames.append(rubbishAtlas.textureNamed(textureName))
+        }
+        let rubbish = SKSpriteNode(texture: rubbishFrames[0])
+        rubbish.zPosition = Layer.foreground.rawValue
+        rubbish.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        rubbish.position = CGPoint(x: frame.midX - 820,
+                                 y: frame.midY - 150 )
+        let scaleFactor: CGFloat = 1.0
+        rubbish.setScale(scaleFactor)
+        addChild(rubbish)
+        rubbishNode = rubbish
+    }
+    
     
     func showChefA(){
         let chefAAtlas = SKTextureAtlas(named: "ChefA")
@@ -209,7 +232,7 @@ class GameThree: SKScene {
         let chefA = SKSpriteNode(texture: chefAFrames[0])
         chefA.zPosition = Layer.foreground.rawValue
         chefA.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        chefA.position = CGPoint(x: frame.midX - 620,
+        chefA.position = CGPoint(x: frame.midX - 370,
                                  y: frame.minY + 110)
         let scaleFactor: CGFloat = 1.3
         chefA.setScale(scaleFactor)
@@ -378,6 +401,21 @@ class GameThree: SKScene {
         }
     }
     
+    func checkProximityToRubbish() {
+        let proximityThreshold: CGFloat = 100.0 // Define a suitable proximity threshold
+        
+        // Assuming you have references to ChefA, ChefB, and ChefC nodes
+        if let rubbish = rubbishNode {
+            let distanceToRubbish = hypot(player.position.x - rubbish.position.x, player.position.y - rubbish.position.y)
+          
+            // Check proximity to ChefA
+            if distanceToRubbish < proximityThreshold {
+                throwRubbish()
+            }
+
+        }
+    }
+    
     func checkProximityToChefs() {
         let proximityThreshold: CGFloat = 100.0 // Define a suitable proximity threshold
         
@@ -525,6 +563,18 @@ class GameThree: SKScene {
         }
     }
     
+    func throwRubbish(){
+        if holding != ""{
+            holding = ""
+            collected = false
+            let playSoundAction = SKAction.playSoundFileNamed("rubbish.mp3", waitForCompletion: false)
+            run(playSoundAction)
+            respawnCollectibles()
+            
+            
+        }
+    }
+    
     override func update(_ currentTime: TimeInterval) {
         if movingPlayer {
             if let lastPosition = lastPosition {
@@ -537,6 +587,7 @@ class GameThree: SKScene {
         // Call the proximity check method
         checkProximityAndCollect()
         checkProximityToChefs()
+        checkProximityToRubbish()
         
     }
     
@@ -620,14 +671,23 @@ class GameThree: SKScene {
                 requestedCollectible = "milk"
                 let board = SKSpriteNode(imageNamed: "board_milk")
                 setupBoard(board, chef: requestedby) // Pass the chef information
+                board.name = "board"
+
+                print(board)
             case 2:
                 requestedCollectible = "egg"
                 let board = SKSpriteNode(imageNamed: "board_egg")
                 setupBoard(board, chef: requestedby) // Pass the chef information
+                board.name = "board"
+                print(board)
+
             case 3:
                 requestedCollectible = "strawberry"
                 let board = SKSpriteNode(imageNamed: "board_strawberry")
                 setupBoard(board, chef: requestedby) // Pass the chef information
+                board.name = "board"
+                print(board)
+
             default:
                 break
             }
@@ -638,11 +698,16 @@ class GameThree: SKScene {
     
     
     func setupBoard(_ board: SKSpriteNode, chef: String) {
+        if boardIn == true{
+            removeBoard()
+        }
+    
         // Set position based on chef
+        boardIn = true
         var position = CGPoint.zero
         switch chef {
         case "chefA":
-            position = CGPoint(x: frame.midX - 770, y: frame.midY - 470)
+            position = CGPoint(x: frame.midX - 500, y: frame.midY - 470)
         case "chefB":
             position = CGPoint(x: frame.midX + 85, y: frame.midY - 470)
         case "chefC":
@@ -676,26 +741,27 @@ class GameThree: SKScene {
             if node.name == "board" {
                 // Add rotation animation
                 let rotationAngle1: CGFloat = CGFloat.pi / -12 // First rotation angle
-                let rotateAction1 = SKAction.rotate(byAngle: rotationAngle1, duration: 0.5)
+                let rotateAction1 = SKAction.rotate(byAngle: rotationAngle1, duration: 0.2)
                 
                 let rotationAngle2: CGFloat = CGFloat.pi / 12 // Second rotation angle
-                let rotateAction2 = SKAction.rotate(byAngle: rotationAngle2, duration: 0.5)
+                let rotateAction2 = SKAction.rotate(byAngle: rotationAngle2, duration: 0.2)
                 
                 let rotateSequence = SKAction.sequence([rotateAction1, rotateAction2])
                 
-                // Wait action
-                let waitAction = SKAction.wait(forDuration: 0.5) // Adjust as needed
-                
+                // Define the downward movement action
+                let moveDownAction = SKAction.moveBy(x: 0, y: -200, duration: 0.5) // Adjust the distance and duration as needed
+                            
                 // Remove from parent action
                 let removeAction = SKAction.removeFromParent()
                 
                 // Sequence of actions: rotate, wait, remove
-                let sequence = SKAction.sequence([rotateSequence, waitAction, removeAction])
+                let sequence = SKAction.sequence([rotateSequence,moveDownAction, removeAction])
                 
                 // Run the sequence on the board node
                 node.run(sequence)
             }
         }
+        boardIn = false
     }
     
     
@@ -706,6 +772,7 @@ class GameThree: SKScene {
         spawnCollectible_milk()
         sendGreenToad()
         sendBrownToad()
+        showRubbish()
         showChefA()
         showChefB()
         showChefC()

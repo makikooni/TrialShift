@@ -24,8 +24,6 @@ GameThree:
 1. Add starting screens with "How to Play"
 2. Move middle bowl and character to the left
 3. Add rubbish to remove wrongly collected items
-4. Remove issue with not vanishing boards 
-5. Repair proximity settings (milk?)
 
 
 
