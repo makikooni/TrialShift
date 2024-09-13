@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		FB5198EA2BB73D5400F21342 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5198E92BB73D5400F21342 /* GameScene.swift */; };
 		FB68D93E2BEE59AE00E19E32 /* Collectible3.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB68D93D2BEE59AE00E19E32 /* Collectible3.swift */; };
+		FB7337422C127BB7005B2774 /* rubbish.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FB7337412C127BB7005B2774 /* rubbish.mp3 */; };
 		FB7433052B9F447B0093ED6F /* bubbles.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FB7432FF2B9F447B0093ED6F /* bubbles.mp3 */; };
 		FB7433062B9F447B0093ED6F /* collect.wav in Resources */ = {isa = PBXBuildFile; fileRef = FB7433002B9F447B0093ED6F /* collect.wav */; };
 		FB7433072B9F447B0093ED6F /* miss.wav in Resources */ = {isa = PBXBuildFile; fileRef = FB7433012B9F447B0093ED6F /* miss.wav */; };
@@ -21,7 +22,6 @@
 		FB82BF702C0120930011AE9A /* gameover.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FB82BF6F2C0120930011AE9A /* gameover.mp3 */; };
 		FBA2AAC62C01684D00EED121 /* error.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FBA2AAC52C01684D00EED121 /* error.mp3 */; };
 		FBA2AAC82C04A7BF00EED121 /* GameData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA2AAC72C04A62100EED121 /* GameData.swift */; };
-		FBA2AAD02C0522EB00EED121 /* rubbish.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FBA2AACF2C0522EB00EED121 /* rubbish.mp3 */; };
 		FBB0AD202BE5835D00398031 /* GameThree.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB0AD1F2BE5835D00398031 /* GameThree.swift */; };
 		FBC561712BBE04A800D8AF8F /* GameTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC561702BBE04A800D8AF8F /* GameTwo.swift */; };
 		FBEB51482BA1D96B006A7943 /* quak.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FBEB51472BA1D96B006A7943 /* quak.mp3 */; };
@@ -40,6 +40,7 @@
 		FB5198E92BB73D5400F21342 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		FB5CD63E2BEA9D5400004D18 /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
 		FB68D93D2BEE59AE00E19E32 /* Collectible3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collectible3.swift; sourceTree = "<group>"; };
+		FB7337412C127BB7005B2774 /* rubbish.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = rubbish.mp3; sourceTree = "<group>"; };
 		FB7432FF2B9F447B0093ED6F /* bubbles.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bubbles.mp3; sourceTree = "<group>"; };
 		FB7433002B9F447B0093ED6F /* collect.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = collect.wav; sourceTree = "<group>"; };
 		FB7433012B9F447B0093ED6F /* miss.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = miss.wav; sourceTree = "<group>"; };
@@ -52,7 +53,6 @@
 		FB82BF6F2C0120930011AE9A /* gameover.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gameover.mp3; sourceTree = "<group>"; };
 		FBA2AAC52C01684D00EED121 /* error.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = error.mp3; sourceTree = "<group>"; };
 		FBA2AAC72C04A62100EED121 /* GameData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameData.swift; sourceTree = "<group>"; };
-		FBA2AACF2C0522EB00EED121 /* rubbish.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = rubbish.mp3; path = ../../../../Downloads/rubbish.mp3; sourceTree = "<group>"; };
 		FBB0AD1F2BE5835D00398031 /* GameThree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameThree.swift; sourceTree = "<group>"; };
 		FBC561702BBE04A800D8AF8F /* GameTwo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTwo.swift; sourceTree = "<group>"; };
 		FBEB51472BA1D96B006A7943 /* quak.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = quak.mp3; sourceTree = "<group>"; };
@@ -92,7 +92,7 @@
 				FB82BF6D2C0106FA0011AE9A /* game_won.mp3 */,
 				FB82BF6F2C0120930011AE9A /* gameover.mp3 */,
 				FBA2AAC52C01684D00EED121 /* error.mp3 */,
-				FBA2AACF2C0522EB00EED121 /* rubbish.mp3 */,
+				FB7337412C127BB7005B2774 /* rubbish.mp3 */,
 			);
 			path = Sounds;
 			sourceTree = "<group>";
@@ -125,21 +125,21 @@
 		FBF563B72B9A89ED007EC769 /* trialshift */ = {
 			isa = PBXGroup;
 			children = (
-				FBA2AAC72C04A62100EED121 /* GameData.swift */,
+				FBF563C02B9A89ED007EC769 /* GameViewController.swift */,
 				FBF563B82B9A89ED007EC769 /* AppDelegate.swift */,
+				FBA2AAC72C04A62100EED121 /* GameData.swift */,
 				FBF563BE2B9A89ED007EC769 /* GameOne.swift */,
 				FBC561702BBE04A800D8AF8F /* GameTwo.swift */,
 				FBB0AD1F2BE5835D00398031 /* GameThree.swift */,
-				FBF563C02B9A89ED007EC769 /* GameViewController.swift */,
-				FBF563C22B9A89ED007EC769 /* Main.storyboard */,
-				FBF563C52B9A89EE007EC769 /* Assets.xcassets */,
 				FBF563D32B9B4885007EC769 /* Collectible.swift */,
 				FB7E683F2BBF189600D07CD6 /* Collectible2.swift */,
 				FB68D93D2BEE59AE00E19E32 /* Collectible3.swift */,
 				FBF563CF2B9A9A20007EC769 /* Player.swift */,
 				FB5198E92BB73D5400F21342 /* GameScene.swift */,
 				FBF563D12B9A9A7D007EC769 /* SpriteKitHelper.swift */,
+				FBF563C22B9A89ED007EC769 /* Main.storyboard */,
 				FBF563C72B9A89EE007EC769 /* LaunchScreen.storyboard */,
+				FBF563C52B9A89EE007EC769 /* Assets.xcassets */,
 				FBDC0A302B9FD3CC005B534B /* Music */,
 				FB7432FE2B9F447B0093ED6F /* Sounds */,
 			);
@@ -217,7 +217,7 @@
 				FBF563C62B9A89EE007EC769 /* Assets.xcassets in Resources */,
 				FB82BF6A2C01064F0011AE9A /* item_given.mp3 in Resources */,
 				FBEB51482BA1D96B006A7943 /* quak.mp3 in Resources */,
-				FBA2AAD02C0522EB00EED121 /* rubbish.mp3 in Resources */,
+				FB7337422C127BB7005B2774 /* rubbish.mp3 in Resources */,
 				FBF563C92B9A89EE007EC769 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

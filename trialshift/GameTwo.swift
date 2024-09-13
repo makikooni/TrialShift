@@ -422,7 +422,7 @@ class GameTwo: SKScene {
         
         // Check if the game is over and the button is present
         guard gameover, let backToMainScreenButton = backToMainScreenButton else {
-            // Your existing touch handling logic for player's movement
+            // Touch handling logic for player's movement
             for touch in touches {
                 guard !gameover else { return } // Ignore touches if game is over
                 
