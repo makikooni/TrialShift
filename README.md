@@ -16,14 +16,8 @@ https://github.com/makikooni/trialshift/assets/92479890/9cff578a-5959-44da-900a-
 - [x] Welcome Screen Code Layout
 - [x] 1sr mini games
 - [x] 2nd mini game
-- [ ] 50% 3rd mini games
+- [x] 3rd mini games
 
-
-- [ ] Welcome & Ending Storyline
-- [ ] Top Scores Files
-- [ ] Consistent visual assets
-- [ ] AppStore publishing 
 
 ## Project status
-In progress on 5 April 2024. <br><br>
 Produced as a part of my studies at Apple Develpment L5 Diploma at UAL, Creative Computing Institute. 
