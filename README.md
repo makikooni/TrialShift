@@ -28,3 +28,6 @@
 
 ## Project status
 Produced as a part of my studies at Apple Develpment L5 Diploma at UAL, Creative Computing Institute. 
+
+## Individual games
+tba
