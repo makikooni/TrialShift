@@ -1,4 +1,6 @@
-<img src="https://github.com/makikooni/trialshift/assets/92479890/42a58437-f85b-4f17-b1a9-df804a414ff8" alt="Untitled-1-02" width="400">
+<div align="center">
+  <img src="https://github.com/makikooni/trialshift/assets/92479890/42a58437-f85b-4f17-b1a9-df804a414ff8" alt="Untitled-1-02" width="400">
+</div>
 
 # Tech Stack
 ![Static Badge](https://img.shields.io/badge/Swift-FA7343?style=for-the-badge&logo=swift&logoColor=white)
