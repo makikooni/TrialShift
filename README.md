@@ -12,10 +12,6 @@ This project offers a nostalgic gaming experience reminiscent of classic Nintend
 https://github.com/user-attachments/assets/ccd6dd40-13dd-4352-b2e5-41e73db049a0
 
 
-
-https://github.com/makikooni/trialshift/assets/92479890/9cff578a-5959-44da-900a-8b6833491911
-
-
 ## Goals
 - [x] Welcome Screen Code Layout
 - [x] 1sr mini games
