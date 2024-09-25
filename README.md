@@ -18,12 +18,15 @@
   </tr>
 </table>
 
+https://github.com/user-attachments/assets/8e752fe7-4167-4788-bc51-ff6afb097c18
+
+
 
 ## Goals
 - [x] Welcome Screen Code Layout
-- [x] 1sr mini games
+- [x] 1sr mini game
 - [x] 2nd mini game
-- [x] 3rd mini games
+- [x] 3rd mini game
 
 
 ## Project status
