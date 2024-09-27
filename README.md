@@ -33,7 +33,6 @@ https://github.com/user-attachments/assets/8e752fe7-4167-4788-bc51-ff6afb097c18
 Produced as a part of my studies at Apple Develpment L5 Diploma at UAL, Creative Computing Institute. 
 
 ## Individual games
-tba
 ![TrialShift-Final-1727383180807](https://github.com/user-attachments/assets/db5cf033-2b24-4b32-a14c-cd1409bed5b8)
 ![TrialShift-Final2-1727383242837](https://github.com/user-attachments/assets/b583207a-c314-4285-af24-0404c494824d)
 ![TrialShift-Final3-1727383305349](https://github.com/user-attachments/assets/f00d1616-5d87-44f9-8329-2d521123351e)
